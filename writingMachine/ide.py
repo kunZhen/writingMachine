@@ -250,5 +250,12 @@ def import_file():
             # Print an error message if there was an issue during the file import
             print(f"Error importing file: {e}")
 def compile_code():
-    # Logic
-    print("Compilar")
+    # Get the content from the text widget
+    content = text_right.get(1.0, tk.END)  # Get all text including end-of-line character
+
+    # Split the content into lines
+    lines = content.splitlines()
+
+    # Print each line with its line number
+    for line_number, line in enumerate(lines, start=1):
+        print(f"Line {line_number}: {line}")
