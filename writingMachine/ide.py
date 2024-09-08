@@ -11,6 +11,30 @@ def init_ide():
     icon = tk.PhotoImage(file="icon.png")
     window.iconphoto(False, icon)
 
+    # Crear una barra de herramientas en la parte superior
+    toolbar = tk.Frame(window, bg="gray30")
+    toolbar.pack(side=tk.TOP, fill=tk.X)
+
+    # Botón Import
+    import_button = tk.Button(toolbar, text="Import", command=import_file,
+                              bg="gray60", fg="black", padx=20, pady=5, font=("Arial", 7))
+    import_button.pack(side=tk.LEFT, padx=10, pady=5)
+
+    # Botón New
+    new_button = tk.Button(toolbar, text="New", command=create_new_file,
+                           bg="gray60", fg="black", padx=20, pady=5, font=("Arial", 7))
+    new_button.pack(side=tk.LEFT, padx=10, pady=5)
+
+    # Botón Save
+    save_button = tk.Button(toolbar, text="Save", command=save_file,
+                            bg="gray60", fg="black", padx=20, pady=5, font=("Arial", 7))
+    save_button.pack(side=tk.LEFT, padx=10, pady=5)
+
+    # Botón Compile
+    compile_button = tk.Button(toolbar, text="Compile", command=compile_code,
+                               bg="gray60", fg="black", padx=20, pady=5, font=("Arial", 7))
+    compile_button.pack(side=tk.LEFT, padx=10, pady=5)
+
     # Crear paned window para dividir la ventana en dos secciones
     paned_main = tk.PanedWindow(window, orient=tk.VERTICAL, sashwidth=5, bg="gray")  # Panel principal (vertical)
     paned_main.pack(fill=tk.BOTH, expand=True)
@@ -119,3 +143,19 @@ def update_line_numbers(text_widget, line_numbers_widget):
         line_numbers_widget.insert(f"{i}.0", f"{i:>2}  \n")  # Ajusta el formato de los números de línea
 
     line_numbers_widget.config(state="disabled")
+
+def import_file():
+    # Lógica para importar un nuevo archivo
+    print("Importar archivo")
+
+def create_new_file():
+    # Lógica para crear un nuevo archivo
+    print("Nuevo archivo")
+
+def save_file():
+    # Lógica para guardar el archivo actual
+    print("Guardar archivo")
+
+def compile_code():
+    # Lógica para guardar el archivo actual
+    print("Compilar")

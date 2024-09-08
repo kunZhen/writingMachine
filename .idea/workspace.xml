@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97459244-f4d8-4ace-b010-13b6a36bc4f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/writingMachine/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/writingMachine/ide.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/writingMachine/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/writingMachine/ide.py" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/ide.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +51,10 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\henry\Documents\GitHub\writingMachine\writingMachine" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\henry\Documents\GitHub\writingMachine\writingMachine" />
+      <recent name="C:\Users\henry\Documents\GitHub\writingMachine\icon" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
@@ -88,7 +91,7 @@
       <updated>1725726900983</updated>
       <workItem from="1725726909230" duration="1266000" />
       <workItem from="1725737022962" duration="5465000" />
-      <workItem from="1725771368092" duration="344000" />
+      <workItem from="1725771368092" duration="729000" />
     </task>
     <servers />
   </component>
@@ -97,6 +100,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/writingMachine$ide.coverage" NAME="ide Coverage Results" MODIFIED="1725769638418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
-    <SUITE FILE_PATH="coverage/writingMachine$main.coverage" NAME="main Coverage Results" MODIFIED="1725771713383" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
+    <SUITE FILE_PATH="coverage/writingMachine$main.coverage" NAME="main Coverage Results" MODIFIED="1725772007195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
   </component>
 </project>
