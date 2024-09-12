@@ -17,12 +17,57 @@ class ChampiListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ChampiParser#statement.
-    def enterStatement(self, ctx:ChampiParser.StatementContext):
+    # Enter a parse tree produced by ChampiParser#VarAssignStatement.
+    def enterVarAssignStatement(self, ctx:ChampiParser.VarAssignStatementContext):
         pass
 
-    # Exit a parse tree produced by ChampiParser#statement.
-    def exitStatement(self, ctx:ChampiParser.StatementContext):
+    # Exit a parse tree produced by ChampiParser#VarAssignStatement.
+    def exitVarAssignStatement(self, ctx:ChampiParser.VarAssignStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by ChampiParser#PrintlnStatement.
+    def enterPrintlnStatement(self, ctx:ChampiParser.PrintlnStatementContext):
+        pass
+
+    # Exit a parse tree produced by ChampiParser#PrintlnStatement.
+    def exitPrintlnStatement(self, ctx:ChampiParser.PrintlnStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by ChampiParser#varAssign.
+    def enterVarAssign(self, ctx:ChampiParser.VarAssignContext):
+        pass
+
+    # Exit a parse tree produced by ChampiParser#varAssign.
+    def exitVarAssign(self, ctx:ChampiParser.VarAssignContext):
+        pass
+
+
+    # Enter a parse tree produced by ChampiParser#println.
+    def enterPrintln(self, ctx:ChampiParser.PrintlnContext):
+        pass
+
+    # Exit a parse tree produced by ChampiParser#println.
+    def exitPrintln(self, ctx:ChampiParser.PrintlnContext):
+        pass
+
+
+    # Enter a parse tree produced by ChampiParser#NumberExpr.
+    def enterNumberExpr(self, ctx:ChampiParser.NumberExprContext):
+        pass
+
+    # Exit a parse tree produced by ChampiParser#NumberExpr.
+    def exitNumberExpr(self, ctx:ChampiParser.NumberExprContext):
+        pass
+
+
+    # Enter a parse tree produced by ChampiParser#VarRefExpr.
+    def enterVarRefExpr(self, ctx:ChampiParser.VarRefExprContext):
+        pass
+
+    # Exit a parse tree produced by ChampiParser#VarRefExpr.
+    def exitVarRefExpr(self, ctx:ChampiParser.VarRefExprContext):
         pass
 
 

@@ -1,1 +1,4 @@
-println("Hello, world!");
+x = 42;
+y = 13;
+println(x);
+println(y);

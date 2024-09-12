@@ -1,9 +1,9 @@
 from antlr4 import *
 from generated.ChampiLexer import ChampiLexer
 from generated.ChampiParser import ChampiParser
+from ChampiASTListener import ChampiASTListener  # Asegúrate de que la importación sea correcta
 
 def main():
-    # Cambia 'input_file.txt' por el nombre de tu archivo de texto
     input_file = 'test.txt'
 
     # Abre el archivo y lee su contenido
@@ -16,7 +16,13 @@ def main():
     token_stream = CommonTokenStream(lexer)
     parser = ChampiParser(token_stream)
     tree = parser.program()
-    print(tree.toStringTree(recog=parser))
+
+    # Creamos el listener
+    listener = ChampiASTListener()
+
+    # Creamos el walker para recorrer el árbol con el listener
+    walker = ParseTreeWalker()
+    walker.walk(listener, tree)
 
 if __name__ == '__main__':
     main()

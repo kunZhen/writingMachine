@@ -1,8 +1,20 @@
 grammar Champi;
 
-program: statement+ ;
-statement: 'println' '(' STRING ')' ';' ;
+program : (statement)* EOF;
 
-STRING: '"' (ESC | ~["\\])* '"' ;
-fragment ESC: '\\' ["/bfnrt] ;
-WS: [ \t\r\n]+ -> skip ;
+statement
+    : varAssign            # VarAssignStatement
+    | println              # PrintlnStatement
+    ;
+
+varAssign : IDENTIFIER '=' expr ';';
+println   : 'println' '(' expr ')' ';';
+
+expr
+    : NUMBER               # NumberExpr
+    | IDENTIFIER           # VarRefExpr
+    ;
+
+IDENTIFIER : [a-zA-Z_][a-zA-Z_0-9]*;
+NUMBER     : [0-9]+;
+WS         : [ \t\r\n]+ -> skip;
