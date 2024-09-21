@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97459244-f4d8-4ace-b010-13b6a36bc4f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/writingMachine/Champi.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/writingMachine/ast/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/writingMachine/ast/print_statement.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/writingMachine/test.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/writingMachine/test_grammar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/writingMachine.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/writingMachine.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/writingMachine/generated/Champi.interp" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/generated/Champi.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/writingMachine/generated/ChampiLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/generated/ChampiLexer.interp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,21 +46,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/henry/Documents/GitHub/writingMachine/writingMachine",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/henry/Documents/GitHub/writingMachine/writingMachine&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\henry\Documents\GitHub\writingMachine\writingMachine" />
@@ -74,7 +70,7 @@
       <recent name="C:\Users\henry\Documents\GitHub\writingMachine\icon" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.calc_evaluator">
     <configuration name="calc_evaluator" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="writingMachine" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -141,6 +137,7 @@
       <workItem from="1726113613607" duration="65000" />
       <workItem from="1726113690635" duration="542000" />
       <workItem from="1726114249717" duration="4055000" />
+      <workItem from="1726712888723" duration="20000" />
     </task>
     <servers />
   </component>
@@ -148,7 +145,8 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/writingMachine$test_grammar.coverage" NAME="test_grammar Coverage Results" MODIFIED="1726118173136" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
+    <SUITE FILE_PATH="coverage/writingMachine$setup_antlr.coverage" NAME="setup_antlr Coverage Results" MODIFIED="1726645687537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
+    <SUITE FILE_PATH="coverage/writingMachine$test_grammar.coverage" NAME="test_grammar Coverage Results" MODIFIED="1726645779123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$pruebamil.coverage" NAME="pruebamil Coverage Results" MODIFIED="1726116990832" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$ide.coverage" NAME="ide Coverage Results" MODIFIED="1725769638418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$ChampiParser.coverage" NAME="ChampiParser Coverage Results" MODIFIED="1726115132988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine/generated" />
