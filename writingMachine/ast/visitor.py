@@ -341,6 +341,11 @@ class ASTVisitor:
 
             # Verificar la condición
             condition_result = self.visit(node.condition)
+
+            # Asegurarse de que tomamos solo el primer valor si es una lista
+            if isinstance(condition_result, list):
+                condition_result = condition_result[0]
+
             print(f"  Resultado de la condición: {condition_result}")
 
             if condition_result:

@@ -343,10 +343,10 @@ if __name__ == "__main__":
     Def(var, 1);
     Repeat 
     [Add(var);
-    var = 2;
-    Substr(var, 2);]
+    Down;]
     Until
     [var = 3];
+    Add(var);
     
   
     """
