@@ -327,6 +327,11 @@ class ASTVisitor:
         left = node.left.accept(self)
         right = node.right.accept(self)
 
+        if isinstance(left, list):
+            left = left[0]
+        if isinstance(right, list):
+            right = right[0]
+
         # Imprimir los valores antes de realizar la operación
         print(f"Operando izquierdo: {left}, Operando derecho: {right}, Operador: {node.operator}")
 
