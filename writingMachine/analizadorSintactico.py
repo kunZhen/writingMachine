@@ -57,7 +57,9 @@ current_color = 1  # 1: Negro, 2: Rojo
 
 # Regla inicial (punto de entrada)
 def p_program(p):
-    '''program : statement
+    '''program : statement SEMI
+               | statement
+               | program statement SEMI
                | program statement'''
     if len(p) == 2:
         p[0] = Program([p[1]])  # Crea un nodo Program con una lista que contiene un statement
@@ -66,25 +68,25 @@ def p_program(p):
 
 # produccion statment para casos de control
 def p_statement(p):
-    '''statement : expression SEMI
-                 | def_statement SEMI
-                 | put_statement SEMI
-                 | add_statement SEMI
-                 | continueup_statement SEMI
-                 | continuedown_statement SEMI
-                 | continueright_statement SEMI
-                 | continueleft_statement SEMI
-                 | pos_statement SEMI
-                 | posx_statement SEMI
-                 | posy_statement SEMI
-                 | usecolor_statement SEMI
-                 | down_statement SEMI
-                 | up_statement SEMI
-                 | beginning_statement SEMI
-                 | for_statement SEMI
-                 | case_statement SEMI
-                 | repeat_statement SEMI
-                 | while_statement SEMI'''
+    '''statement : expression
+                 | def_statement
+                 | put_statement
+                 | add_statement
+                 | continueup_statement
+                 | continuedown_statement
+                 | continueright_statement
+                 | continueleft_statement
+                 | pos_statement
+                 | posx_statement
+                 | posy_statement
+                 | usecolor_statement
+                 | down_statement
+                 | up_statement
+                 | beginning_statement
+                 | for_statement
+                 | case_statement
+                 | repeat_statement
+                 | while_statement '''
     if isinstance(p[1], (DefStatement, PutStatement, AddStatement,
                          ContinueUpStatement, ContinueDownStatement, ContinueRightStatement, ContinueLeftStatement,
                          PosStatement, PosXStatement, PosYStatement, UseColorStatement,
@@ -331,7 +333,7 @@ def parse(input_string):
 # Ejemplo de prueba
 if __name__ == "__main__":
     code = """
-    Def(x,(Sum (4,Sum(2,3))));
+    Def(x,(Sum (4,Sum(2,3*4))))
     """
     # Analizar el código y obtener el AST
     ast_root = parse(code)
