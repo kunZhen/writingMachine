@@ -7,6 +7,7 @@
     <list default="true" id="97459244-f4d8-4ace-b010-13b6a36bc4f9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/writingMachine/analizadorSintactico.py" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/analizadorSintactico.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/writingMachine/ast/visitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/ast/visitor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,6 +145,17 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/writingMachine$setup_antlr.coverage" NAME="setup_antlr Coverage Results" MODIFIED="1726645687537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$calc_evaluator.coverage" NAME="calc_evaluator Coverage Results" MODIFIED="1727107248048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
@@ -154,7 +166,7 @@
     <SUITE FILE_PATH="coverage/writingMachine$main.coverage" NAME="main Coverage Results" MODIFIED="1725827526413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$greater_statement.coverage" NAME="greater_statement Coverage Results" MODIFIED="1727062697437" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine/ast" />
     <SUITE FILE_PATH="coverage/writingMachine$visitor.coverage" NAME="visitor Coverage Results" MODIFIED="1727085550351" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine/ast" />
-    <SUITE FILE_PATH="coverage/writingMachine$analizadorSintactico.coverage" NAME="analizadorSintactico Coverage Results" MODIFIED="1727107378290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
+    <SUITE FILE_PATH="coverage/writingMachine$analizadorSintactico.coverage" NAME="analizadorSintactico Coverage Results" MODIFIED="1727109234481" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$analizadorLexico.coverage" NAME="analizadorLexico Coverage Results" MODIFIED="1727106576541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$pruebamil.coverage" NAME="pruebamil Coverage Results" MODIFIED="1726116990832" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$ChampiParser.coverage" NAME="ChampiParser Coverage Results" MODIFIED="1726115132988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine/generated" />

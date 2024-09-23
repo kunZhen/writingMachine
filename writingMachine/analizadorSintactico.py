@@ -333,7 +333,7 @@ def parse(input_string):
 # Ejemplo de prueba
 if __name__ == "__main__":
     code = """
-    Def(x,(Sum (4,Sum(2,3*4))))
+    6+[(5*8)+4]
     """
     # Analizar el código y obtener el AST
     ast_root = parse(code)

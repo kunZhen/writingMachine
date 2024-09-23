@@ -1,9 +1,37 @@
 import random
 
+from writingMachine.ast.add_statement import AddStatement
+from writingMachine.ast.and_statement import AndStatement
+from writingMachine.ast.beginning_statement import BeginningStatement
+from writingMachine.ast.binary_operation import BinaryOperation
 from writingMachine.ast.boolean_expression import BooleanExpression
+from writingMachine.ast.continuedown_statement import ContinueDownStatement
+from writingMachine.ast.continueleft_statement import ContinueLeftStatement
+from writingMachine.ast.continueright_statement import ContinueRightStatement
+from writingMachine.ast.continueup_statement import ContinueUpStatement
 from writingMachine.ast.def_statement import DefStatement
+from writingMachine.ast.div_statement import DivStatement
+from writingMachine.ast.down_statement import DownStatement
+from writingMachine.ast.equal_statement import EqualStatement
+from writingMachine.ast.execute_statement import ExecuteStatement
+from writingMachine.ast.expression_bracket import ExpressionBracket
+from writingMachine.ast.expression_group import ExpressionGroup
+from writingMachine.ast.expression_list import ExpressionList
+from writingMachine.ast.greater_statement import GreaterStatement
 from writingMachine.ast.id_expression import IdExpression
+from writingMachine.ast.mult_statement import MultStatement
 from writingMachine.ast.number_expression import NumberExpression
+from writingMachine.ast.or_statement import OrStatement
+from writingMachine.ast.pos_statement import PosStatement
+from writingMachine.ast.posx_statement import PosXStatement
+from writingMachine.ast.posy_statement import PosYStatement
+from writingMachine.ast.put_statement import PutStatement
+from writingMachine.ast.random_statement import RandomStatement
+from writingMachine.ast.smaller_statement import SmallerStatement
+from writingMachine.ast.substr_statement import SubstrStatement
+from writingMachine.ast.sum_statement import SumStatement
+from writingMachine.ast.up_statement import UpStatement
+from writingMachine.ast.usecolor_statement import UseColorStatement
 from writingMachine.ast.variable_context import VariableContext
 
 
@@ -36,9 +64,18 @@ class ASTVisitor:
         return results
 
     def visit_expression(self, node):
-        if isinstance(node.value, (NumberExpression, BooleanExpression, IdExpression)):
+        print("Tipo de node.value:", type(node.value))
+        if isinstance(node.value, (NumberExpression, BooleanExpression, IdExpression, BinaryOperation,
+                                   SumStatement, AddStatement,AndStatement, BeginningStatement,
+                                   ContinueDownStatement, ContinueUpStatement, ContinueRightStatement,
+                                   ContinueLeftStatement, DefStatement, DivStatement, DownStatement, EqualStatement,
+                                   ExecuteStatement, ExpressionBracket, ExpressionGroup,
+                                   ExpressionList, GreaterStatement, MultStatement, OrStatement,
+                                   PosStatement, PosXStatement, PosYStatement, PutStatement, RandomStatement,
+                                   SmallerStatement, SubstrStatement, UpStatement, UseColorStatement)):
             return self.visit(node.value)
         return node.value
+
     def visit_for_statement(self, node):
         """Método para visitar un nodo ForStatement."""
         results = []
@@ -289,22 +326,40 @@ class ASTVisitor:
     def visit_binaryoperation(self, node):
         left = node.left.accept(self)
         right = node.right.accept(self)
+
+        # Imprimir los valores antes de realizar la operación
+        print(f"Operando izquierdo: {left}, Operando derecho: {right}, Operador: {node.operator}")
+
         if node.operator == '+':
-            return left + right
+            result = left + right
+            print(result)
+            return result
         elif node.operator == '-':
-            return left - right
+            result = left - right
+            print(result)
+            return result
         elif node.operator == '*':
-            return left * right
+            result = left * right
+            print(result)
+            return result
         elif node.operator == '/':
             if right == 0:
                 raise ValueError("División por cero")
-            return left / right
+            result = left / right
+            print(result)
+            return result
         elif node.operator == '<':
-            return left < right
+            result = left < right
+            print(result)
+            return result
         elif node.operator == '>':
-            return left > right
+            result = left > right
+            print(result)
+            return result
         elif node.operator == '=':
-            return left == right
+            result = left == right
+            print(result)
+            return result
 
 
     def visit_expressiongroup(self, node):
