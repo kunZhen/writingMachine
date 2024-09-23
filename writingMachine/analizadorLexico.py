@@ -123,7 +123,6 @@ def analysis(input):
 # Ejemplo de prueba
 if __name__ == '__main__':
     code = """
-Sum(1, 2);
         """
     print("Tokens encontrados:")
     print(analysis(code))
