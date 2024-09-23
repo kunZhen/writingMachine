@@ -39,7 +39,7 @@ from writingMachine.ast.sum_statement import SumStatement
 from writingMachine.ast.up_statement import UpStatement
 from writingMachine.ast.usecolor_statement import UseColorStatement
 from writingMachine.ast.visitor import ASTVisitor
-
+from writingMachine.ast.while_statement import WhileStatement
 
 # Jerarquia de palabras
 precedence = (
@@ -308,9 +308,8 @@ def p_repeat_statement(p):
     p[0] = RepeatStatement(body=p[3], condition=p[7])
 # Regla para el control While
 def p_while_statement(p):
-    '''while_statement : WHILE LBRACKET statement RBRACKET LBRACKET statement RBRACKET WHEND'''
-    # p[2] es la condición del while, p[3] es el bloque de código que se ejecutará
-    p[0] = f"While {p[2]}: {p[3]}"
+    '''while_statement : WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND'''
+    p[0] = WhileStatement(condition=p[3], body=p[6])  # La condición se toma de p[3] y el cuerpo de p[6]
 
 # Regla para pluralizar casos
 def p_case_list(p):
@@ -341,11 +340,11 @@ if __name__ == "__main__":
     code = """
     Sum(2,1);
     Def(var, 1);
-    Repeat 
+    While 
+    [var < 1]
     [Add(var);
     Down;]
-    Until
-    [var = 3];
+    Whend;
     Add(var);
     
   

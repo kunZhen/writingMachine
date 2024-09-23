@@ -34,6 +34,7 @@ from writingMachine.ast.sum_statement import SumStatement
 from writingMachine.ast.up_statement import UpStatement
 from writingMachine.ast.usecolor_statement import UseColorStatement
 from writingMachine.ast.variable_context import VariableContext
+from writingMachine.ast.while_statement import WhileStatement
 
 
 class ASTVisitor:
@@ -74,7 +75,7 @@ class ASTVisitor:
                                    ExpressionList, GreaterStatement, MultStatement, OrStatement,
                                    PosStatement, PosXStatement, PosYStatement, PutStatement, RandomStatement,
                                    SmallerStatement, SubstrStatement, UpStatement, UseColorStatement,
-                                   RepeatStatement, VariableContext)):
+                                   RepeatStatement, VariableContext, WhileStatement)):
             return self.visit(node.value)
         return node.value
 
@@ -351,6 +352,29 @@ class ASTVisitor:
             if condition_result:
                 print("Saliendo del bucle Repeat")
                 break  # Salir del bucle si la condición es verdadera
+
+    def visit_whilestatement(self, node):
+        iteration = 0
+        while True:
+            iteration += 1
+            print(f"Iteración While {iteration}")
+
+            # Evaluar la condición
+            condition_result = self.visit(node.condition)
+            print(f"  Resultado de la condición: {condition_result}")
+
+            # Asegúrate de que tomas solo el primer valor si es una lista
+            if isinstance(condition_result, list):
+                condition_result = condition_result[0]
+
+            if not condition_result:
+                print("Saliendo del bucle While")
+                break
+
+            # Ejecutar el cuerpo
+            for statement in node.body:
+                print(f"  Ejecutando declaración: {statement}")
+                self.visit(statement)
 
     def visit_binaryoperation(self, node):
         left = node.left.accept(self)
