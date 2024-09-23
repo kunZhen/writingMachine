@@ -3,6 +3,7 @@ import random
 import ply.yacc as yacc
 from analizadorLexico import tokens
 from writingMachine.ast.expression_list import ExpressionList
+from writingMachine.ast.repeat_statement import RepeatStatement
 from writingMachine.ast.substr_statement import SubstrStatement
 from writingMachine.ast.add_statement import AddStatement
 from writingMachine.ast.and_statement import AndStatement
@@ -61,11 +62,17 @@ def p_program(p):
                | statement
                | program statement SEMI
                | program statement'''
-    if len(p) == 2:
+    if len(p) == 2:  # Solo un statement
         p[0] = Program([p[1]])  # Crea un nodo Program con una lista que contiene un statement
-    else:
-        p[0] = Program(p[1].statements + [p[2]])  # Crea un nodo Program con la lista de statements
-
+    elif len(p) == 3:  # Un statement sin SEMI
+        p[0] = Program([p[1]])  # Crea un nodo Program con una lista que contiene un statement
+    else:  # Viene de program statement SEMI o program statement
+        if hasattr(p[1], 'statements'):
+            # Asegúrate de que p[1] tenga el atributo statements
+            p[0] = Program(p[1].statements + [p[2]])
+        else:
+            # Si p[1] no tiene el atributo statements, es un solo statement
+            p[0] = Program([p[1]] + [p[2]])  # Asegúrate de que se maneje correctamente
 # produccion statment para casos de control
 def p_statement(p):
     '''statement : expression
@@ -86,7 +93,7 @@ def p_statement(p):
                  | for_statement
                  | case_statement
                  | repeat_statement
-                 | while_statement '''
+                 | while_statement'''
     if isinstance(p[1], (DefStatement, PutStatement, AddStatement,
                          ContinueUpStatement, ContinueDownStatement, ContinueRightStatement, ContinueLeftStatement,
                          PosStatement, PosXStatement, PosYStatement, UseColorStatement,
@@ -113,12 +120,12 @@ def p_expression_comparison(p):
 
 # Regla para definir variable
 def p_def_statement(p):
-    '''def_statement : DEF LPAREN ID COMMA expression RPAREN'''
+    '''def_statement : DEF LPAREN ID COMMA statement RPAREN'''
     p[0] = DefStatement(p[3], p[5])  # Crea un nodo DefStatement con el nombre y el valor
 
 # Regla para modificar variable
 def p_put_statement(p):
-    '''put_statement : PUT LPAREN ID COMMA expression RPAREN'''
+    '''put_statement : PUT LPAREN ID COMMA statement RPAREN'''
     var_name = p[3]
     value = p[5]
 
@@ -127,7 +134,7 @@ def p_put_statement(p):
 # Regla para la funcion ADD
 def p_add_statement(p):
     '''add_statement : ADD LPAREN ID RPAREN
-                     | ADD LPAREN ID COMMA expression RPAREN'''
+                     | ADD LPAREN ID COMMA statement RPAREN'''
     if len(p) == 5:
         p[0] = AddStatement(p[3])
     elif len(p) == 7:
@@ -135,39 +142,39 @@ def p_add_statement(p):
 
 # Regla para el continueup
 def p_continueup_statement(p):
-    '''continueup_statement : CONTINUEUP expression '''
+    '''continueup_statement : CONTINUEUP statement '''
     p[0] = ContinueUpStatement(p[2])
 
 # Regla para el continuedown
 def p_continuedown_statement(p):
-    '''continuedown_statement : CONTINUEDOWN expression'''
+    '''continuedown_statement : CONTINUEDOWN statement'''
     p[0] = ContinueDownStatement(p[2])
 
 # Regla para el continueright
 def p_continueright_statement(p):
-    '''continueright_statement : CONTINUERIGHT expression'''
+    '''continueright_statement : CONTINUERIGHT statement'''
     p[0] = ContinueRightStatement(p[2])
 
 # Regla para el continueleft
 def p_continueleft_statement(p):
-    '''continueleft_statement : CONTINUELEFT expression'''
+    '''continueleft_statement : CONTINUELEFT statement'''
     p[0] = ContinueLeftStatement(p[2])
 
 # Regla que modifica la posicion del lapiz
 def p_pos_statement(p):
-    '''pos_statement : POS LPAREN expression COMMA expression RPAREN'''
+    '''pos_statement : POS LPAREN statement COMMA statement RPAREN'''
     p[0] = PosStatement(p[3], p[5])
 
 def p_posx_statement(p):
-    '''posx_statement : POSX expression'''
+    '''posx_statement : POSX statement'''
     p[0] = PosXStatement(p[2])
 
 def p_posy_statement(p):
-    '''posy_statement : POSY expression'''
+    '''posy_statement : POSY statement'''
     p[0] = PosYStatement(p[2])
 
 def p_usecolor_statement(p):
-    '''usecolor_statement : USECOLOR expression'''
+    '''usecolor_statement : USECOLOR statement'''
     p[0] = UseColorStatement(p[2])
 
 def p_down_statement(p):
@@ -183,43 +190,43 @@ def p_beginning_statement(p):
     p[0] = BeginningStatement()
 # Regla que compara si dos expresiones son iguales
 def p_equal_statement(p):
-    '''expression : EQUAL LPAREN expression COMMA expression RPAREN'''
+    '''expression : EQUAL LPAREN statement COMMA statement RPAREN'''
     p[0] = EqualStatement(p[3], p[5])
 
 def p_and_statement(p):
-    '''expression : AND LPAREN expression COMMA expression RPAREN'''
+    '''expression : AND LPAREN statement COMMA statement RPAREN'''
     p[0] = AndStatement(p[3], p[5])
 
 def p_or_statement(p):
-    '''expression : OR LPAREN expression COMMA expression RPAREN'''
+    '''expression : OR LPAREN statement COMMA statement RPAREN'''
     p[0] = OrStatement(p[3], p[5])
 
 def p_greater_statement(p):
-    '''expression : GREATER LPAREN expression COMMA expression RPAREN'''
+    '''expression : GREATER LPAREN statement COMMA statement RPAREN'''
     p[0] = GreaterStatement(p[3], p[5])
 
 def p_smaller_statement(p):
-    '''expression : SMALLER LPAREN expression COMMA expression RPAREN'''
+    '''expression : SMALLER LPAREN statement COMMA statement RPAREN'''
     p[0] = SmallerStatement(p[3], p[5])
 
 def p_substr_statement(p):
-    '''expression : SUBSTR LPAREN expression COMMA expression RPAREN'''
+    '''expression : SUBSTR LPAREN statement COMMA statement RPAREN'''
     p[0] = SubstrStatement(p[3], p[5])
 
 def p_random_statement(p):
-    '''expression : RANDOM LPAREN expression RPAREN'''
+    '''expression : RANDOM LPAREN statement RPAREN'''
     p[0] = RandomStatement(p[3])
 
 def p_mult_statement(p):
-    '''expression : MULT LPAREN expression COMMA expression RPAREN'''
+    '''expression : MULT LPAREN statement COMMA statement RPAREN'''
     p[0] = MultStatement(p[3], p[5])
 
 def p_div_statement(p):
-    '''expression : DIV LPAREN expression COMMA expression RPAREN'''
+    '''expression : DIV LPAREN statement COMMA statement RPAREN'''
     p[0] = DivStatement(p[3], p[5])
 
 def p_sum_statement(p):
-    '''expression : SUM LPAREN expression COMMA expression RPAREN'''
+    '''expression : SUM LPAREN statement COMMA statement RPAREN'''
     p[0] = SumStatement(p[3], p[5])
 
 def p_expression_group(p):
@@ -227,8 +234,8 @@ def p_expression_group(p):
     p[0] = ExpressionGroup(p[2])
 
 def p_expression_bracket(p):
-    '''expression_bracket : LBRACKET expression_list SEMI RBRACKET
-                          | LBRACKET expression_list RBRACKET'''
+    '''expression_bracket : LBRACKET expression_list RBRACKET
+                          | LBRACKET expression_list SEMI RBRACKET'''
     p[0] = ExpressionBracket(p[2])
 # Regla para las expresiones booleanas
 def p_expression_boolean(p):
@@ -237,8 +244,8 @@ def p_expression_boolean(p):
 
 # Regla para la pluralizacion de expresiones
 def p_expression_list(p):
-    '''expression_list : expression
-                       | expression_list expression'''
+    '''expression_list : statement
+                       | expression_list statement'''
     if len(p) == 2:
         p[0] = ExpressionList([p[1]])  # Caso base
     else:
@@ -297,12 +304,11 @@ def p_case_statement(p):
 
 # Regla para el control repeat
 def p_repeat_statement(p):
-    '''repeat_statement : REPEAT expression_bracket UNTIL expression_bracket'''
-    p[0] = f"Repeat: {', '.join(map(str, p[2]))} until {p[4]}"
-
+    '''repeat_statement : REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET'''
+    p[0] = RepeatStatement(body=p[3], condition=p[7])
 # Regla para el control While
 def p_while_statement(p):
-    '''while_statement : WHILE expression_bracket expression_bracket WHEND'''
+    '''while_statement : WHILE LBRACKET statement RBRACKET LBRACKET statement RBRACKET WHEND'''
     # p[2] es la condición del while, p[3] es el bloque de código que se ejecutará
     p[0] = f"While {p[2]}: {p[3]}"
 
@@ -333,10 +339,16 @@ def parse(input_string):
 # Ejemplo de prueba
 if __name__ == "__main__":
     code = """
-    Def(var,0)
-    Def(result, Sum(var, 4))
-    Put(var, result)
-    var = 4 
+    Sum(2,1);
+    Def(var, 1);
+    Repeat 
+    [Add(var);
+    var = 2;
+    Substr(var, 2);]
+    Until
+    [var = 3];
+    
+  
     """
     # Analizar el código y obtener el AST
     ast_root = parse(code)

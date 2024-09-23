@@ -27,6 +27,7 @@ from writingMachine.ast.posx_statement import PosXStatement
 from writingMachine.ast.posy_statement import PosYStatement
 from writingMachine.ast.put_statement import PutStatement
 from writingMachine.ast.random_statement import RandomStatement
+from writingMachine.ast.repeat_statement import RepeatStatement
 from writingMachine.ast.smaller_statement import SmallerStatement
 from writingMachine.ast.substr_statement import SubstrStatement
 from writingMachine.ast.sum_statement import SumStatement
@@ -72,7 +73,8 @@ class ASTVisitor:
                                    ExecuteStatement, ExpressionBracket, ExpressionGroup,
                                    ExpressionList, GreaterStatement, MultStatement, OrStatement,
                                    PosStatement, PosXStatement, PosYStatement, PutStatement, RandomStatement,
-                                   SmallerStatement, SubstrStatement, UpStatement, UseColorStatement)):
+                                   SmallerStatement, SubstrStatement, UpStatement, UseColorStatement,
+                                   RepeatStatement, VariableContext)):
             return self.visit(node.value)
         return node.value
 
@@ -114,7 +116,7 @@ class ASTVisitor:
     def visit_addstatement(self, node):
         if node.var_name not in self.variable_context.variables:
             print(f"Error: '{node.var_name}' no es una variable válida.")
-            return
+            return None
 
         current_value = self.variable_context.get_variable(node.var_name)
 
@@ -124,12 +126,15 @@ class ASTVisitor:
             increment = self.visit(node.increment_value)
             if not isinstance(increment, (int, float)):
                 print(f"Error: El incremento debe ser un número.")
-                return
+                return None
             new_value = current_value + increment
 
+        # Update the variable in the context
         self.variable_context.set_variable(node.var_name, new_value)
         print(f"Incrementado {node.var_name} de {current_value} a {new_value}")
 
+        # Return the new value
+        return new_value
     def visit_continueupstatement(self, node):
         move_units = self.visit(node.move_units)
         if isinstance(move_units, (int, float)):
@@ -323,6 +328,25 @@ class ASTVisitor:
         print(result)
         return result  # Retorna el resultado de la suma
 
+    def visit_repeatstatement(self, node):
+        iteration = 0
+        while True:
+            iteration += 1
+            print(f"Iteración Repeat {iteration}")
+
+            # Ejecutar el cuerpo
+            for statement in node.body:
+                print(f"  Ejecutando declaración: {statement}")
+                self.visit(statement)
+
+            # Verificar la condición
+            condition_result = self.visit(node.condition)
+            print(f"  Resultado de la condición: {condition_result}")
+
+            if condition_result:
+                print("Saliendo del bucle Repeat")
+                break  # Salir del bucle si la condición es verdadera
+
     def visit_binaryoperation(self, node):
         left = node.left.accept(self)
         right = node.right.accept(self)
@@ -378,9 +402,22 @@ class ASTVisitor:
         return results  # Retorna los resultados de todas las expresiones
 
     def visit_expressionlist(self, node):
-        # Aquí iteramos sobre las expresiones dentro del nodo ExpressionList
-        results = [expr.accept(self) for expr in node.expressions]
-        return results  # Retorna los resultados de todas las expresiones
+        results = []
+        for expr in node.expressions:
+            if isinstance(expr, str):
+                # Si es una cadena, probablemente sea el nombre de un método de visita
+                method_name = f'visit_{expr.lower()}'
+                if hasattr(self, method_name):
+                    result = getattr(self, method_name)(expr)
+                else:
+                    print(f"Error: No se encontró el método {method_name}")
+                    result = None
+            else:
+                # Si no es una cadena, visita el nodo normalmente
+                result = self.visit(expr)
+            results.append(result)
+        return results
+
     def visit_idexpression(self, node):
         return self.variable_context.get_variable(node.var_name)
     def visit_numberexpression(self, node):

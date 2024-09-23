@@ -7,4 +7,4 @@ class AddStatement(ASTNode):
         self.increment_value = increment_value
 
     def accept(self, visitor):
-        return visitor.visit_addstatement(self)
+        return visitor.visitaddstatement(self)
