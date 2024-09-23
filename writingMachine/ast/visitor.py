@@ -17,6 +17,7 @@ from writingMachine.ast.execute_statement import ExecuteStatement
 from writingMachine.ast.expression_bracket import ExpressionBracket
 from writingMachine.ast.expression_group import ExpressionGroup
 from writingMachine.ast.expression_list import ExpressionList
+from writingMachine.ast.for_statement import ForStatement
 from writingMachine.ast.greater_statement import GreaterStatement
 from writingMachine.ast.id_expression import IdExpression
 from writingMachine.ast.mult_statement import MultStatement
@@ -75,30 +76,9 @@ class ASTVisitor:
                                    ExpressionList, GreaterStatement, MultStatement, OrStatement,
                                    PosStatement, PosXStatement, PosYStatement, PutStatement, RandomStatement,
                                    SmallerStatement, SubstrStatement, UpStatement, UseColorStatement,
-                                   RepeatStatement, VariableContext, WhileStatement)):
+                                   RepeatStatement, VariableContext, WhileStatement, ForStatement)):
             return self.visit(node.value)
         return node.value
-
-    def visit_for_statement(self, node):
-        """Método para visitar un nodo ForStatement."""
-        results = []
-        if node.max_val <= node.min_val:
-            print(f"Error: El valor máximo ({node.max_val}) debe ser mayor que el valor mínimo ({node.min_val}).")
-            return results
-
-        for i in range(node.min_val, node.max_val + 1):
-            self.variable_context.set_variable(node.var_name, i)  # Usa el contexto de variables
-            # Ejecutar el cuerpo del bucle
-            result = self.visit(node.body)  # Llama al método visit para el cuerpo
-            results.append(result)
-
-        self.variable_context.remove_variable(node.var_name)  # Elimina la variable de control después del bucle
-        print(f"For {node.var_name} from {node.min_val} to {node.max_val}: {results}")
-        return results
-
-    def visit_execute_statement(self, node):
-        """Método para visitar un nodo ExecuteStatement."""
-        return str(node.statement)  # Simplemente convierte el statement a string
 
     def visit_defstatement(self, node):
         value = self.visit(node.value)
@@ -328,6 +308,35 @@ class ASTVisitor:
         result = left + right
         print(result)
         return result  # Retorna el resultado de la suma
+
+    def visit_forstatement(self, node):
+        # Obtener los valores de min_value y max_value
+        min_value = self.visit(node.min_value)
+        max_value = self.visit(node.max_value)
+
+        # Verificar si min_value es mayor o igual que max_value
+        if min_value >= max_value:
+            raise ValueError("Max debe ser mayor que Min en el bucle FOR.")
+
+        # Crear la variable en el contexto
+        if self.variable_context.get_variable(node.variable) is not None:
+            raise ValueError(f"La variable '{node.variable}' ya existe.")
+
+        # Inicializar la variable en el contexto
+        self.variable_context.set_variable(node.variable, min_value)
+
+        # Ejecutar el cuerpo del bucle
+        for i in range(min_value, max_value):
+            print(f"Iteración FOR: {i}")
+            # Establecer el valor de la variable para la iteración actual
+            self.variable_context.set_variable(node.variable, i)
+
+            # Visitar cada declaración en el cuerpo del bucle
+            for statement in node.body:
+                print(f"  Ejecutando declaración: {statement}")
+                self.visit(statement)
+        # Eliminar la variable del contexto al finalizar el bucle
+        self.variable_context.remove_variable(node.variable)
 
     def visit_repeatstatement(self, node):
         iteration = 0

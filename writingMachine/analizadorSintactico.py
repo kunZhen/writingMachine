@@ -264,24 +264,10 @@ def p_expression_id(p):
         p[0] = IdExpression(p[1])  # También podrías manejar el caso aquí si la variable no está definida
 # Regla para la definicion del control for
 def p_for_statement(p):
-    '''for_statement : FOR ID LPAREN NUMBER TO NUMBER RPAREN LOOP expression_bracket END LOOP'''
-    var_name = p[2]
-    min_val = p[4]
-    max_val = p[6]
-    body = p[9]
+    '''for_statement : FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP'''
 
-    if var_name in variables:
-        print(f"Error: La variable '{var_name}' ya está definida. Usa un nombre diferente para el contador.")
-        p[0] = None
-        return
+    p[0] = ForStatement(variable=p[2], min_value=p[4], max_value=p[6], body=p[10])
 
-    if max_val <= min_val:
-        print(f"Error: El valor máximo ({max_val}) debe ser mayor que el valor mínimo ({min_val}).")
-        p[0] = None
-        return
-
-    # Crear un nodo ForStatement en lugar de ejecutar directamente
-    p[0] = ForStatement(var_name, min_val, max_val, body)
 # Regla para la ejecucion del for en un futuro
 def p_execute_statement(p):
     '''execute_statement : statement'''
@@ -338,16 +324,14 @@ def parse(input_string):
 # Ejemplo de prueba
 if __name__ == "__main__":
     code = """
-    Sum(2,1);
     Def(var, 1);
-    While 
-    [var < 1]
-    [Add(var);
-    Down;]
-    Whend;
-    Add(var);
+    For i(1 to 3) Loop
+    [Down;
+    Add(var);]
+    End Loop;
+    Add(var,8);
+
     
-  
     """
     # Analizar el código y obtener el AST
     ast_root = parse(code)
