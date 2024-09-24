@@ -2,6 +2,7 @@ import random
 
 import ply.yacc as yacc
 from analizadorLexico import tokens
+from writingMachine.ast.case_statement import CaseStatement
 from writingMachine.ast.expression_list import ExpressionList
 from writingMachine.ast.repeat_statement import RepeatStatement
 from writingMachine.ast.substr_statement import SubstrStatement
@@ -39,6 +40,7 @@ from writingMachine.ast.sum_statement import SumStatement
 from writingMachine.ast.up_statement import UpStatement
 from writingMachine.ast.usecolor_statement import UseColorStatement
 from writingMachine.ast.visitor import ASTVisitor
+from writingMachine.ast.when_clause import WhenClause
 from writingMachine.ast.while_statement import WhileStatement
 
 # Jerarquia de palabras
@@ -275,19 +277,24 @@ def p_execute_statement(p):
 
 # Regla para el control case
 def p_case_statement(p):
-    '''case_statement : CASE ID WHEN NUMBER THEN case_list ELSE case_list END CASE
-                      | CASE ID WHEN BOOLEAN THEN case_list ELSE case_list END CASE
-                      | CASE ID WHEN NUMBER THEN case_list END CASE
-                      | CASE ID WHEN BOOLEAN THEN case_list END CASE'''
-    variable = p[2]  # ID es la variable
-    if variable not in variables:
-        raise ValueError(f"Error: Variable '{variable}' no está definida.")
+    '''case_statement : CASE ID when_clauses END CASE
+                      | CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE'''
+    if len(p) == 6:
+        p[0] = CaseStatement(variable=p[2], when_clauses=p[3], else_clause=None)
+    else:
+        p[0] = CaseStatement(variable=p[2], when_clauses=p[3], else_clause=p[6])
 
-    if len(p) == 9:  # Caso sin ELSE
-        p[0] = f"Case {p[2]} when {p[4]}: {p[6]}"
-    elif len(p) == 11:  # Caso con ELSE
-        p[0] = f"Case {p[2]} when {p[4]}: {p[6]} else: {p[8]}"
+def p_when_clauses(p):
+    '''when_clauses : when_clause
+                    | when_clauses when_clause'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + [p[2]]
 
+def p_when_clause(p):
+    '''when_clause : WHEN expression THEN LBRACKET program RBRACKET'''
+    p[0] = WhenClause(condition=p[2], body=p[5])
 # Regla para el control repeat
 def p_repeat_statement(p):
     '''repeat_statement : REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET'''
@@ -296,16 +303,6 @@ def p_repeat_statement(p):
 def p_while_statement(p):
     '''while_statement : WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND'''
     p[0] = WhileStatement(condition=p[3], body=p[6])  # La condición se toma de p[3] y el cuerpo de p[6]
-
-# Regla para pluralizar casos
-def p_case_list(p):
-    '''case_list : expression_bracket
-                 | expression_bracket WHEN NUMBER THEN expression_bracket
-                 | expression_bracket WHEN BOOLEAN THEN expression_bracket'''
-    if len(p) == 2:
-        p[0] = [p[1]]  # Solo una declaración
-    else:
-        p[0] = [p[1]] + p[3:]  # Agrega la declaración y continúa
 
 # Regla para manejo de errores
 def p_error(p):
@@ -324,12 +321,20 @@ def parse(input_string):
 # Ejemplo de prueba
 if __name__ == "__main__":
     code = """
-    Def(var, 1);
-    For i(1 to 3) Loop
-    [Down;
-    Add(var);]
-    End Loop;
-    Add(var,8);
+    Def(var, 2);
+    Put(var, Substr(var, 1*1));
+    Case var
+    When 1 Then
+    [Add(var,1);
+    Down;]
+    When 2 Then
+    [Up;
+    ContinueRight 5*4;]
+    Else
+    [Add(var, Mult(3,4));
+    ContinueLeft Sum(2,3);]
+    End Case;
+    Add(var,1);
 
     
     """

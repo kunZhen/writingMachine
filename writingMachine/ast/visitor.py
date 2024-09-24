@@ -5,6 +5,7 @@ from writingMachine.ast.and_statement import AndStatement
 from writingMachine.ast.beginning_statement import BeginningStatement
 from writingMachine.ast.binary_operation import BinaryOperation
 from writingMachine.ast.boolean_expression import BooleanExpression
+from writingMachine.ast.case_statement import CaseStatement
 from writingMachine.ast.continuedown_statement import ContinueDownStatement
 from writingMachine.ast.continueleft_statement import ContinueLeftStatement
 from writingMachine.ast.continueright_statement import ContinueRightStatement
@@ -35,6 +36,7 @@ from writingMachine.ast.sum_statement import SumStatement
 from writingMachine.ast.up_statement import UpStatement
 from writingMachine.ast.usecolor_statement import UseColorStatement
 from writingMachine.ast.variable_context import VariableContext
+from writingMachine.ast.when_clause import WhenClause
 from writingMachine.ast.while_statement import WhileStatement
 
 
@@ -76,7 +78,8 @@ class ASTVisitor:
                                    ExpressionList, GreaterStatement, MultStatement, OrStatement,
                                    PosStatement, PosXStatement, PosYStatement, PutStatement, RandomStatement,
                                    SmallerStatement, SubstrStatement, UpStatement, UseColorStatement,
-                                   RepeatStatement, VariableContext, WhileStatement, ForStatement)):
+                                   RepeatStatement, VariableContext, WhileStatement, ForStatement,
+                                   CaseStatement, WhenClause)):
             return self.visit(node.value)
         return node.value
 
@@ -337,6 +340,37 @@ class ASTVisitor:
                 self.visit(statement)
         # Eliminar la variable del contexto al finalizar el bucle
         self.variable_context.remove_variable(node.variable)
+
+    def visit_casestatement(self, node):
+        print(f"Ejecutando Case para la variable: {node.variable}")
+
+        # Obtener el valor de la variable
+        variable_value = self.variable_context.get_variable(node.variable)
+        if variable_value is None:
+            raise ValueError(f"La variable '{node.variable}' no está definida.")
+
+        print(f"Valor de la variable: {variable_value}")
+
+        # Evaluar cada cláusula When
+        for when_clause in node.when_clauses:
+            condition_value = self.visit(when_clause.condition)
+            print(f"Evaluando condición: {condition_value}")
+
+            if condition_value == variable_value:
+                print("Condición cumplida, ejecutando cuerpo del When")
+                for statement in when_clause.body:
+                    print(f" Ejecutando declaración: {statement}")
+                    self.visit(statement)
+                return
+
+        # Si ninguna condición se cumple y hay una cláusula Else, ejecutarla
+        if node.else_clause:
+            print("Ninguna condición cumplida, ejecutando cláusula Else")
+            for statement in node.else_clause:
+                print(f" Ejecutando declaración: {statement}")
+                self.visit(statement)
+        else:
+            print("Ninguna condición cumplida y no hay cláusula Else")
 
     def visit_repeatstatement(self, node):
         iteration = 0
