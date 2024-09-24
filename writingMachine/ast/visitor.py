@@ -475,6 +475,20 @@ class ASTVisitor:
         min_value = self.visit(node.min_value)
         max_value = self.visit(node.max_value)
 
+        # Verificar que min_value no sea un booleano
+        if str(min_value) == 'True':
+            raise ValueError(f"Error Semántico: 'min_value' no puede ser un booleano. Se obtuvo: '{min_value}'")
+
+        if str(min_value) == 'False':
+            raise ValueError(f"Error Semántico: 'min_value' no puede ser un booleano. Se obtuvo: '{min_value}'")
+
+        # Verificar que max_value no sea un booleano
+        if str(max_value) == 'True':
+            raise ValueError(f"Error Semántico: 'max_value' no puede ser un booleano. Se obtuvo: '{max_value}'")
+
+        if str(max_value) == 'False':
+            raise ValueError(f"Error Semántico: 'max_value' no puede ser un booleano. Se obtuvo: '{max_value}'")
+
         # Verificar si min_value es mayor o igual que max_value
         if min_value >= max_value:
             raise ValueError("Max debe ser mayor que Min en el bucle FOR.")
