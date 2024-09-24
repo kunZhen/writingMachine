@@ -84,18 +84,24 @@ class ASTVisitor:
         return node.value
 
     def visit_defstatement(self, node):
+        var_name = node.var_name
         value = self.visit(node.value)
-        self.variable_context.set_variable(node.var_name, value)
-        print(f"Definido {node.var_name} = {value}")
+        if var_name in self.variable_context.variables:
+            print(f"Error: Variable '{var_name}' ya definida")
+        else:
+            self.variable_context.set_variable(var_name, value)
+            print(f"Definido {node.var_name} = {value}")
         return value
 
     def visit_putstatement(self, node):
-        """Método para visitar un nodo PutStatement."""
-        if node.var_name in self.variable_context.variables:
-            self.variable_context.set_variable(node.var_name, self.visit(node.value))
-            print(f"Actualizado {node.var_name} = {self.visit(node.value)}")
+        var_name = node.var_name
+        value = self.visit(node.value)
+        if var_name in self.variable_context.variables:
+            self.variable_context.set_variable(var_name, value)
+            print(f"Actualizado {var_name} = {value}")
         else:
-            print(f"Error: Variable '{node.var_name}' no definida")
+            print(f"Error: Variable '{var_name}' no definida")
+        return value
 
     def visit_addstatement(self, node):
         if node.var_name not in self.variable_context.variables:
@@ -252,18 +258,13 @@ class ASTVisitor:
         return result
 
     def visit_substrstatement(self, node):
-        # Obtener los valores de N1 y N2
-        left = node.left.accept(self)  # N1
-        right = node.right.accept(self)  # N2
-
-        # Verificar si N1 es mayor o igual a N2
+        left = self.visit(node.left)
+        right = self.visit(node.right)
         if left < right:
             raise ValueError("Error: N1 debe ser mayor o igual a N2.")
-
-        # Realizar la sustracción
         result = left - right
-        print(result)
-        return result  # Retorna el resultado de la sustracción
+        print(f"Sustracción: {left} - {right} = {result}")
+        return result
 
     def visit_randomstatement(self, node):
         # Obtener el valor de n
@@ -279,38 +280,27 @@ class ASTVisitor:
         return result  # Retorna el número aleatorio generado
 
     def visit_multstatement(self, node):
-        # Obtener los valores de N1 y N2
-        left = node.left.accept(self)  # N1
-        right = node.right.accept(self)  # N2
-
-        # Realizar la multiplicación
+        left = self.visit(node.left)
+        right = self.visit(node.right)
         result = left * right
-        print(result)
-        return result  # Retorna el resultado de la multiplicación
+        print(f"Multiplicación: {left} * {right} = {result}")
+        return result
 
     def visit_divstatement(self, node):
-        # Obtener los valores de N1 y N2
-        left = node.left.accept(self)  # N1
-        right = node.right.accept(self)  # N2
-
-        # Verificar que N2 no sea cero
+        left = self.visit(node.left)
+        right = self.visit(node.right)
         if right == 0:
             raise ValueError("Error: División por cero no permitida.")
-
-        # Realizar la división entera (truncada)
         result = left // right
-        print(result)
-        return result  # Retorna el resultado de la división
+        print(f"División: {left} // {right} = {result}")
+        return result
 
     def visit_sumstatement(self, node):
-        # Obtener los valores de N1 y N2
-        left = node.left.accept(self)  # N1
-        right = node.right.accept(self)  # N2
-
-        # Realizar la suma
+        left = self.visit(node.left)
+        right = self.visit(node.right)
         result = left + right
-        print(result)
-        return result  # Retorna el resultado de la suma
+        print(f"Suma: {left} + {right} = {result}")
+        return result
 
     def visit_forstatement(self, node):
         # Obtener los valores de min_value y max_value
@@ -420,8 +410,8 @@ class ASTVisitor:
                 self.visit(statement)
 
     def visit_binaryoperation(self, node):
-        left = node.left.accept(self)
-        right = node.right.accept(self)
+        left = self.visit(node.left)
+        right = self.visit(node.right)
 
         if isinstance(left, list):
             left = left[0]
@@ -489,6 +479,14 @@ class ASTVisitor:
                 result = self.visit(expr)
             results.append(result)
         return results
+
+    def evaluate(self, node):
+        if isinstance(node, IdExpression):
+            return self.variable_context.get_variable(node.var_name)
+        elif isinstance(node, NumberExpression):
+            return node.value
+        else:
+            return self.visit(node)
 
     def visit_idexpression(self, node):
         return self.variable_context.get_variable(node.var_name)
