@@ -6,3 +6,5 @@ class NumberExpression(Expression):
 
     def accept(self, visitor):
         return visitor.visit_numberexpression(self)
+
+

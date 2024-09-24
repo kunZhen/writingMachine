@@ -321,7 +321,9 @@ def parse(input_string):
 # Ejemplo de prueba
 if __name__ == "__main__":
     code = """
-    Def(var, 2); 
+    Def(var4,True);
+    Put(var4, 5>6);
+    Def(var,1);
     Def(var2, 8*8); 
     Put(var, var2); 
     Add(var); 
@@ -329,60 +331,54 @@ if __name__ == "__main__":
     ContinueUp 5*(4-3); 
     ContinueDown var2; 
     ContinueRight Mult(var,2); 
-    ContinueLeft 2;
-    Pos(var, Substr(var, 1));
-    PosX 5*5;
-    PosY var2*5;
-    UseColor 2;
-    Down;
-    Up;
-    Beginning;
-    Equal(var1, var2);
-    Def(var3,true);
-    Equal(true,var3);
-    And(var3,true);
-    Or(var3,false);
-    Greater(3, 5*4);
-    Smaller(3, 5/1);
-    Random(var2);
-    Put(var, Sum(var,4));
-    Put(var, Substr(var,var));
+    ContinueLeft 2; 
+    Pos(var, Substr(var, 1)); 
+    PosX 5*5; 
+    PosY var2*5; 
+    UseColor 2; 
+    Down; 
+    Up; 
+    Beginning; 
+    Equal(var1, var2); 
+    Def(var3,True); 
+    Equal(true,var3); 
+    And(var3,true); 
+    Or(var3,false); 
+    Greater(3, 5*4); 
+    Smaller(3, 5/1); 
+    Random(var2); 
+    Put(var, Sum(var,4)); Put(var, Substr(var,var)); 
     Repeat 
-        [Add(var);
-        Up;]
-    Until
-        [var = 2];
+        [Add(var); Up;] 
+    Until [var = 2];
     
-    While [Smaller(var, 4)]
-        [ContinueLeft 1*2;
-        Add(var);]
-    Whend;
+    While [Smaller(var, 4)] 
+        [ContinueLeft 1*2; Add(var);] 
+    Whend; 
+    For i(2 to 4) Loop 
+        [Add(var,3+8)] 
+    End Loop; 
     
-    For i(2 to 4) Loop
-        [Add(var,3+8)]
-    End Loop;
+    Put(var, 3); 
     
-    Put(var, 3);
-    
-    Case var
-        When 1 Then
-        [Up]
-        When 2 Then
-        [Down]
-        When 3 Then
-        [Add(var)]
-    End Case;
-    
-    For x(0 to 3) Loop
-        [Case x
-            When 0 Then
-                [Up]
-            When 1 Then
-                [Down]
-            Else
-                [Add(var)]
-        End Case]
-    End Loop;
+    Case var 
+        When 1 Then 
+            [Up] 
+        When 2 Then 
+            [Down] 
+        When 3 Then 
+            [Add(var)]
+    End Case; 
+    For x(0 to 3) Loop 
+        [Case x 
+            When 0 Then 
+                [Up] 
+            When 1 Then 
+                [Down] 
+            Else 
+                [Add(var)] 
+        End Case] 
+    End Loop; 
     """
     # Analizar el código y obtener el AST
     ast_root = parse(code)
@@ -391,7 +387,9 @@ if __name__ == "__main__":
     # Crear un visitor para ejecutar el AST
     visitor = ASTVisitor()  # Usa tu clase de visitor
     visitor.visit(ast_root)  # Ejecuta el árbol AST
+
     visitor.print_ast(ast_root)
+    visitor.print_symbol_table()
 
 
 

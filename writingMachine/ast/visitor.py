@@ -86,30 +86,50 @@ class ASTVisitor:
 
     def visit_defstatement(self, node):
         var_name = node.var_name
-        value = self.visit(node.value)
+        value = self.visit(node.value)  # Llama a visit para obtener el valor
+        print(f"VALOR '{str(value)}' VALOR")
+
+        # Determinar el tipo basado en el nodo
+        if str(value) == 'True':
+            var_type = "BOOLEAN"
+        elif str(value) == 'False':
+            var_type = "BOOLEAN"
+        elif isinstance(value, int):
+            var_type = "NUMBER"
+        elif isinstance(node.value, IdExpression):
+            var_type = "ID"
+        else:
+            var_type = "UNKNOWN"
+
         if var_name in self.variable_context.variables:
             print(f"Error: Variable '{var_name}' ya definida")
         else:
-            self.variable_context.set_variable(var_name, value)
-            print(f"Definido {node.var_name} = {value}")
+            self.variable_context.set_variable(var_name, value, var_type)
+            print(f"Definido {var_name} = {value} (Tipo: {var_type})")
+
         return value
 
     def visit_putstatement(self, node):
         var_name = node.var_name
         value = self.visit(node.value)
+
+
         if var_name in self.variable_context.variables:
-            self.variable_context.set_variable(var_name, value)
+            current_type = self.variable_context.get_variable_type(var_name)
+            self.variable_context.set_variable(var_name, value, current_type)
             print(f"Actualizado {var_name} = {value}")
         else:
             print(f"Error: Variable '{var_name}' no definida")
         return value
 
     def visit_addstatement(self, node):
+
         if node.var_name not in self.variable_context.variables:
             print(f"Error: '{node.var_name}' no es una variable válida.")
             return None
 
         current_value = self.variable_context.get_variable(node.var_name)
+        current_type = self.variable_context.get_variable_type(node.var_name)
 
         if node.increment_value is None:
             new_value = current_value + 1
@@ -119,9 +139,8 @@ class ASTVisitor:
                 print(f"Error: El incremento debe ser un número.")
                 return None
             new_value = current_value + increment
-
         # Update the variable in the context
-        self.variable_context.set_variable(node.var_name, new_value)
+        self.variable_context.set_variable(node.var_name, new_value, current_type)
         print(f"Incrementado {node.var_name} de {current_value} a {new_value}")
 
         # Return the new value
@@ -312,26 +331,26 @@ class ASTVisitor:
         if min_value >= max_value:
             raise ValueError("Max debe ser mayor que Min en el bucle FOR.")
 
-        # Crear la variable en el contexto
+        # Inicializar la variable en el contexto
         if self.variable_context.get_variable(node.variable) is not None:
             raise ValueError(f"La variable '{node.variable}' ya existe.")
 
-        # Inicializar la variable en el contexto
-        self.variable_context.set_variable(node.variable, min_value)
+        # Establecer la variable de control del bucle
+        self.variable_context.set_variable(node.variable, min_value, "NUMBER")
 
         # Ejecutar el cuerpo del bucle
         for i in range(min_value, max_value):
             print(f"Iteración FOR: {i}")
-            # Establecer el valor de la variable para la iteración actual
-            self.variable_context.set_variable(node.variable, i)
+            # Actualizar el valor de la variable para la iteración actual
+            self.variable_context.set_variable(node.variable, i, "NUMBER")
 
             # Visitar cada declaración en el cuerpo del bucle
             for statement in node.body:
                 print(f"  Ejecutando declaración: {statement}")
                 self.visit(statement)
+
         # Eliminar la variable del contexto al finalizar el bucle
         self.variable_context.remove_variable(node.variable)
-
     def visit_casestatement(self, node):
         print(f"Ejecutando Case para la variable: {node.variable}")
 
@@ -514,3 +533,6 @@ class ASTVisitor:
                 print(f"{indent}  ]")
             else:
                 print(f"{indent}  {attr}: {value}")  # Si es un valor básico, lo imprime directamente
+
+    def print_symbol_table(self):
+        self.variable_context.print_symbol_table()
