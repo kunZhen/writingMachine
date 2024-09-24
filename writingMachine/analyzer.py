@@ -7,7 +7,7 @@ from writingMachine.ast.visitor import ASTVisitor
 
 def main():
 
-    input_file = "errores.txt"  # Nombre del archivo de código
+    input_file = "errores_sintacticos.txt"  # Nombre del archivo de código
 
     # Leer el contenido del archivo
     try:
@@ -32,6 +32,12 @@ def main():
     ast_root = parse(code)  # Asumiendo que tienes una función de análisis sintáctico llamada `parse`
     print("\nAST:", ast_root)  # Para verificar que se construyó correctamente
 
+
+    if syntax_errors:
+        print("\nErrores de sintaxis:")
+        for error in syntax_errors:
+            print(error)
+
     # Crear un visitor para ejecutar el AST
     visitor = ASTVisitor()  # Usa tu clase de visitor
     visitor.visit(ast_root)  # Ejecuta el árbol AST
@@ -42,10 +48,6 @@ def main():
     if lexical_errors:
         print("\nErrores léxicos:")
         for error in lexical_errors:
-            print(error)
-    if syntax_errors:
-        print("\nErrores de sintaxis:")
-        for error in syntax_errors:
             print(error)
     if visitor.semantic_errors:
         print("\nErrores semánticos:")

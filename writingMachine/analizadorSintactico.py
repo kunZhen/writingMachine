@@ -307,14 +307,12 @@ def p_while_statement(p):
 
 # Regla para manejo de errores
 def p_error(p):
-    if p:
-        print(f"Error de sintaxis: símbolo inesperado '{p.value}' en la línea {p.lineno}")
-    else:
-        print(f"Error de sintaxis: Se esperaba más input pero no se encontró.")
     global syntax_errors
     if p:
+        print(f"Error de sintaxis: símbolo inesperado '{p.value}' en la línea {p.lineno}")
         syntax_errors.append(f"Error de sintaxis: símbolo inesperado '{p.value}' en la línea {p.lineno}")
     else:
+        print(f"Error de sintaxis: Se esperaba más input pero no se encontró.")
         syntax_errors.append("Error de sintaxis: Se esperaba más input pero no se encontró.")
 
 # Construir el parser

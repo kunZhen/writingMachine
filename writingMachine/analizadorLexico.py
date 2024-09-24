@@ -105,11 +105,11 @@ def t_NEWLINE(t):
 # Manejo de errores léxicos
 def t_error(t):
     global errors_description
-    errors_description.append(f"Not valid symbol '{t.value[0]}' en la linea {t.lineno}")
+    errors_description.append(f"Error Léxico: Símbolo inválido '{t.value[0]}' en la linea {t.lineno}")
     t.lexer.skip(1)
 
     global lexical_errors
-    lexical_errors.append(f"Not valid symbol '{t.value[0]}' en la línea {t.lineno}")
+    lexical_errors.append(f"Error Léxico: Símbolo inválido '{t.value[0]}' en la línea {t.lineno}")
     t.lexer.skip(1)
 
 
