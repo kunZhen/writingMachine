@@ -57,6 +57,7 @@ variables = {}
 x_position = 1  # Posición inicial en el eje x
 y_position = 1  # Posición inicial en el eje y
 current_color = 1  # 1: Negro, 2: Rojo
+syntax_errors = []
 
 # Regla inicial (punto de entrada)
 def p_program(p):
@@ -310,6 +311,11 @@ def p_error(p):
         print(f"Error de sintaxis: símbolo inesperado '{p.value}' en la línea {p.lineno}")
     else:
         print(f"Error de sintaxis: Se esperaba más input pero no se encontró.")
+    global syntax_errors
+    if p:
+        syntax_errors.append(f"Error de sintaxis: símbolo inesperado '{p.value}' en la línea {p.lineno}")
+    else:
+        syntax_errors.append("Error de sintaxis: Se esperaba más input pero no se encontró.")
 
 # Construir el parser
 parser = yacc.yacc()

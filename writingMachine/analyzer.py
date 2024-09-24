@@ -1,11 +1,12 @@
 import sys
 
-from writingMachine.analizadorLexico import analysis, errors_description
-from writingMachine.analizadorSintactico import parse
+from writingMachine.analizadorLexico import analysis, errors_description, lexical_errors
+from writingMachine.analizadorSintactico import parse, syntax_errors
 from writingMachine.ast.visitor import ASTVisitor
 
 
 def main():
+
     input_file = "code.txt"  # Nombre del archivo de código
 
     # Leer el contenido del archivo
@@ -37,6 +38,15 @@ def main():
     #visitor.print_ast(ast_root);
     # Imprimir la tabla de símbolos
     visitor.print_symbol_table()  # Asegúrate de tener un método para imprimir la tabla de símbolos
+
+    if lexical_errors:
+        print("\nErrores léxicos:")
+        for error in lexical_errors:
+            print(error)
+    if syntax_errors:
+        print("\nErrores de sintaxis:")
+        for error in syntax_errors:
+            print(error)
 
 if __name__ == '__main__':
     main()

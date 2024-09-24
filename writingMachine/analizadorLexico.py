@@ -2,6 +2,7 @@ import ply.lex as lex
 
 # Listas para almacenar errores
 errors_description = []
+lexical_errors = []
 
 # Lista de tokens
 tokens = (
@@ -106,6 +107,11 @@ def t_error(t):
     global errors_description
     errors_description.append(f"Not valid symbol '{t.value[0]}' en la linea {t.lineno}")
     t.lexer.skip(1)
+
+    global lexical_errors
+    lexical_errors.append(f"Not valid symbol '{t.value[0]}' en la línea {t.lineno}")
+    t.lexer.skip(1)
+
 
 # Construir el lexer
 lexer = lex.lex()
