@@ -2,13 +2,15 @@ import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
+from writingMachine.analyzer import Analyzer
+
 # Global variables for main window, right panel text widget, and current file
 window = None
 text_right = None
 current_file = None
-
+text_terminal = None
 def init_ide():
-    global file_listbox, window, text_right  # Reference global variables
+    global file_listbox, window, text_right, text_terminal  # Reference global variables
 
     # Create the main window
     window = tk.Tk()
@@ -250,12 +252,35 @@ def import_file():
             # Print an error message if there was an issue during the file import
             print(f"Error importing file: {e}")
 def compile_code():
-    # Get the content from the text widget
-    content = text_right.get(1.0, tk.END)  # Get all text including end-of-line character
+    global text_terminal  # Aseguramos que tenemos acceso al panel inferior (terminal)
 
-    # Split the content into lines
-    lines = content.splitlines()
+    log_file_path = os.path.join("output_log.txt")
+    with open(log_file_path, 'w') as log_file:
+        log_file.write("")
 
-    # Print each line with its line number
-    for line_number, line in enumerate(lines, start=1):
-        print(f"Line {line_number}: {line}")
+    # Ejecutar el analizador (compilador) con el archivo actual
+    analyzer = Analyzer(current_file)
+    try:
+        analyzer.generate_log()
+    except Exception as e:
+        # Imprimir el error en el terminal, si ocurre un problema
+        text_terminal.insert(tk.END, f"Error en el analizador: {str(e)}\n")
+
+    # Leer el contenido del archivo output_log.txt
+    try:
+        with open(log_file_path, 'r') as log_file:
+            log_content = log_file.read()
+
+        # Limpiar el terminal antes de mostrar el nuevo contenido
+        text_terminal.delete(1.0, tk.END)
+
+        # Insertar el contenido del archivo de log en el panel inferior (terminal)
+        text_terminal.insert(tk.END, log_content)
+
+        # Desplazarse automáticamente hacia abajo para mostrar el log más reciente
+        text_terminal.see(tk.END)
+
+    except FileNotFoundError:
+        # Si no se encuentra el archivo de log, mostramos un mensaje de error en el terminal
+        text_terminal.insert(tk.END, "Error: No se encontró el archivo 'output_log.txt'.\n")
+        text_terminal.see(tk.END)

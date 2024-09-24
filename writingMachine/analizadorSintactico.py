@@ -50,12 +50,12 @@ precedence = (
     ('left', 'EQUAL', 'SMALLER', 'GREATER', 'EQUALS',
      'LT', 'GT'),  # Comparaciones
     ('left', 'PLUS', 'MINUS', 'SUM', 'SUBSTR'),   # Suma y resta
-    ('left', 'MULT_OP', 'DIV_OP', 'MULT', 'DIV'),  # Multiplicación y división
+    ('left', 'MULT_OP', 'DIV_OP', 'MULT', 'DIV'),  # Multiplicacion y division
 )
 # Variables necesarias
 variables = {}
-x_position = 1  # Posición inicial en el eje x
-y_position = 1  # Posición inicial en el eje y
+x_position = 1  # Posicion inicial en el eje x
+y_position = 1  # Posicion inicial en el eje y
 current_color = 1  # 1: Negro, 2: Rojo
 syntax_errors = []
 
@@ -71,11 +71,11 @@ def p_program(p):
         p[0] = Program([p[1]])  # Crea un nodo Program con una lista que contiene un statement
     else:  # Viene de program statement SEMI o program statement
         if hasattr(p[1], 'statements'):
-            # Asegúrate de que p[1] tenga el atributo statements
+            # Asegurate de que p[1] tenga el atributo statements
             p[0] = Program(p[1].statements + [p[2]])
         else:
             # Si p[1] no tiene el atributo statements, es un solo statement
-            p[0] = Program([p[1]] + [p[2]])  # Asegúrate de que se maneje correctamente
+            p[0] = Program([p[1]] + [p[2]])  # Asegurate de que se maneje correctamente
 # produccion statment para casos de control
 def p_statement(p):
     '''statement : expression
@@ -107,7 +107,7 @@ def p_statement(p):
     else:
         p[0] = Expression(p[1])
 
-# Reglas para las expresiones aritméticas
+# Reglas para las expresiones aritmeticas
 def p_expression_binop(p):
     '''expression : expression PLUS expression
                   | expression MINUS expression
@@ -257,14 +257,14 @@ def p_expression_list(p):
 # Regla para la manejar numeros
 def p_expression_number(p):
     'expression : NUMBER'
-    p[0] = NumberExpression(p[1])  # Crea un nodo NumberExpression con el valor del número
+    p[0] = NumberExpression(p[1])  # Crea un nodo NumberExpression con el valor del numero
 # Regla para manejar identificadores
 def p_expression_id(p):
     'expression : ID'
     if p[1] in variables:
         p[0] = IdExpression(p[1])  # Crea un nodo IdExpression con el nombre de la variable
     else:
-        p[0] = IdExpression(p[1])  # También podrías manejar el caso aquí si la variable no está definida
+        p[0] = IdExpression(p[1])  # Tambien podrias manejar el caso aqui si la variable no esta definida
 # Regla para la definicion del control for
 def p_for_statement(p):
     '''for_statement : FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP'''
@@ -303,22 +303,22 @@ def p_repeat_statement(p):
 # Regla para el control While
 def p_while_statement(p):
     '''while_statement : WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND'''
-    p[0] = WhileStatement(condition=p[3], body=p[6])  # La condición se toma de p[3] y el cuerpo de p[6]
+    p[0] = WhileStatement(condition=p[3], body=p[6])  # La condicion se toma de p[3] y el cuerpo de p[6]
 
 # Regla para manejo de errores
 def p_error(p):
     global syntax_errors
     if p:
-        print(f"Error de sintaxis: símbolo inesperado '{p.value}' en la línea {p.lineno}")
-        syntax_errors.append(f"Error de sintaxis: símbolo inesperado '{p.value}' en la línea {p.lineno}")
+        print(f"Error de sintaxis: simbolo inesperado '{p.value}' en la linea {p.lineno}")
+        syntax_errors.append(f"Error de sintaxis: simbolo inesperado '{p.value}' en la linea {p.lineno}")
     else:
-        print(f"Error de sintaxis: Se esperaba más input pero no se encontró.")
-        syntax_errors.append("Error de sintaxis: Se esperaba más input pero no se encontró.")
+        print(f"Error de sintaxis: Se esperaba mas input pero no se encontro.")
+        syntax_errors.append("Error de sintaxis: Se esperaba mas input pero no se encontro.")
 
 # Construir el parser
 parser = yacc.yacc()
 
-# Función para realizar el análisis sintáctico
+# Funcion para realizar el analisis sintactico
 def parse(input_string):
     return parser.parse(input_string, tracking=True)
 
@@ -387,13 +387,13 @@ if __name__ == "__main__":
         End Case] 
     End Loop; 
     """
-    # Analizar el código y obtener el AST
+    # Analizar el codigo y obtener el AST
     ast_root = parse(code)
-    print("AST:", ast_root)  # Para verificar que se construyó correctamente
+    print("AST:", ast_root)  # Para verificar que se construyo correctamente
 
     # Crear un visitor para ejecutar el AST
     visitor = ASTVisitor()  # Usa tu clase de visitor
-    visitor.visit(ast_root)  # Ejecuta el árbol AST
+    visitor.visit(ast_root)  # Ejecuta el arbol AST
 
     #visitor.print_ast(ast_root)
     #visitor.print_symbol_table()

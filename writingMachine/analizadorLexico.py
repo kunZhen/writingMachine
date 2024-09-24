@@ -77,7 +77,7 @@ def t_BOOLEAN(t):
     t.type = 'BOOLEAN'
     return t
 
-# Regla para reconocer números
+# Regla para reconocer numeros
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
@@ -97,26 +97,26 @@ def t_ID(t):
 # Ignorar espacios y tabulaciones
 t_ignore = ' \t'
 
-# Manejo de saltos de línea
+# Manejo de saltos de linea
 def t_NEWLINE(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-# Manejo de errores léxicos
+# Manejo de errores lexicos
 def t_error(t):
     global errors_description
-    errors_description.append(f"Error Léxico: Símbolo inválido '{t.value[0]}' en la linea {t.lineno}")
+    errors_description.append(f"Error Lexico: Simbolo invalido '{t.value[0]}' en la linea {t.lineno}")
     t.lexer.skip(1)
 
     global lexical_errors
-    lexical_errors.append(f"Error Léxico: Símbolo inválido '{t.value[0]}' en la línea {t.lineno}")
+    lexical_errors.append(f"Error Lexico: Simbolo invalido '{t.value[0]}' en la linea {t.lineno}")
     t.lexer.skip(1)
 
 
 # Construir el lexer
 lexer = lex.lex()
 
-# Función de análisis léxico
+# Funcion de analisis lexico
 def analysis(input):
     lexer.input(input)
     tokens = []
@@ -134,6 +134,6 @@ if __name__ == '__main__':
     print(analysis(code))
 
     if errors_description:
-        print("\nErrores léxicos:")
+        print("\nErrores lexicos:")
         for error in errors_description:
             print(error)

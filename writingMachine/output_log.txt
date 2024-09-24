@@ -1,0 +1,626 @@
+Tokens encontrados:
+[('Def', 'DEF', 4, 1), ('(', 'LPAREN', 4, 4), ('var4', 'ID', 4, 5), (',', 'COMMA', 4, 9), ('True', 'BOOLEAN', 4, 10), (')', 'RPAREN', 4, 14), (';', 'SEMI', 4, 15), ('Put', 'PUT', 5, 1), ('(', 'LPAREN', 5, 4), ('var4', 'ID', 5, 5), (',', 'COMMA', 5, 9), (5, 'NUMBER', 5, 11), ('>', 'GT', 5, 12), (6, 'NUMBER', 5, 13), (')', 'RPAREN', 5, 14), (';', 'SEMI', 5, 15), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('var', 'ID', 6, 5), (',', 'COMMA', 6, 8), (1, 'NUMBER', 6, 9), (')', 'RPAREN', 6, 10), (';', 'SEMI', 6, 11), ('Def', 'DEF', 7, 1), ('(', 'LPAREN', 7, 4), ('var2', 'ID', 7, 5), (',', 'COMMA', 7, 9), (8, 'NUMBER', 7, 11), ('*', 'MULT_OP', 7, 12), (8, 'NUMBER', 7, 13), (')', 'RPAREN', 7, 14), (';', 'SEMI', 7, 15), ('Put', 'PUT', 8, 1), ('(', 'LPAREN', 8, 4), ('var', 'ID', 8, 5), (',', 'COMMA', 8, 8), ('var2', 'ID', 8, 10), (')', 'RPAREN', 8, 14), (';', 'SEMI', 8, 15), ('Add', 'ADD', 9, 1), ('(', 'LPAREN', 9, 4), ('var', 'ID', 9, 5), (',', 'COMMA', 9, 8), ('Div', 'DIV', 9, 10), ('(', 'LPAREN', 9, 13), (5, 'NUMBER', 9, 14), (',', 'COMMA', 9, 15), ('var2', 'ID', 9, 16), (')', 'RPAREN', 9, 20), (')', 'RPAREN', 9, 21), (';', 'SEMI', 9, 22), ('ContinueUp', 'CONTINUEUP', 10, 1), (5, 'NUMBER', 10, 12), ('*', 'MULT_OP', 10, 13), ('(', 'LPAREN', 10, 14), (4, 'NUMBER', 10, 15), ('-', 'MINUS', 10, 16), (3, 'NUMBER', 10, 17), (')', 'RPAREN', 10, 18), (';', 'SEMI', 10, 19), ('ContinueDown', 'CONTINUEDOWN', 11, 1), ('var2', 'ID', 11, 14), (';', 'SEMI', 11, 18), ('ContinueRight', 'CONTINUERIGHT', 12, 1), ('Mult', 'MULT', 12, 15), ('(', 'LPAREN', 12, 19), ('var', 'ID', 12, 20), (',', 'COMMA', 12, 23), (2, 'NUMBER', 12, 24), (')', 'RPAREN', 12, 25), (';', 'SEMI', 12, 26), ('ContinueLeft', 'CONTINUELEFT', 13, 1), (2, 'NUMBER', 13, 14), (';', 'SEMI', 13, 15), ('Pos', 'POS', 14, 1), ('(', 'LPAREN', 14, 4), ('var', 'ID', 14, 5), (',', 'COMMA', 14, 8), ('Substr', 'SUBSTR', 14, 10), ('(', 'LPAREN', 14, 16), ('var', 'ID', 14, 17), (',', 'COMMA', 14, 20), (1, 'NUMBER', 14, 22), (')', 'RPAREN', 14, 23), (')', 'RPAREN', 14, 24), (';', 'SEMI', 14, 25), ('PosX', 'POSX', 15, 1), (5, 'NUMBER', 15, 6), ('*', 'MULT_OP', 15, 7), (5, 'NUMBER', 15, 8), (';', 'SEMI', 15, 9), ('PosY', 'POSY', 16, 1), ('var2', 'ID', 16, 6), ('*', 'MULT_OP', 16, 10), (5, 'NUMBER', 16, 11), (';', 'SEMI', 16, 12), ('UseColor', 'USECOLOR', 17, 1), (2, 'NUMBER', 17, 10), (';', 'SEMI', 17, 11), ('Down', 'DOWN', 18, 1), (';', 'SEMI', 18, 5), ('Up', 'UP', 19, 1), (';', 'SEMI', 19, 3), ('Beginning', 'BEGINNING', 20, 1), (';', 'SEMI', 20, 10), ('Equal', 'EQUAL', 21, 1), ('(', 'LPAREN', 21, 6), ('var1', 'ID', 21, 7), (',', 'COMMA', 21, 11), ('var2', 'ID', 21, 13), (')', 'RPAREN', 21, 17), (';', 'SEMI', 21, 18), ('Def', 'DEF', 22, 1), ('(', 'LPAREN', 22, 4), ('var3', 'ID', 22, 5), (',', 'COMMA', 22, 9), ('True', 'BOOLEAN', 22, 10), (')', 'RPAREN', 22, 14), (';', 'SEMI', 22, 15), ('Equal', 'EQUAL', 23, 1), ('(', 'LPAREN', 23, 6), ('true', 'BOOLEAN', 23, 7), (',', 'COMMA', 23, 11), ('var3', 'ID', 23, 12), (')', 'RPAREN', 23, 16), (';', 'SEMI', 23, 17), ('And', 'AND', 24, 1), ('(', 'LPAREN', 24, 4), ('var3', 'ID', 24, 5), (',', 'COMMA', 24, 9), ('true', 'BOOLEAN', 24, 10), (')', 'RPAREN', 24, 14), (';', 'SEMI', 24, 15), ('Or', 'OR', 25, 1), ('(', 'LPAREN', 25, 3), ('var3', 'ID', 25, 4), (',', 'COMMA', 25, 8), ('false', 'BOOLEAN', 25, 9), (')', 'RPAREN', 25, 14), (';', 'SEMI', 25, 15), ('Greater', 'GREATER', 26, 1), ('(', 'LPAREN', 26, 8), (3, 'NUMBER', 26, 9), (',', 'COMMA', 26, 10), (5, 'NUMBER', 26, 12), ('*', 'MULT_OP', 26, 13), (4, 'NUMBER', 26, 14), (')', 'RPAREN', 26, 15), (';', 'SEMI', 26, 16), ('Smaller', 'SMALLER', 27, 1), ('(', 'LPAREN', 27, 8), (3, 'NUMBER', 27, 9), (',', 'COMMA', 27, 10), (5, 'NUMBER', 27, 12), ('/', 'DIV_OP', 27, 13), (1, 'NUMBER', 27, 14), (')', 'RPAREN', 27, 15), (';', 'SEMI', 27, 16), ('Random', 'RANDOM', 28, 1), ('(', 'LPAREN', 28, 7), ('var2', 'ID', 28, 8), (')', 'RPAREN', 28, 12), (';', 'SEMI', 28, 13), ('Put', 'PUT', 30, 1), ('(', 'LPAREN', 30, 4), ('var', 'ID', 30, 5), (',', 'COMMA', 30, 8), ('Sum', 'SUM', 30, 10), ('(', 'LPAREN', 30, 13), ('var', 'ID', 30, 14), (',', 'COMMA', 30, 17), (4, 'NUMBER', 30, 18), (')', 'RPAREN', 30, 19), (')', 'RPAREN', 30, 20), (';', 'SEMI', 30, 21), ('Put', 'PUT', 30, 23), ('(', 'LPAREN', 30, 26), ('var', 'ID', 30, 27), (',', 'COMMA', 30, 30), ('Substr', 'SUBSTR', 30, 32), ('(', 'LPAREN', 30, 38), ('var', 'ID', 30, 39), (',', 'COMMA', 30, 42), ('var', 'ID', 30, 43), (')', 'RPAREN', 30, 46), (')', 'RPAREN', 30, 47), (';', 'SEMI', 30, 48), ('Repeat', 'REPEAT', 32, 1), ('[', 'LBRACKET', 33, 5), ('Add', 'ADD', 33, 6), ('(', 'LPAREN', 33, 9), ('var', 'ID', 33, 10), (')', 'RPAREN', 33, 13), (';', 'SEMI', 33, 14), ('Up', 'UP', 33, 16), (';', 'SEMI', 33, 18), (']', 'RBRACKET', 33, 19), ('Until', 'UNTIL', 34, 1), ('[', 'LBRACKET', 34, 7), ('var', 'ID', 34, 8), ('=', 'EQUALS', 34, 12), (2, 'NUMBER', 34, 14), (']', 'RBRACKET', 34, 15), (';', 'SEMI', 34, 16), ('While', 'WHILE', 36, 1), ('[', 'LBRACKET', 36, 7), ('Smaller', 'SMALLER', 36, 8), ('(', 'LPAREN', 36, 15), ('var', 'ID', 36, 16), (',', 'COMMA', 36, 19), (4, 'NUMBER', 36, 21), (')', 'RPAREN', 36, 22), (']', 'RBRACKET', 36, 23), ('[', 'LBRACKET', 37, 5), ('ContinueLeft', 'CONTINUELEFT', 37, 6), (1, 'NUMBER', 37, 19), ('*', 'MULT_OP', 37, 20), (2, 'NUMBER', 37, 21), (';', 'SEMI', 37, 22), ('Add', 'ADD', 37, 24), ('(', 'LPAREN', 37, 27), ('var', 'ID', 37, 28), (')', 'RPAREN', 37, 31), (';', 'SEMI', 37, 32), (']', 'RBRACKET', 37, 33), ('Whend', 'WHEND', 38, 1), (';', 'SEMI', 38, 6), ('For', 'FOR', 39, 1), ('i', 'ID', 39, 5), ('(', 'LPAREN', 39, 6), (2, 'NUMBER', 39, 7), ('to', 'TO', 39, 9), (4, 'NUMBER', 39, 12), (')', 'RPAREN', 39, 13), ('Loop', 'LOOP', 39, 15), ('[', 'LBRACKET', 40, 5), ('Add', 'ADD', 40, 6), ('(', 'LPAREN', 40, 9), ('var', 'ID', 40, 10), (',', 'COMMA', 40, 13), (3, 'NUMBER', 40, 14), ('+', 'PLUS', 40, 15), (8, 'NUMBER', 40, 16), (')', 'RPAREN', 40, 17), (']', 'RBRACKET', 40, 18), ('End', 'END', 41, 1), ('Loop', 'LOOP', 41, 5), (';', 'SEMI', 41, 9), ('Put', 'PUT', 43, 1), ('(', 'LPAREN', 43, 4), ('var', 'ID', 43, 5), (',', 'COMMA', 43, 8), (3, 'NUMBER', 43, 10), (')', 'RPAREN', 43, 11), (';', 'SEMI', 43, 12), ('Case', 'CASE', 45, 1), ('var', 'ID', 45, 6), ('When', 'WHEN', 46, 5), (1, 'NUMBER', 46, 10), ('Then', 'THEN', 46, 12), ('[', 'LBRACKET', 47, 9), ('Up', 'UP', 47, 10), (']', 'RBRACKET', 47, 12), ('When', 'WHEN', 48, 5), (2, 'NUMBER', 48, 10), ('Then', 'THEN', 48, 12), ('[', 'LBRACKET', 49, 9), ('Down', 'DOWN', 49, 10), (']', 'RBRACKET', 49, 14), ('When', 'WHEN', 50, 5), (3, 'NUMBER', 50, 10), ('Then', 'THEN', 50, 12), ('[', 'LBRACKET', 51, 9), ('Add', 'ADD', 51, 10), ('(', 'LPAREN', 51, 13), ('var', 'ID', 51, 14), (')', 'RPAREN', 51, 17), (']', 'RBRACKET', 51, 18), ('End', 'END', 52, 1), ('Case', 'CASE', 52, 5), (';', 'SEMI', 52, 9), ('For', 'FOR', 53, 1), ('x', 'ID', 53, 5), ('(', 'LPAREN', 53, 6), (0, 'NUMBER', 53, 7), ('to', 'TO', 53, 9), (3, 'NUMBER', 53, 12), (')', 'RPAREN', 53, 13), ('Loop', 'LOOP', 53, 15), ('[', 'LBRACKET', 54, 5), ('Case', 'CASE', 54, 6), ('x', 'ID', 54, 11), ('When', 'WHEN', 55, 9), (0, 'NUMBER', 55, 14), ('Then', 'THEN', 55, 16), ('[', 'LBRACKET', 56, 13), ('Up', 'UP', 56, 14), (']', 'RBRACKET', 56, 16), ('When', 'WHEN', 57, 9), (1, 'NUMBER', 57, 14), ('Then', 'THEN', 57, 16), ('[', 'LBRACKET', 58, 13), ('Down', 'DOWN', 58, 14), (']', 'RBRACKET', 58, 18), ('Else', 'ELSE', 59, 9), ('[', 'LBRACKET', 60, 13), ('Add', 'ADD', 60, 14), ('(', 'LPAREN', 60, 17), ('var', 'ID', 60, 18), (')', 'RPAREN', 60, 21), (']', 'RBRACKET', 60, 22), ('End', 'END', 61, 5), ('Case', 'CASE', 61, 9), (']', 'RBRACKET', 61, 13), ('End', 'END', 62, 1), ('Loop', 'LOOP', 62, 5), (';', 'SEMI', 62, 9)]
+
+AST: <writingMachine.ast.program.Program object at 0x0000015BEAA5DC10>
+Definido var4 = True (Tipo: BOOLEAN)
+Operando izquierdo: 5, Operando derecho: 6, Operador: >
+False
+Actualizado var4 = False
+Definido var = 1 (Tipo: NUMBER)
+Operando izquierdo: 8, Operando derecho: 8, Operador: *
+64
+Definido var2 = 64 (Tipo: NUMBER)
+Actualizado var = 64
+Division: 5 // 64 = 0
+Incrementado var de 64 a 64
+Operando izquierdo: 4, Operando derecho: 3, Operador: -
+1
+Operando izquierdo: 5, Operando derecho: 1, Operador: *
+5
+Movido 5 unidades hacia arriba. Nueva posicion en Y: 5
+Movido 64 unidades hacia abajo. Nueva posicion en Y: -59
+Multiplicacion: 64 * 2 = 128
+Movido 128 unidades hacia la derecha. Nueva posicion en X: 128
+Movido 2 unidades hacia la izquierda. Nueva posicion en X: 126
+Sustraccion: 64 - 1 = 63
+Posicion actualizada a X: 64, Y: 63
+Operando izquierdo: 5, Operando derecho: 5, Operador: *
+25
+Posicion actualizada a X: 25, Y: 63
+Operando izquierdo: 64, Operando derecho: 5, Operador: *
+320
+Posicion actualizada a X: 25, Y: 320
+Color cambiado a Rojo (Compartimiento 2)
+Lapicero colocado en la superficie (Down)
+Lapicero levantado de la superficie (Up)
+Lapicero colocado en la posicion inicial: X: 1, Y: 1
+False
+Definido var3 = True (Tipo: BOOLEAN)
+True
+True
+True
+Operando izquierdo: 5, Operando derecho: 4, Operador: *
+20
+False
+Operando izquierdo: 5, Operando derecho: 1, Operador: /
+5.0
+True
+36
+Suma: 64 + 4 = 68
+Actualizado var = 68
+Sustraccion: 68 - 68 = 0
+Actualizado var = 0
+Iteracion Repeat 1
+Incrementado var de 0 a 1
+Lapicero levantado de la superficie (Up)
+Operando izquierdo: 1, Operando derecho: 2, Operador: =
+False
+  Resultado de la condicion: False
+Iteracion Repeat 2
+Incrementado var de 1 a 2
+Lapicero levantado de la superficie (Up)
+Operando izquierdo: 2, Operando derecho: 2, Operador: =
+True
+  Resultado de la condicion: True
+Saliendo del bucle Repeat
+Iteracion While 1
+True
+  Resultado de la condicion: [True]
+Operando izquierdo: 1, Operando derecho: 2, Operador: *
+2
+Movido 2 unidades hacia la izquierda. Nueva posicion en X: -1
+Incrementado var de 2 a 3
+Iteracion While 2
+True
+  Resultado de la condicion: [True]
+Operando izquierdo: 1, Operando derecho: 2, Operador: *
+2
+Movido 2 unidades hacia la izquierda. Nueva posicion en X: -3
+Incrementado var de 3 a 4
+Iteracion While 3
+False
+  Resultado de la condicion: [False]
+Saliendo del bucle While
+Iteracion FOR: 2
+Operando izquierdo: 3, Operando derecho: 8, Operador: +
+11
+Incrementado var de 4 a 15
+Iteracion FOR: 3
+Operando izquierdo: 3, Operando derecho: 8, Operador: +
+11
+Incrementado var de 15 a 26
+Actualizado var = 3
+Ejecutando Case para la variable: var
+Valor de la variable: 3
+Evaluando condicion: 1
+Evaluando condicion: 2
+Evaluando condicion: 3
+Condicion cumplida, ejecutando cuerpo del When
+Incrementado var de 3 a 4
+Iteracion FOR: 0
+Ejecutando Case para la variable: x
+Valor de la variable: 0
+Evaluando condicion: 0
+Condicion cumplida, ejecutando cuerpo del When
+Lapicero levantado de la superficie (Up)
+Iteracion FOR: 1
+Ejecutando Case para la variable: x
+Valor de la variable: 1
+Evaluando condicion: 0
+Evaluando condicion: 1
+Condicion cumplida, ejecutando cuerpo del When
+Lapicero colocado en la superficie (Down)
+Iteracion FOR: 2
+Ejecutando Case para la variable: x
+Valor de la variable: 2
+Evaluando condicion: 0
+Evaluando condicion: 1
+Ninguna condicion cumplida, ejecutando clausula Else
+Incrementado var de 4 a 5
+
+AST:
+Program
+  statements: [
+  DefStatement
+    var_name: var4
+    value:
+    Expression
+      value:
+      BooleanExpression
+        value: True
+  PutStatement
+    var_name: var4
+    value:
+    Expression
+      value:
+      BinaryOperation
+        left:
+        NumberExpression
+          value: 5
+        operator: >
+        right:
+        NumberExpression
+          value: 6
+  DefStatement
+    var_name: var
+    value:
+    Expression
+      value:
+      NumberExpression
+        value: 1
+  DefStatement
+    var_name: var2
+    value:
+    Expression
+      value:
+      BinaryOperation
+        left:
+        NumberExpression
+          value: 8
+        operator: *
+        right:
+        NumberExpression
+          value: 8
+  PutStatement
+    var_name: var
+    value:
+    Expression
+      value:
+      IdExpression
+        var_name: var2
+  AddStatement
+    var_name: var
+    increment_value:
+    Expression
+      value:
+      DivStatement
+        left:
+        Expression
+          value:
+          NumberExpression
+            value: 5
+        right:
+        Expression
+          value:
+          IdExpression
+            var_name: var2
+  ContinueUpStatement
+    move_units:
+    Expression
+      value:
+      BinaryOperation
+        left:
+        NumberExpression
+          value: 5
+        operator: *
+        right:
+        ExpressionGroup
+          expressions:
+          ExpressionList
+            expressions: [
+            Expression
+              value:
+              BinaryOperation
+                left:
+                NumberExpression
+                  value: 4
+                operator: -
+                right:
+                NumberExpression
+                  value: 3
+            ]
+  ContinueDownStatement
+    move_units:
+    Expression
+      value:
+      IdExpression
+        var_name: var2
+  ContinueRightStatement
+    move_units:
+    Expression
+      value:
+      MultStatement
+        left:
+        Expression
+          value:
+          IdExpression
+            var_name: var
+        right:
+        Expression
+          value:
+          NumberExpression
+            value: 2
+  ContinueLeftStatement
+    move_units:
+    Expression
+      value:
+      NumberExpression
+        value: 2
+  PosStatement
+    x_val:
+    Expression
+      value:
+      IdExpression
+        var_name: var
+    y_val:
+    Expression
+      value:
+      SubstrStatement
+        left:
+        Expression
+          value:
+          IdExpression
+            var_name: var
+        right:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+  PosXStatement
+    x_val:
+    Expression
+      value:
+      BinaryOperation
+        left:
+        NumberExpression
+          value: 5
+        operator: *
+        right:
+        NumberExpression
+          value: 5
+  PosYStatement
+    y_val:
+    Expression
+      value:
+      BinaryOperation
+        left:
+        IdExpression
+          var_name: var2
+        operator: *
+        right:
+        NumberExpression
+          value: 5
+  UseColorStatement
+    color_value:
+    Expression
+      value:
+      NumberExpression
+        value: 2
+  DownStatement
+  UpStatement
+  BeginningStatement
+  Expression
+    value:
+    EqualStatement
+      left:
+      Expression
+        value:
+        IdExpression
+          var_name: var1
+      right:
+      Expression
+        value:
+        IdExpression
+          var_name: var2
+  DefStatement
+    var_name: var3
+    value:
+    Expression
+      value:
+      BooleanExpression
+        value: True
+  Expression
+    value:
+    EqualStatement
+      left:
+      Expression
+        value:
+        BooleanExpression
+          value: True
+      right:
+      Expression
+        value:
+        IdExpression
+          var_name: var3
+  Expression
+    value:
+    AndStatement
+      left:
+      Expression
+        value:
+        IdExpression
+          var_name: var3
+      right:
+      Expression
+        value:
+        BooleanExpression
+          value: True
+  Expression
+    value:
+    OrStatement
+      left:
+      Expression
+        value:
+        IdExpression
+          var_name: var3
+      right:
+      Expression
+        value:
+        BooleanExpression
+          value: False
+  Expression
+    value:
+    GreaterStatement
+      left:
+      Expression
+        value:
+        NumberExpression
+          value: 3
+      right:
+      Expression
+        value:
+        BinaryOperation
+          left:
+          NumberExpression
+            value: 5
+          operator: *
+          right:
+          NumberExpression
+            value: 4
+  Expression
+    value:
+    SmallerStatement
+      left:
+      Expression
+        value:
+        NumberExpression
+          value: 3
+      right:
+      Expression
+        value:
+        BinaryOperation
+          left:
+          NumberExpression
+            value: 5
+          operator: /
+          right:
+          NumberExpression
+            value: 1
+  Expression
+    value:
+    RandomStatement
+      value:
+      Expression
+        value:
+        IdExpression
+          var_name: var2
+  PutStatement
+    var_name: var
+    value:
+    Expression
+      value:
+      SumStatement
+        left:
+        Expression
+          value:
+          IdExpression
+            var_name: var
+        right:
+        Expression
+          value:
+          NumberExpression
+            value: 4
+  PutStatement
+    var_name: var
+    value:
+    Expression
+      value:
+      SubstrStatement
+        left:
+        Expression
+          value:
+          IdExpression
+            var_name: var
+        right:
+        Expression
+          value:
+          IdExpression
+            var_name: var
+  Expression
+    value:
+    RepeatStatement
+      body: [
+      Program
+        statements: [
+        AddStatement
+          var_name: var
+          increment_value: None
+        UpStatement
+        ]
+      ]
+      condition:
+      Program
+        statements: [
+        Expression
+          value:
+          BinaryOperation
+            left:
+            IdExpression
+              var_name: var
+            operator: =
+            right:
+            NumberExpression
+              value: 2
+        ]
+  Expression
+    value:
+    WhileStatement
+      condition:
+      Program
+        statements: [
+        Expression
+          value:
+          SmallerStatement
+            left:
+            Expression
+              value:
+              IdExpression
+                var_name: var
+            right:
+            Expression
+              value:
+              NumberExpression
+                value: 4
+        ]
+      body: [
+      Program
+        statements: [
+        ContinueLeftStatement
+          move_units:
+          Expression
+            value:
+            BinaryOperation
+              left:
+              NumberExpression
+                value: 1
+              operator: *
+              right:
+              NumberExpression
+                value: 2
+        AddStatement
+          var_name: var
+          increment_value: None
+        ]
+      ]
+  Expression
+    value:
+    ForStatement
+      variable: i
+      min_value:
+      NumberExpression
+        value: 2
+      max_value:
+      NumberExpression
+        value: 4
+      body: [
+      Program
+        statements: [
+        AddStatement
+          var_name: var
+          increment_value:
+          Expression
+            value:
+            BinaryOperation
+              left:
+              NumberExpression
+                value: 3
+              operator: +
+              right:
+              NumberExpression
+                value: 8
+        ]
+      ]
+  PutStatement
+    var_name: var
+    value:
+    Expression
+      value:
+      NumberExpression
+        value: 3
+  Expression
+    value:
+    CaseStatement
+      variable: var
+      when_clauses: [
+      WhenClause
+        condition:
+        NumberExpression
+          value: 1
+        body: [
+        Program
+          statements: [
+          UpStatement
+          ]
+        ]
+      WhenClause
+        condition:
+        NumberExpression
+          value: 2
+        body: [
+        Program
+          statements: [
+          DownStatement
+          ]
+        ]
+      WhenClause
+        condition:
+        NumberExpression
+          value: 3
+        body: [
+        Program
+          statements: [
+          AddStatement
+            var_name: var
+            increment_value: None
+          ]
+        ]
+      ]
+      else_clause: [
+      ]
+  Expression
+    value:
+    ForStatement
+      variable: x
+      min_value:
+      NumberExpression
+        value: 0
+      max_value:
+      NumberExpression
+        value: 3
+      body: [
+      Program
+        statements: [
+        Expression
+          value:
+          CaseStatement
+            variable: x
+            when_clauses: [
+            WhenClause
+              condition:
+              NumberExpression
+                value: 0
+              body: [
+              Program
+                statements: [
+                UpStatement
+                ]
+              ]
+            WhenClause
+              condition:
+              NumberExpression
+                value: 1
+              body: [
+              Program
+                statements: [
+                DownStatement
+                ]
+              ]
+            ]
+            else_clause: [
+            Program
+              statements: [
+              AddStatement
+                var_name: var
+                increment_value: None
+              ]
+            ]
+        ]
+      ]
+  ]
+Symbol Table:
+Name       Type       Value
+----------------------------------------
+var4       BOOLEAN    False
+var        NUMBER     5
+var2       NUMBER     64
+var3       BOOLEAN    True
