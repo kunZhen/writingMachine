@@ -1,11 +1,8 @@
 Def(var4,True);
-Def(var4, 3);
-Def(var5,4);
 Put(var4, 5>6);
 Def(var,1);
 Def(var2, 8*8);
 Put(var, var2);
-Add(var, var4);
 Add(var, Div(5,var2));
 ContinueUp 5*(4-3);
 ContinueDown var2;

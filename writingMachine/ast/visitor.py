@@ -50,6 +50,7 @@ class ASTVisitor:
         self.y_position = 0
         self.current_color = 1  # 1 para negro, 2 para rojo
         self.pen_down = False
+        self.semantic_errors = []
 
     def visit(self, node):
         method_name = f'visit_{type(node).__name__.lower()}'
@@ -104,6 +105,8 @@ class ASTVisitor:
             if existing_type != var_type:
                 print(f"Error Semántico: La variable '{var_name}' ya está definida como '{existing_type}', "
                       f"pero se intenta redefinir como '{var_type}'.")
+                self.semantic_errors.append(f"Error Semántico: La variable '{var_name}' ya está definida como '{existing_type}', "
+                      f"pero se intenta redefinir como '{var_type}'.")
                 return None  # O lanza una excepción, según tu diseño
 
         # Si la variable no está definida o los tipos coinciden, se define o redefine
@@ -141,10 +144,14 @@ class ASTVisitor:
             print(f"Actualizado {var_name} = {value}")
         else:
             print(f"Error Semántico: La variable '{var_name}' no está definida.")
+            self.semantic_errors.append(
+                f"Error Semántico: La variable '{var_name}' no está definida.")
 
     def visit_addstatement(self, node):
         if node.var_name not in self.variable_context.variables:
             print(f"Error Semántico: '{node.var_name}' no es una variable válida.")
+            self.semantic_errors.append(
+                f"Error Semántico: '{node.var_name}' no es una variable válida.")
             return None
 
         current_value = self.variable_context.get_variable(node.var_name)
@@ -153,6 +160,7 @@ class ASTVisitor:
         # Comprobar si la variable es de tipo numérico
         if current_type != "NUMBER":
             print(f"Error Semántico: No se puede incrementar '{node.var_name}' de tipo '{current_type}'.")
+            self.semantic_errors.append(f"Error Semántico: No se puede incrementar '{node.var_name}' de tipo '{current_type}'.")
             return None
 
         if node.increment_value is None:
@@ -164,9 +172,13 @@ class ASTVisitor:
             if str(increment) == 'True':
                 print(
                     f"Error Semántico: El incremento debe ser un número, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
+                self.semantic_errors.append(f"Error Semántico: El incremento debe ser un número, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
+
                 return None
             elif str(increment) == 'False':
                 print(
+                    f"Error Semántico: El incremento debe ser un número, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
+                self.semantic_errors.append(
                     f"Error Semántico: El incremento debe ser un número, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
                 return None
 
@@ -183,6 +195,7 @@ class ASTVisitor:
         move_units = self.visit(node.move_units)
         if str(move_units) == 'True' or str(move_units) == 'False':
             print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
+            self.semantic_errors.append(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
             return None
         elif isinstance(move_units, (int, float)):
             self.y_position += move_units
@@ -197,6 +210,7 @@ class ASTVisitor:
         move_units = self.visit(node.move_units)
         if str(move_units) == 'True' or str(move_units) == 'False':
             print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
+            self.semantic_errors.append(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
             return None
         elif isinstance(move_units, (int, float)):
             self.y_position -= move_units
@@ -211,6 +225,7 @@ class ASTVisitor:
         move_units = self.visit(node.move_units)
         if str(move_units) == 'True' or str(move_units) == 'False':
             print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
+            self.semantic_errors.append(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
             return None
         elif isinstance(move_units, (int, float)):
             self.x_position += move_units
@@ -225,6 +240,7 @@ class ASTVisitor:
         move_units = self.visit(node.move_units)
         if str(move_units) == 'True' or str(move_units) == 'False':
             print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
+            self.semantic_errors.append(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
             return None
         elif isinstance(move_units, (int, float)):
             self.x_position -= move_units
@@ -242,11 +258,13 @@ class ASTVisitor:
         if str(x_val) == 'True' or str(x_val) == 'False':
             print(
                 f"Error Semántico: La posición X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
+            self.semantic_errors.append(f"Error Semántico: La posición X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
             return None
 
         if str(y_val) == 'True' or str(y_val) == 'False':
             print(
                 f"Error Semántico: La posición Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
+            self.semantic_errors.append(f"Error Semántico: La posición Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
             return None
 
         self.x_position = x_val
@@ -261,6 +279,7 @@ class ASTVisitor:
         if str(x_val) == 'True' or str(x_val) == 'False':
             print(
                 f"Error Semántico: La posición X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
+            self.semantic_errors.append(f"Error Semántico: La posición X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
             return None
 
         self.x_position = x_val
@@ -274,6 +293,7 @@ class ASTVisitor:
         if str(y_val) == 'True' or str(y_val) == 'False':
             print(
                 f"Error Semántico: La posición Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
+            self.semantic_errors.append(f"Error Semántico: La posición Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
             return None
 
         self.y_position = y_val
@@ -340,10 +360,13 @@ class ASTVisitor:
         if str(left) == 'True' or str(left) == 'False':
             print(
                 f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            self.semantic_errors.append(f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
             return None
 
         if str(right) == 'True' or str(right) == 'False':
             print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            self.semantic_errors.append(
                 f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
@@ -359,10 +382,14 @@ class ASTVisitor:
         if str(left) == 'True' or str(left) == 'False':
             print(
                 f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
             return None
 
         if str(right) == 'True' or str(right) == 'False':
             print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            self.semantic_errors.append(
                 f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
@@ -378,10 +405,14 @@ class ASTVisitor:
         if str(left) == 'True' or str(left) == 'False':
             print(
                 f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
             return None
 
         if str(right) == 'True' or str(right) == 'False':
             print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            self.semantic_errors.append(
                 f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
@@ -399,6 +430,7 @@ class ASTVisitor:
         # Verificar que n no sea un booleano
         if str(n) == 'True' or str(n) == 'False':
             print(f"Error Semántico: n no puede ser un booleano. Se obtuvo '{n}' de tipo '{type(n).__name__}'.")
+            self.semantic_errors.append(f"Error Semántico: n no puede ser un booleano. Se obtuvo '{n}' de tipo '{type(n).__name__}'.")
             return None
 
         # Verificar que n sea un número válido
@@ -418,10 +450,14 @@ class ASTVisitor:
         if str(left) == 'True' or str(left) == 'False':
             print(
                 f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
             return None
 
         if str(right) == 'True' or str(right) == 'False':
             print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            self.semantic_errors.append(
                 f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
@@ -437,10 +473,14 @@ class ASTVisitor:
         if str(left) == 'True' or str(left) == 'False':
             print(
                 f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
             return None
 
         if str(right) == 'True' or str(right) == 'False':
             print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            self.semantic_errors.append(
                 f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
@@ -459,11 +499,14 @@ class ASTVisitor:
         if str(left) == 'True' or str(left) == 'False':
             print(
                 f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
             return None
 
         if str(right) == 'True' or str(right) == 'False':
             print(
                 f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            self.semantic_errors.append(f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
         result = left + right
@@ -474,20 +517,6 @@ class ASTVisitor:
         # Obtener los valores de min_value y max_value
         min_value = self.visit(node.min_value)
         max_value = self.visit(node.max_value)
-
-        # Verificar que min_value no sea un booleano
-        if str(min_value) == 'True':
-            raise ValueError(f"Error Semántico: 'min_value' no puede ser un booleano. Se obtuvo: '{min_value}'")
-
-        if str(min_value) == 'False':
-            raise ValueError(f"Error Semántico: 'min_value' no puede ser un booleano. Se obtuvo: '{min_value}'")
-
-        # Verificar que max_value no sea un booleano
-        if str(max_value) == 'True':
-            raise ValueError(f"Error Semántico: 'max_value' no puede ser un booleano. Se obtuvo: '{max_value}'")
-
-        if str(max_value) == 'False':
-            raise ValueError(f"Error Semántico: 'max_value' no puede ser un booleano. Se obtuvo: '{max_value}'")
 
         # Verificar si min_value es mayor o igual que max_value
         if min_value >= max_value:
