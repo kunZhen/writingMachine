@@ -52,7 +52,6 @@ class ASTVisitor:
         self.pen_down = False
 
     def visit(self, node):
-        print(f"Visiting node: {type(node).__name__}")
         method_name = f'visit_{type(node).__name__.lower()}'
         visitor = getattr(self, method_name, self.generic_visit)
         return visitor(node)
@@ -70,7 +69,6 @@ class ASTVisitor:
         return results
 
     def visit_expression(self, node):
-        print("Tipo de node.value:", type(node.value))
         if isinstance(node.value, (NumberExpression, BooleanExpression, IdExpression, BinaryOperation,
                                    SumStatement, AddStatement,AndStatement, BeginningStatement,
                                    ContinueDownStatement, ContinueUpStatement, ContinueRightStatement,
@@ -102,10 +100,15 @@ class ASTVisitor:
             var_type = "UNKNOWN"
 
         if var_name in self.variable_context.variables:
-            print(f"Error: Variable '{var_name}' ya definida")
-        else:
-            self.variable_context.set_variable(var_name, value, var_type)
-            print(f"Definido {var_name} = {value} (Tipo: {var_type})")
+            existing_type = self.variable_context.get_variable_type(var_name)
+            if existing_type != var_type:
+                print(f"Error Semántico: La variable '{var_name}' ya está definida como '{existing_type}', "
+                      f"pero se intenta redefinir como '{var_type}'.")
+                return None  # O lanza una excepción, según tu diseño
+
+        # Si la variable no está definida o los tipos coinciden, se define o redefine
+        self.variable_context.set_variable(var_name, value, var_type)
+        print(f"Definido {var_name} = {value} (Tipo: {var_type})")
 
         return value
 
@@ -113,85 +116,139 @@ class ASTVisitor:
         var_name = node.var_name
         value = self.visit(node.value)
 
-
         if var_name in self.variable_context.variables:
             current_type = self.variable_context.get_variable_type(var_name)
+            # Determinar el tipo del nuevo valor
+            if str(value) == 'True':
+                new_type = "BOOLEAN"
+            elif str(value) == 'False':
+                new_type = "BOOLEAN"
+            elif isinstance(value, int):
+                new_type = "NUMBER"
+            elif isinstance(node.value, IdExpression):
+                new_type = "ID"
+            else:
+                new_type = "UNKNOWN"
+
+            # Comprobar si los tipos coinciden
+            if new_type != current_type:
+                print(f"Error Semántico: No se puede asignar '{value}' de tipo '{new_type}' a "
+                      f"la variable '{var_name}' que es de tipo '{current_type}'.")
+                return None  # O lanza una excepción según tu diseño
+
+            # Si los tipos coinciden, actualiza la variable
             self.variable_context.set_variable(var_name, value, current_type)
             print(f"Actualizado {var_name} = {value}")
         else:
-            print(f"Error: Variable '{var_name}' no definida")
-        return value
+            print(f"Error Semántico: La variable '{var_name}' no está definida.")
 
     def visit_addstatement(self, node):
-
         if node.var_name not in self.variable_context.variables:
-            print(f"Error: '{node.var_name}' no es una variable válida.")
+            print(f"Error Semántico: '{node.var_name}' no es una variable válida.")
             return None
 
         current_value = self.variable_context.get_variable(node.var_name)
         current_type = self.variable_context.get_variable_type(node.var_name)
 
+        # Comprobar si la variable es de tipo numérico
+        if current_type != "NUMBER":
+            print(f"Error Semántico: No se puede incrementar '{node.var_name}' de tipo '{current_type}'.")
+            return None
+
         if node.increment_value is None:
             new_value = current_value + 1
         else:
             increment = self.visit(node.increment_value)
-            if not isinstance(increment, (int, float)):
-                print(f"Error: El incremento debe ser un número.")
+
+            # Verificar que el incremento sea un número
+            if str(increment) == 'True':
+                print(
+                    f"Error Semántico: El incremento debe ser un número, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
                 return None
+            elif str(increment) == 'False':
+                print(
+                    f"Error Semántico: El incremento debe ser un número, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
+                return None
+
             new_value = current_value + increment
-        # Update the variable in the context
+
+        # Actualizar la variable en el contexto
         self.variable_context.set_variable(node.var_name, new_value, current_type)
         print(f"Incrementado {node.var_name} de {current_value} a {new_value}")
 
-        # Return the new value
+        # Retornar el nuevo valor
         return new_value
+
     def visit_continueupstatement(self, node):
         move_units = self.visit(node.move_units)
-        if isinstance(move_units, (int, float)):
+        if str(move_units) == 'True' or str(move_units) == 'False':
+            print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
+            return None
+        elif isinstance(move_units, (int, float)):
             self.y_position += move_units
             result = f"Movido {move_units} unidades hacia arriba. Nueva posición en Y: {self.y_position}"
             print(result)
             return result
         else:
-            print(f"Error: No se puede mover {move_units} unidades. Verifica el valor.")
+            print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
             return None
 
     def visit_continuedownstatement(self, node):
         move_units = self.visit(node.move_units)
-        if isinstance(move_units, (int, float)):
+        if str(move_units) == 'True' or str(move_units) == 'False':
+            print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
+            return None
+        elif isinstance(move_units, (int, float)):
             self.y_position -= move_units
             result = f"Movido {move_units} unidades hacia abajo. Nueva posición en Y: {self.y_position}"
             print(result)
             return result
         else:
-            print(f"Error: No se puede mover {move_units} unidades. Verifica el valor.")
+            print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
             return None
 
     def visit_continuerightstatement(self, node):
         move_units = self.visit(node.move_units)
-        if isinstance(move_units, (int, float)):
+        if str(move_units) == 'True' or str(move_units) == 'False':
+            print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
+            return None
+        elif isinstance(move_units, (int, float)):
             self.x_position += move_units
             result = f"Movido {move_units} unidades hacia la derecha. Nueva posición en X: {self.x_position}"
             print(result)
             return result
         else:
-            print(f"Error: No se puede mover {move_units} unidades. Verifica el valor.")
+            print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
             return None
 
     def visit_continueleftstatement(self, node):
         move_units = self.visit(node.move_units)
-        if isinstance(move_units, (int, float)):
+        if str(move_units) == 'True' or str(move_units) == 'False':
+            print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
+            return None
+        elif isinstance(move_units, (int, float)):
             self.x_position -= move_units
             result = f"Movido {move_units} unidades hacia la izquierda. Nueva posición en X: {self.x_position}"
             print(result)
             return result
         else:
-            print(f"Error: No se puede mover {move_units} unidades. Verifica el valor.")
+            print(f"Error Semántico: No se puede mover '{move_units}' unidades. Se esperaba un número.")
             return None
 
     def visit_posstatement(self, node):
         x_val = self.visit(node.x_val)
         y_val = self.visit(node.y_val)
+
+        if str(x_val) == 'True' or str(x_val) == 'False':
+            print(
+                f"Error Semántico: La posición X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
+            return None
+
+        if str(y_val) == 'True' or str(y_val) == 'False':
+            print(
+                f"Error Semántico: La posición Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
+            return None
+
         self.x_position = x_val
         self.y_position = y_val
         result = f"Posición actualizada a X: {self.x_position}, Y: {self.y_position}"
@@ -200,6 +257,12 @@ class ASTVisitor:
 
     def visit_posxstatement(self, node):
         x_val = self.visit(node.x_val)
+
+        if str(x_val) == 'True' or str(x_val) == 'False':
+            print(
+                f"Error Semántico: La posición X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
+            return None
+
         self.x_position = x_val
         result = f"Posición actualizada a X: {self.x_position}, Y: {self.y_position}"
         print(result)
@@ -207,6 +270,12 @@ class ASTVisitor:
 
     def visit_posystatement(self, node):
         y_val = self.visit(node.y_val)
+
+        if str(y_val) == 'True' or str(y_val) == 'False':
+            print(
+                f"Error Semántico: La posición Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
+            return None
+
         self.y_position = y_val
         result = f"Posición actualizada a X: {self.x_position}, Y: {self.y_position}"
         print(result)
@@ -266,6 +335,18 @@ class ASTVisitor:
     def visit_greaterstatement(self, node):
         left = node.left.accept(self)
         right = node.right.accept(self)
+
+        # Verificar que left y right no sean booleanos
+        if str(left) == 'True' or str(left) == 'False':
+            print(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            return None
+
+        if str(right) == 'True' or str(right) == 'False':
+            print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            return None
+
         result = left > right
         print(result)
         return result
@@ -273,6 +354,18 @@ class ASTVisitor:
     def visit_smallerstatement(self, node):
         left = node.left.accept(self)
         right = node.right.accept(self)
+
+        # Verificar que left y right no sean booleanos
+        if str(left) == 'True' or str(left) == 'False':
+            print(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            return None
+
+        if str(right) == 'True' or str(right) == 'False':
+            print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            return None
+
         result = left < right
         print(result)
         return result
@@ -280,8 +373,21 @@ class ASTVisitor:
     def visit_substrstatement(self, node):
         left = self.visit(node.left)
         right = self.visit(node.right)
+
+        # Verificar que left y right no sean booleanos
+        if str(left) == 'True' or str(left) == 'False':
+            print(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            return None
+
+        if str(right) == 'True' or str(right) == 'False':
+            print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            return None
+
         if left < right:
             raise ValueError("Error: N1 debe ser mayor o igual a N2.")
+
         result = left - right
         print(f"Sustracción: {left} - {right} = {result}")
         return result
@@ -289,6 +395,11 @@ class ASTVisitor:
     def visit_randomstatement(self, node):
         # Obtener el valor de n
         n = node.value.accept(self)  # Asegúrate de que node.value sea un nodo que pueda ser evaluado
+
+        # Verificar que n no sea un booleano
+        if str(n) == 'True' or str(n) == 'False':
+            print(f"Error Semántico: n no puede ser un booleano. Se obtuvo '{n}' de tipo '{type(n).__name__}'.")
+            return None
 
         # Verificar que n sea un número válido
         if n < 0:
@@ -302,6 +413,18 @@ class ASTVisitor:
     def visit_multstatement(self, node):
         left = self.visit(node.left)
         right = self.visit(node.right)
+
+        # Verificar que left y right no sean booleanos
+        if str(left) == 'True' or str(left) == 'False':
+            print(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            return None
+
+        if str(right) == 'True' or str(right) == 'False':
+            print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            return None
+
         result = left * right
         print(f"Multiplicación: {left} * {right} = {result}")
         return result
@@ -309,8 +432,21 @@ class ASTVisitor:
     def visit_divstatement(self, node):
         left = self.visit(node.left)
         right = self.visit(node.right)
+
+        # Verificar que left y right no sean booleanos
+        if str(left) == 'True' or str(left) == 'False':
+            print(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            return None
+
+        if str(right) == 'True' or str(right) == 'False':
+            print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            return None
+
         if right == 0:
             raise ValueError("Error: División por cero no permitida.")
+
         result = left // right
         print(f"División: {left} // {right} = {result}")
         return result
@@ -318,6 +454,18 @@ class ASTVisitor:
     def visit_sumstatement(self, node):
         left = self.visit(node.left)
         right = self.visit(node.right)
+
+        # Verificar que left y right no sean booleanos
+        if str(left) == 'True' or str(left) == 'False':
+            print(
+                f"Error Semántico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
+            return None
+
+        if str(right) == 'True' or str(right) == 'False':
+            print(
+                f"Error Semántico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            return None
+
         result = left + right
         print(f"Suma: {left} + {right} = {result}")
         return result
@@ -471,7 +619,6 @@ class ASTVisitor:
             result = left == right
             print(result)
             return result
-
 
     def visit_expressiongroup(self, node):
         # Aquí asumimos que node.expressions es una instancia de ExpressionList

@@ -322,11 +322,12 @@ def parse(input_string):
 if __name__ == "__main__":
     code = """
     Def(var4,True);
+    Def(var4, 3);
     Put(var4, 5>6);
     Def(var,1);
     Def(var2, 8*8); 
     Put(var, var2); 
-    Add(var); 
+    Add(var, var4); 
     Add(var, Div(5,var2)); 
     ContinueUp 5*(4-3); 
     ContinueDown var2; 
@@ -347,7 +348,9 @@ if __name__ == "__main__":
     Greater(3, 5*4); 
     Smaller(3, 5/1); 
     Random(var2); 
-    Put(var, Sum(var,4)); Put(var, Substr(var,var)); 
+    
+    Put(var, Sum(var,4)); Put(var, Substr(var,var));
+     
     Repeat 
         [Add(var); Up;] 
     Until [var = 2];
@@ -388,8 +391,8 @@ if __name__ == "__main__":
     visitor = ASTVisitor()  # Usa tu clase de visitor
     visitor.visit(ast_root)  # Ejecuta el árbol AST
 
-    visitor.print_ast(ast_root)
-    visitor.print_symbol_table()
+    #visitor.print_ast(ast_root)
+    #visitor.print_symbol_table()
 
 
 
