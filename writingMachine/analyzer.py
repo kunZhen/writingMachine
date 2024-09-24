@@ -7,7 +7,7 @@ from writingMachine.ast.visitor import ASTVisitor
 
 def main():
 
-    input_file = "errores_sintacticos.txt"  # Nombre del archivo de código
+    input_file = "errores_semanticos.txt"  # Nombre del archivo de código
 
     # Leer el contenido del archivo
     try:
