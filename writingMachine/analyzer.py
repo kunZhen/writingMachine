@@ -9,6 +9,7 @@ class Analyzer:
         self.input_file = input_file
 
     def process_code(self):
+        syntax_errors = []
         # Leer el contenido del archivo
         try:
             with open(self.input_file, 'r') as file:
@@ -16,17 +17,11 @@ class Analyzer:
         except FileNotFoundError:
             print(f"Error: El archivo '{self.input_file}' no se encontró.")
             return
-
         # Imprimir los tokens encontrados
         print("Tokens encontrados:")
         tokens = analysis(code)  # Asumiendo que tienes una función de análisis léxico llamada `analysis`
         print(tokens)
 
-        # Verificar y mostrar errores léxicos
-        if errors_description:
-            print("\nErrores lexicos:")
-            for error in errors_description:
-                print(error)
 
         # Analizar el código y obtener el AST
         ast_root = parse(code)  # Asumiendo que tienes una función de análisis sintáctico llamada `parse`

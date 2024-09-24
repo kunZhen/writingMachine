@@ -1,6 +1,5 @@
 import ply.lex as lex
 
-# Listas para almacenar errores
 errors_description = []
 lexical_errors = []
 
