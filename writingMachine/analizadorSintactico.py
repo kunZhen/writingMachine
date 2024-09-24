@@ -391,5 +391,7 @@ if __name__ == "__main__":
     # Crear un visitor para ejecutar el AST
     visitor = ASTVisitor()  # Usa tu clase de visitor
     visitor.visit(ast_root)  # Ejecuta el árbol AST
+    visitor.print_ast(ast_root)
+
 
 

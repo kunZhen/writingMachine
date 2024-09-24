@@ -22,6 +22,7 @@ from writingMachine.ast.for_statement import ForStatement
 from writingMachine.ast.greater_statement import GreaterStatement
 from writingMachine.ast.id_expression import IdExpression
 from writingMachine.ast.mult_statement import MultStatement
+from writingMachine.ast.node import ASTNode
 from writingMachine.ast.number_expression import NumberExpression
 from writingMachine.ast.or_statement import OrStatement
 from writingMachine.ast.pos_statement import PosStatement
@@ -495,3 +496,21 @@ class ASTVisitor:
 
     def visit_booleanexpression(self, node):
         return node.value
+
+    def print_ast(self, node, level=0):
+        indent = "  " * level  # Indentar de acuerdo al nivel de profundidad
+        print(f"{indent}{type(node).__name__}")  # Imprimir el tipo del nodo
+
+        # Verificar los atributos de cada nodo
+        for attr, value in vars(node).items():
+            if isinstance(value, ASTNode):  # Si es un nodo AST, imprimir recursivamente
+                print(f"{indent}  {attr}:")
+                self.print_ast(value, level + 1)
+            elif isinstance(value, (list, tuple)):  # Si es una lista o tupla de nodos
+                print(f"{indent}  {attr}: [")
+                for item in value:
+                    if isinstance(item, ASTNode):
+                        self.print_ast(item, level + 1)
+                print(f"{indent}  ]")
+            else:
+                print(f"{indent}  {attr}: {value}")  # Si es un valor básico, lo imprime directamente
