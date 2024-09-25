@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="97459244-f4d8-4ace-b010-13b6a36bc4f9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/writingMachine/analizadorLexico.py" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/analizadorLexico.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/writingMachine/analyzer.py" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/analyzer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/writingMachine/ast/variable_context.py" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/ast/variable_context.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/writingMachine/files/errores_lexicos.txt" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/files/errores_lexicos.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/writingMachine/files/Prueba 2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/files/Prueba 2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/writingMachine/output_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/writingMachine/output_log.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -167,7 +164,7 @@
     <SUITE FILE_PATH="coverage/writingMachine$grammar_test.coverage" NAME="grammar_test Coverage Results" MODIFIED="1726892797679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$ide.coverage" NAME="ide Coverage Results" MODIFIED="1727214719369" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$lexer.coverage" NAME="lexer Coverage Results" MODIFIED="1727015372262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
-    <SUITE FILE_PATH="coverage/writingMachine$main.coverage" NAME="main Coverage Results" MODIFIED="1727221276741" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
+    <SUITE FILE_PATH="coverage/writingMachine$main.coverage" NAME="main Coverage Results" MODIFIED="1727224894460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
     <SUITE FILE_PATH="coverage/writingMachine$greater_statement.coverage" NAME="greater_statement Coverage Results" MODIFIED="1727062697437" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine/ast" />
     <SUITE FILE_PATH="coverage/writingMachine$visitor.coverage" NAME="visitor Coverage Results" MODIFIED="1727215739472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine/ast" />
     <SUITE FILE_PATH="coverage/writingMachine$analizadorSintactico.coverage" NAME="analizadorSintactico Coverage Results" MODIFIED="1727159438930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/writingMachine" />
