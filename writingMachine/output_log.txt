@@ -1,57 +1,8 @@
 Tokens encontrados:
-[('Def', 'DEF', 20, 1), ('(', 'LPAREN', 20, 4), ('var5', 'ID', 20, 5), (',', 'COMMA', 20, 9), (6, 'NUMBER', 20, 10), (')', 'RPAREN', 20, 11), (';', 'SEMI', 20, 12), ('ContinueDown', 'CONTINUEDOWN', 21, 1), (5, 'NUMBER', 21, 14), (';', 'SEMI', 21, 15), ('ContinueDown', 'CONTINUEDOWN', 22, 1), (5, 'NUMBER', 22, 14), ('*', 'MULT_OP', 22, 15), (4, 'NUMBER', 22, 16), (';', 'SEMI', 22, 17), ('ContinueDown', 'CONTINUEDOWN', 23, 1), ('var5', 'ID', 23, 14), (';', 'SEMI', 23, 18), ('ContinueDown', 'CONTINUEDOWN', 24, 1), (5, 'NUMBER', 24, 14), (';', 'SEMI', 24, 15)]
+[('//hola', 'COMMENT', 69, 1), ('Def', 'DEF', 70, 1), ('(', 'LPAREN', 70, 4), ('var5', 'ID', 70, 5), (',', 'COMMA', 70, 9), (6, 'NUMBER', 70, 10), (')', 'RPAREN', 70, 11), (';', 'SEMI', 70, 12)]
+Error de sintaxis: simbolo inesperado 'Def' en la linea 70
 
-AST: <writingMachine.ast.program.Program object at 0x00000201651540D0>
-Definido var5 = 6 (Tipo: NUMBER)
-Movido 5 unidades hacia abajo. Nueva posicion en Y: -5
-Operando izquierdo: 5, Operando derecho: 4, Operador: *
-20
-Movido 20 unidades hacia abajo. Nueva posicion en Y: -25
-Movido 6 unidades hacia abajo. Nueva posicion en Y: -31
-Movido 5 unidades hacia abajo. Nueva posicion en Y: -36
+AST: None
 
 AST:
-Program
-  statements: [
-  DefStatement
-    var_name: var5
-    value:
-    Expression
-      value:
-      NumberExpression
-        value: 6
-  ContinueDownStatement
-    move_units:
-    Expression
-      value:
-      NumberExpression
-        value: 5
-  ContinueDownStatement
-    move_units:
-    Expression
-      value:
-      BinaryOperation
-        left:
-        NumberExpression
-          value: 5
-        operator: *
-        right:
-        NumberExpression
-          value: 4
-  ContinueDownStatement
-    move_units:
-    Expression
-      value:
-      IdExpression
-        var_name: var5
-  ContinueDownStatement
-    move_units:
-    Expression
-      value:
-      NumberExpression
-        value: 5
-  ]
-Symbol Table:
-Name       Type       Value
-----------------------------------------
-var5       NUMBER     6
+NoneType

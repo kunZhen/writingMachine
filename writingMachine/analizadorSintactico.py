@@ -325,7 +325,9 @@ def parse(input_string):
 # Ejemplo de prueba
 if __name__ == "__main__":
     code = """
-    Def(vawr,True); 
+    //hola
+    Def(var1,true);
+    Put(var1, false); 
     """
     # Analizar el codigo y obtener el AST
     ast_root = parse(code)
@@ -335,7 +337,7 @@ if __name__ == "__main__":
     visitor = ASTVisitor()  # Usa tu clase de visitor
     visitor.visit(ast_root)  # Ejecuta el arbol AST
 
-    #visitor.print_ast(ast_root)
+    visitor.print_ast(ast_root)
     #visitor.print_symbol_table()
 
 

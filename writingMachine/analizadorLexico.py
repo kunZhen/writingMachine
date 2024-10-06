@@ -2,6 +2,8 @@ import ply.lex as lex
 
 errors_description = []
 lexical_errors = []
+first_token_checked = False  # Flag para verificar si ya revisamos el primer token
+
 
 # Lista de tokens
 tokens = (
@@ -14,7 +16,7 @@ tokens = (
     'CONTINUEDOWN', 'CONTINUEUP', 'ADD', 'PUT', 'FOR',
     'TO', 'LOOP', 'END', 'CASE', 'WHEN', 'THEN', 'ELSE',
     'REPEAT', 'UNTIL', 'WHILE', 'WHEND', 'EQUALS',
-    'LT', 'GT', 'TURNLEFT', 'TURNRIGHT'
+    'LT', 'GT', 'TURNLEFT', 'TURNRIGHT','COMMENT'
 )
 
 # Expresiones regulares para los tokens
@@ -101,14 +103,22 @@ def t_NEWLINE(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+def t_COMMENT(t):
+    r'//.*'
+    global first_token_checked
+    if not first_token_checked:
+        first_token_checked = True
+        return t  # Retornamos el primer comentario para la verificación
+    # Después del primer token, ignoramos los comentarios
+    pass
 # Manejo de errores lexicos
 def t_error(t):
-    global errors_description
-    errors_description.append(f"Error Lexico: Simbolo invalido '{t.value[0]}' en la linea {t.lineno}")
-    t.lexer.skip(1)
-
-    global lexical_errors
-    lexical_errors.append(f"Error Lexico: Simbolo invalido '{t.value[0]}' en la linea {t.lineno}")
+    global lexical_errors, first_token_checked
+    if not first_token_checked:
+        lexical_errors.append(f"Error Lexico: El programa debe comenzar con un comentario en la línea {t.lineno}")
+        first_token_checked = True
+    else:
+        lexical_errors.append(f"Error Lexico: Simbolo invalido '{t.value[0]}' en la linea {t.lineno}")
     t.lexer.skip(1)
 
 
@@ -116,23 +126,43 @@ def t_error(t):
 lexer = lex.lex()
 
 # Funcion de analisis lexico
+# Funcion de analisis lexico
 def analysis(input):
+    global first_token_checked
+    first_token_checked = False  # Restablecer flag para cada análisis
     lexer.input(input)
     tokens = []
 
     for tok in lexer:
-        column = tok.lexpos - input.rfind('\n', 0, tok.lexpos)
-        tokens.append((tok.value, tok.type, tok.lineno, column))
+        if not first_token_checked:
+            # Verificar si el primer token no es un comentario
+            if tok.type != 'COMMENT':
+                lexical_errors.append(
+                    f"Error Léxico: El programa debe comenzar con un comentario en la línea {tok.lineno}")
+            # Si es comentario o no, marcamos que ya revisamos el primer token
+            first_token_checked = True
+            # Saltamos el comentario sin agregarlo a la lista de tokens
+            if tok.type == 'COMMENT':
+                continue
+
+        # Procesar tokens normales (excluyendo el primer comentario)
+        if tok.type != 'COMMENT':  # No agregamos ningún comentario a la lista de tokens
+            column = tok.lexpos - input.rfind('\n', 0, tok.lexpos)
+            tokens.append((tok.value, tok.type, tok.lineno, column))
+
     return tokens
 
 # Ejemplo de prueba
 if __name__ == '__main__':
     code = """
+        //vamos
+        Def(var1,true)
+        //sii
         """
     print("Tokens encontrados:")
     print(analysis(code))
 
-    if errors_description:
+    if lexical_errors:
         print("\nErrores lexicos:")
-        for error in errors_description:
+        for error in lexical_errors:
             print(error)

@@ -1,6 +1,4 @@
+//hola
 Def(var5,6);
-ContinueDown 5; 		
-ContinueDown 5*4; 		
-ContinueDown var5; 		
-ContinueDown 5;
+
 
