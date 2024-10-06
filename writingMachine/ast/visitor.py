@@ -1,5 +1,5 @@
 import random
-
+import re
 from writingMachine.ast.add_statement import AddStatement
 from writingMachine.ast.and_statement import AndStatement
 from writingMachine.ast.beginning_statement import BeginningStatement
@@ -93,10 +93,18 @@ class ASTVisitor:
         var_name = node.var_name
         value = self.visit(node.value)  # Llama a visit para obtener el valor
 
-        # Determinar el tipo basado en el nodo
-        if str(value) == 'True':
-            var_type = "BOOLEAN"
-        elif str(value) == 'False':
+        # Reglas para el nombre de la variable: min 3, max 10, empieza con minúscula,
+        # contiene letras, números, _ y @.
+        if not re.match(r'^[a-z][a-zA-Z0-9_@]{2,9}$', var_name):
+            error_msg = (f"Error Semántico: El nombre de la variable '{var_name}' no cumple "
+                         "con las reglas. Debe tener entre 3 y 10 caracteres, comenzar con "
+                         "una letra minúscula, y puede contener letras, números, '_' y '@'.")
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
+
+        # Determinar el tipo basado en el valor del nodo
+        if str(value) == 'True' or str(value) == 'False':
             var_type = "BOOLEAN"
         elif isinstance(value, int):
             var_type = "NUMBER"
@@ -105,16 +113,17 @@ class ASTVisitor:
         else:
             var_type = "UNKNOWN"
 
+        # Verificar si la variable ya está definida y si el tipo coincide
         if var_name in self.variable_context.variables:
             existing_type = self.variable_context.get_variable_type(var_name)
             if existing_type != var_type:
-                print(f"Error Semantico: La variable '{var_name}' ya esta definida como '{existing_type}', "
-                      f"pero se intenta redefinir como '{var_type}'.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{var_name}' ya esta definida como '{existing_type}', "
-                      f"pero se intenta redefinir como '{var_type}'.")
-                return None  # O lanza una excepcion, segun tu diseño
+                error_msg = (f"Error Semántico: La variable '{var_name}' ya está definida como '{existing_type}', "
+                             f"pero se intenta redefinir como '{var_type}'.")
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
+                return None  # O lanza una excepción, según tu diseño
 
-        # Si la variable no esta definida o los tipos coinciden, se define o redefine
+        # Si la variable no está definida o los tipos coinciden, se define o redefine
         self.variable_context.set_variable(var_name, value, var_type)
         print(f"Definido {var_name} = {value} (Tipo: {var_type})")
 

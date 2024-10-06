@@ -84,10 +84,10 @@ def t_NUMBER(t):
 
 # Regla para reconocer identificadores
 def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    r'[a-zA-Z_@][a-zA-Z_0-9@]*'
     if t.value in ('Mult', 'Div', 'Sum', 'Random', 'Substr', 'Smaller', 'Greater', 'Or', 'And', 'Equal',
                    'Beginning', 'Up', 'Down', 'UseColor', 'PosY', 'PosX', 'Pos', 'ContinueLeft',
-                   'ContinueRight', 'ContinueDown', 'ContinueUp', 'Add','Put', 'For', 'to', 'Loop', 'End',
+                   'ContinueRight', 'ContinueDown', 'ContinueUp', 'Add', 'Put', 'For', 'to', 'Loop', 'End',
                    'Case', 'When', 'Then', 'Else', 'Repeat', 'Until', 'While', 'Whend', 'Def', 'PUT', 'ADD',
                    'case', 'TurnLeft', 'TurnRight'):
         t.type = t.value.upper()  # Cambiar el tipo a MULT, DIV o SUM

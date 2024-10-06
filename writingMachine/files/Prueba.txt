@@ -1,1 +1,247 @@
-Hola
+ContinueDown TRUE; 		
+ContinueDown 5*FALSE; 		
+ContinueDown var5; 		
+ContinueDown; 		        
+		
+		
+ContinueRight TRUE; 		
+ContinueRight 5*FALSE; 		
+ContinueRight var5; 		
+ContinueRight; 		        
+		
+ContinueLeft TRUE; 		
+ContinueLeft 5*FALSE; 		
+ContinueLeft var5; 		
+ContinueLeft; 		
+		
+Pos(100); 		
+Pos(var1); 		
+Pos(var5); 		
+Pos(var5,100); 		
+Pos(100, var5); 		
+Pos(TRUE, FALSE); 		
+		
+PosX; 		
+PosX variableX; 	
+PosX var5; 		
+		
+		
+PosY; 		
+PosY variableX; 	
+PosY var5; 		
+		
+UseColor 3; 		
+		
+		
+		
+Down 5; 		
+Down var1; 		
+Down var5; 		
+		
+Up 5; 			
+Up var1; 		
+Up var5; 		
+		
+		
+Beginning 5; 		
+Beginning var1; 	
+Beginning var5; 	
+		
+		
+DEF(var6, 2);		
+For var6(1 to 5) Loop 		
+[PoxY Add(var2, var1); 		
+ContinueRight 9;] 		
+End Loop; 		
+		
+For var7 Loop 		
+[PoxY Add(var2, var1); 		
+ContinueRight 9;] 		
+End Loop; 		
+		
+For var8(5 to 1) Loop 		
+[PoxY Add(var2, var1); 		
+ContinueRight 9;] 		
+End Loop; 		
+		
+For var9(1 to 5) 		
+[PoxY Add(var2, var1); 		
+ContinueRight 9;] 		
+End Loop; 		
+		
+For var10(1 to 5) Loop 		
+[PoxY Add(var2, var1); 		
+ContinueRight 9;] ;		
+		
+		
+Case var1 		
+When 1 Then 		
+When 2 Then 		
+[ Add(var2, 1) ] 		
+When 3 Then 		
+[ Add(variale3, 1) ] 		
+End case; 		
+		
+		
+		
+Case var5 		
+Else 		
+[ Add(var, 1) ] 		
+When True Then 		
+[ Add(var2, 1); ] 		
+End case; 		
+		
+		
+Case var1 		
+When 1 		
+[ Add(var1, 1); ] 		
+End case; 		
+		
+Case var1 		
+When 1 Then		
+[ Add(1, 1); ] 		
+End case; 		
+		
+Repeat 			
+Until 		
+[bucle = 2]; 		
+		
+Repeat 			
+[TurnRight 90] 		
+Until 		
+[False]; 		
+		
+Repeat 		
+[TurnRight 90] 		
+Until 		
+[bucleXYZ = 2]; 		
+		
+Repeat 		
+[TurnRight var5] 		
+Until 		
+[bucle = 2]; 		
+		
+		
+While 				
+[TurnRight 90] 		
+Whend; 		
+		
+		
+While [bucle=1] 		
+[TurnRight] 		  
+Whend; 		
+		
+		
+While [bucleXYZ=1] 		
+[TurnRight] 		
+Whend; 		
+		
+		
+Equal(10,2*5); 		
+		
+		
+		
+While [Equal() ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [Equal(10) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [Equal(var5,2*5) ] 	
+[TurnRight 90] 		
+Whend; 		
+		
+		
+		
+While [And(true,5) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [And(true) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [And(true,true, False) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+		
+		
+		
+While [or(true,5) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [or(true) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [or(true,true, False) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [Greater(True, 2*5) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [Greater(var5,2*5) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [Greater(10) ] 			
+[TurnRight 90] 		
+Whend; 		
+		
+		
+While [Smaller(True, 2*5) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [Smaller(var5,2*5) ] 		
+[TurnRight 90] 		
+Whend; 		
+		
+While [Smaller(10) ] 			
+[TurnRight 90] 		
+Whend; 		
+		
+		
+TurnLeft Substr(45, 100); 		
+		
+TurnLeft Substr(var5, 45); 		
+		
+TurnLeft Substr(45, False); 		
+		
+		
+TurnLeft Random(True); 		
+		
+TurnLeft Random(); 		
+		
+TurnLeft Random(var5); 		
+		
+		
+		
+TurnLeft Mult(var5, 45); 		
+		
+TurnLeft Mult(45, False); 		
+		
+		
+		
+		
+TurnLeft Div(var5, 45); 		
+		
+TurnLeft Div(45, False); 		
+		
+		
+TurnLeft Sum(var5, 45); 		
+		
+TurnLeft Sum(45, False); 		
+			
+		
+		
+		
+
+
+
