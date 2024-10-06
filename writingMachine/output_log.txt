@@ -1,8 +1,24 @@
 Tokens encontrados:
-[('//hola', 'COMMENT', 69, 1), ('Def', 'DEF', 70, 1), ('(', 'LPAREN', 70, 4), ('var5', 'ID', 70, 5), (',', 'COMMA', 70, 9), (6, 'NUMBER', 70, 10), (')', 'RPAREN', 70, 11), (';', 'SEMI', 70, 12)]
-Error de sintaxis: simbolo inesperado 'Def' en la linea 70
+[('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('var5', 'ID', 5, 5), (',', 'COMMA', 5, 9), (6, 'NUMBER', 5, 10), (')', 'RPAREN', 5, 11), (';', 'SEMI', 5, 12)]
 
-AST: None
+AST: <writingMachine.ast.program.Program object at 0x000001F22A6C5670>
+Definido var5 = 6 (Tipo: NUMBER)
 
 AST:
-NoneType
+Program
+  statements: [
+  DefStatement
+    var_name: var5
+    value:
+    Expression
+      value:
+      NumberExpression
+        value: 6
+  ]
+Symbol Table:
+Name       Type       Value
+----------------------------------------
+var5       NUMBER     6
+
+Errores lexicos:
+Error Léxico: El programa debe comenzar con un comentario en la línea 5

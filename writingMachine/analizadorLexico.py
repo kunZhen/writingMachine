@@ -16,7 +16,7 @@ tokens = (
     'CONTINUEDOWN', 'CONTINUEUP', 'ADD', 'PUT', 'FOR',
     'TO', 'LOOP', 'END', 'CASE', 'WHEN', 'THEN', 'ELSE',
     'REPEAT', 'UNTIL', 'WHILE', 'WHEND', 'EQUALS',
-    'LT', 'GT', 'TURNLEFT', 'TURNRIGHT','COMMENT'
+    'LT', 'GT', 'TURNLEFT', 'TURNRIGHT','COMMENT', 'PROC'
 )
 
 # Expresiones regulares para los tokens
@@ -45,6 +45,7 @@ t_OR = r'Or'
 t_AND = r'And'
 t_EQUAL = r'Equal'
 t_BEGINNING = r'Beginning'
+t_PROC = r'Proc'
 t_UP = r'Up'
 t_DOWN = r'Down'
 t_USECOLOR = r'UseColor'
@@ -91,7 +92,7 @@ def t_ID(t):
                    'Beginning', 'Up', 'Down', 'UseColor', 'PosY', 'PosX', 'Pos', 'ContinueLeft',
                    'ContinueRight', 'ContinueDown', 'ContinueUp', 'Add', 'Put', 'For', 'to', 'Loop', 'End',
                    'Case', 'When', 'Then', 'Else', 'Repeat', 'Until', 'While', 'Whend', 'Def', 'PUT', 'ADD',
-                   'case', 'TurnLeft', 'TurnRight'):
+                   'case', 'TurnLeft', 'TurnRight', 'Proc', 'end'):
         t.type = t.value.upper()  # Cambiar el tipo a MULT, DIV o SUM
     return t
 
@@ -156,8 +157,9 @@ def analysis(input):
 if __name__ == '__main__':
     code = """
         //vamos
-        Def(var1,true)
-        //sii
+        Proc aguacate (banano)
+        []
+        end;
         """
     print("Tokens encontrados:")
     print(analysis(code))

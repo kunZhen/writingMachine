@@ -320,14 +320,24 @@ parser = yacc.yacc()
 
 # Funcion para realizar el analisis sintactico
 def parse(input_string):
-    return parser.parse(input_string, tracking=True)
+    # Separar el input en líneas
+    lines = input_string.strip().splitlines()
 
+    # Filtrar las líneas que no comienzan con '//'
+    filtered_lines = [line for line in lines if not line.strip().startswith('//')]
+
+    # Unir las líneas restantes
+    processed_code = "\n".join(filtered_lines)
+
+    # Ahora, parsear el código procesado
+    return parser.parse(processed_code, tracking=True)
 # Ejemplo de prueba
 if __name__ == "__main__":
     code = """
     //hola
     Def(var1,true);
     Put(var1, false); 
+    //buenas
     """
     # Analizar el codigo y obtener el AST
     ast_root = parse(code)
