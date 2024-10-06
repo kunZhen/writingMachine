@@ -4,6 +4,7 @@ import ply.yacc as yacc
 from analizadorLexico import tokens
 from writingMachine.ast.case_statement import CaseStatement
 from writingMachine.ast.expression_list import ExpressionList
+from writingMachine.ast.procedure_statement import ProcedureStatement
 from writingMachine.ast.repeat_statement import RepeatStatement
 from writingMachine.ast.substr_statement import SubstrStatement
 from writingMachine.ast.add_statement import AddStatement
@@ -79,6 +80,7 @@ def p_program(p):
 # produccion statment para casos de control
 def p_statement(p):
     '''statement : expression
+                 | procedure_statement
                  | def_statement
                  | put_statement
                  | add_statement
@@ -305,6 +307,20 @@ def p_while_statement(p):
     '''while_statement : WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND'''
     p[0] = WhileStatement(condition=p[3], body=p[6])  # La condicion se toma de p[3] y el cuerpo de p[6]
 
+def p_procedure_statement(p):
+    '''procedure_statement : PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI'''
+    p[0] = ProcedureStatement(name=p[2], parameters=p[4], body=p[7])
+
+def p_parameter_list(p):
+    '''parameter_list : expression
+                      | parameter_list COMMA expression
+                      | '''  # Deja esta línea vacía para indicar que puede ser una lista vacía
+    if len(p) == 2:
+        p[0] = [p[1]]  # Una sola expresión
+    elif len(p) == 4:
+        p[0] = p[1] + [p[3]]  # Agrega la expresión a la lista existente
+    else:
+        p[0] = []  # No hay parámetros, lista vacía
 # Regla para manejo de errores
 def p_error(p):
     global syntax_errors
@@ -335,8 +351,12 @@ def parse(input_string):
 if __name__ == "__main__":
     code = """
     //hola
-    Def(var1,true);
-    Put(var1, false); 
+    Proc ayu ()
+    [
+    Def(var1, 1);
+    Put(var1, 1);
+    ];
+    end; 
     //buenas
     """
     # Analizar el codigo y obtener el AST

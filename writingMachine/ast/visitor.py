@@ -28,6 +28,7 @@ from writingMachine.ast.or_statement import OrStatement
 from writingMachine.ast.pos_statement import PosStatement
 from writingMachine.ast.posx_statement import PosXStatement
 from writingMachine.ast.posy_statement import PosYStatement
+from writingMachine.ast.procedure_statement import ProcedureStatement
 from writingMachine.ast.put_statement import PutStatement
 from writingMachine.ast.random_statement import RandomStatement
 from writingMachine.ast.repeat_statement import RepeatStatement
@@ -85,7 +86,7 @@ class ASTVisitor:
                                    PosStatement, PosXStatement, PosYStatement, PutStatement, RandomStatement,
                                    SmallerStatement, SubstrStatement, UpStatement, UseColorStatement,
                                    RepeatStatement, VariableContext, WhileStatement, ForStatement,
-                                   CaseStatement, WhenClause)):
+                                   CaseStatement, WhenClause, ProcedureStatement)):
             return self.visit(node.value)
         return node.value
 
@@ -628,6 +629,13 @@ class ASTVisitor:
             # Ejecutar el cuerpo
             for statement in node.body:
                 self.visit(statement)
+
+    def visit_procedurestatement(self, node):
+        print(f"Ejecutando procedimiento: {node.name}")
+
+        # Ejecutar cada instrucción en el cuerpo del procedimiento
+        for statement in node.body:
+            self.visit(statement)
 
     def visit_binaryoperation(self, node):
         left = self.visit(node.left)
