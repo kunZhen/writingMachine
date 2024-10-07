@@ -367,13 +367,13 @@ if __name__ == "__main__":
     
     Proc ayu2 (bueno)
     [
-    Smaller (sii, 2);
+    Random (4);
     ];
     end;
     
     Proc Main ()
     [
-    Def(car,true);
+    Def(car,5);
     call ayu (2,car);
     call ayu2(1);
     ];

@@ -797,6 +797,34 @@ class ASTVisitor:
         left = self.visit(node.left)
         right = self.visit(node.right)
 
+        # Verificación de contexto para left
+        if isinstance(node.left.value, IdExpression):
+            referenced_var_name = node.left.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Verificación de contexto para right
+        if isinstance(node.right.value, IdExpression):
+            referenced_var_name = node.right.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
         # Verificar que left y right no sean booleanos
         if str(left) == 'True' or str(left) == 'False':
             print(
@@ -813,30 +841,47 @@ class ASTVisitor:
             return None
 
         if left < right:
-            raise ValueError("Error: N1 debe ser mayor o igual a N2.")
-
+            print(
+                f"Error Semantico: N1 debe ser mayor o igual a N2.")
+            self.semantic_errors.append(
+                f"Error Semantico: N1 debe ser mayor o igual a N2.")
+            return None
         result = left - right
         print(f"Sustraccion: {left} - {right} = {result}")
         return result
 
     def visit_randomstatement(self, node):
         # Obtener el valor de n
-        n = node.value.accept(self)  # Asegurate de que node.value sea un nodo que pueda ser evaluado
+        n = node.value.accept(self)  # Asegúrate de que node.value sea un nodo que pueda ser evaluado
+        # Verificación de contexto para n
+        if isinstance(node.value.value, IdExpression):
+            referenced_var_name = node.value.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
 
         # Verificar que n no sea un booleano
         if str(n) == 'True' or str(n) == 'False':
             print(f"Error Semantico: n no puede ser un booleano. Se obtuvo '{n}' de tipo '{type(n).__name__}'.")
-            self.semantic_errors.append(f"Error Semantico: n no puede ser un booleano. Se obtuvo '{n}' de tipo '{type(n).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semantico: n no puede ser un booleano. Se obtuvo '{n}' de tipo '{type(n).__name__}'.")
             return None
 
-        # Verificar que n sea un numero valido
+        # Verificar que n sea un número válido
         if n < 0:
             raise ValueError("Error: n debe ser mayor o igual a 0.")
 
-        # Generar un numero aleatorio entre 0 y n
+        # Generar un número aleatorio entre 0 y n
         result = random.randint(0, n)
         print(result)
-        return result  # Retorna el numero aleatorio generado
+        return result  # Retorna el número aleatorio generado
 
     def visit_multstatement(self, node):
         left = self.visit(node.left)
