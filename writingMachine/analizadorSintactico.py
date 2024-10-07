@@ -376,7 +376,7 @@ if __name__ == "__main__":
     
     Proc Main ()
     [
-    Def(car,5);
+    Def(car,true);
     call ayu (2,car);
     call ayu2(1);
     ];

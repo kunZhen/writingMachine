@@ -892,8 +892,16 @@ class ASTVisitor:
         if isinstance(right, list):
             right = right[0]
 
-        # Imprimir los valores antes de realizar la operacion
+        # Imprimir los valores antes de realizar la operación
         print(f"Operando izquierdo: {left}, Operando derecho: {right}, Operador: {node.operator}")
+
+        # Verificar que ambos operandos son del mismo tipo
+        if type(left) != type(right):
+            print(f"Error Semantico: Los operandos deben ser del mismo tipo. "
+                  f"Encontrado {type(left).__name__} y {type(right).__name__}.")
+            self.semantic_errors.append(f"Error Semantico: Los operandos deben ser del mismo tipo. "
+                                        f"Encontrado {type(left).__name__} y {type(right).__name__}.")
+            return None
 
         if node.operator == '+':
             result = left + right
@@ -909,7 +917,9 @@ class ASTVisitor:
             return result
         elif node.operator == '/':
             if right == 0:
-                raise ValueError("Division por cero")
+                print("Error Semantico: Division por cero")
+                self.semantic_errors.append("Error Semantico: Division por cero")
+                return None
             result = left / right
             print(result)
             return result
