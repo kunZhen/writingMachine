@@ -1046,16 +1046,43 @@ class ASTVisitor:
         # Obtener los valores de min_value y max_value
         min_value = self.visit(node.min_value)
         max_value = self.visit(node.max_value)
+        print(min_value)
+
+        # Verificar que min_value y max_value sean enteros
+        if not isinstance(min_value, int):
+            error_msg = f"Error Semántico: min_value debe ser un número entero. Se obtuvo '{min_value}' de tipo '{type(min_value).__name__}'."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
+
+        if not isinstance(max_value, int):
+            error_msg = f"Error Semántico: max_value debe ser un número entero. Se obtuvo '{max_value}' de tipo '{type(max_value).__name__}'."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
 
         # Verificar si min_value es mayor o igual que max_value
         if min_value >= max_value:
             raise ValueError("Max debe ser mayor que Min en el bucle FOR.")
 
-        # Inicializar la variable en el contexto
-        if self.variable_context.get_variable(node.variable) is not None:
-            raise ValueError(f"La variable '{node.variable}' ya existe.")
+        # Reglas para el nombre de la variable de control
+        if not re.match(r'^[a-z][a-zA-Z0-9*@]{2,9}$', node.variable):
+            error_msg = (f"Error Semántico: El nombre de la variable de control '{node.variable}' no cumple "
+                         "con las reglas. Debe tener entre 3 y 10 caracteres, comenzar con "
+                         "una letra minúscula, y puede contener letras, números, '_' y '@'.")
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
 
-        # Establecer la variable de control del bucle
+        # Verificar si la variable ya existe en el contexto actual o en global
+        if f"{node.variable}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
+                f"{node.variable}_Main" in self.variable_context.variables:
+            error_msg = f"La variable '{node.variable}' ya existe en el contexto actual o global."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
+
+        # Inicializar la variable en el contexto
         self.variable_context.set_variable(node.variable, min_value, "NUMBER")
 
         # Ejecutar el cuerpo del bucle
@@ -1070,34 +1097,46 @@ class ASTVisitor:
 
         # Eliminar la variable del contexto al finalizar el bucle
         self.variable_context.remove_variable(node.variable)
+
     def visit_casestatement(self, node):
         print(f"Ejecutando Case para la variable: {node.variable}")
 
+        # Verificación de contexto para la variable que se está evaluando
+
+        referenced_var_name = node.variable
+        referenced_full_name = (
+            f"{referenced_var_name}_{self.variable_context.current_procedure}"
+            if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+            else f"{referenced_var_name}_Main"
+        )
+
+        if referenced_full_name not in self.variable_context.variables:
+            print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+            self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+            return None
+
         # Obtener el valor de la variable
         variable_value = self.variable_context.get_variable(node.variable)
-        if variable_value is None:
-            raise ValueError(f"La variable '{node.variable}' no esta definida.")
-
         print(f"Valor de la variable: {variable_value}")
 
-        # Evaluar cada clausula When
+        # Evaluar cada cláusula When
         for when_clause in node.when_clauses:
             condition_value = self.visit(when_clause.condition)
-            print(f"Evaluando condicion: {condition_value}")
+            print(f"Evaluando condición: {condition_value}")
 
             if condition_value == variable_value:
-                print("Condicion cumplida, ejecutando cuerpo del When")
+                print("Condición cumplida, ejecutando cuerpo del When")
                 for statement in when_clause.body:
                     self.visit(statement)
                 return
 
-        # Si ninguna condicion se cumple y hay una clausula Else, ejecutarla
+        # Si ninguna condición se cumple y hay una cláusula Else, ejecutarla
         if node.else_clause:
-            print("Ninguna condicion cumplida, ejecutando clausula Else")
+            print("Ninguna condición cumplida, ejecutando cláusula Else")
             for statement in node.else_clause:
                 self.visit(statement)
         else:
-            print("Ninguna condicion cumplida y no hay clausula Else")
+            print("Ninguna condición cumplida y no hay cláusula Else")
 
     def visit_repeatstatement(self, node):
         iteration = 0

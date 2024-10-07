@@ -367,13 +367,18 @@ if __name__ == "__main__":
     
     Proc ayu2 (bueno)
     [
-    Sum (bueno, bueno);
+    Case car
+        When true Then
+        [Add(bueno,1);]
+    Else
+        [Add(bueno, 3);]
+    End Case;
     ];
     end;
     
     Proc Main ()
     [
-    Def(car,5);
+    Def(car,false);
     call ayu (2,car);
     call ayu2(1);
     ];
