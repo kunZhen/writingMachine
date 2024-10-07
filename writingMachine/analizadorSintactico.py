@@ -367,13 +367,10 @@ if __name__ == "__main__":
     
     Proc ayu2 (bueno)
     [
-    Def(xxx,4);
-    Put(xxx,8);
-    Add(xxx, Sum(xxx,Substr(xxx,bueno)));
-    Repeat
-        [Add(xxx)]
-    Until
-        [xxx = 55];
+    While [bueno < 5]
+        [Add(bueno);
+        ContinueLeft 3;]
+    Whend;
     ];
     end;
     

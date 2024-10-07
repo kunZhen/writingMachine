@@ -1193,7 +1193,15 @@ class ASTVisitor:
 
             # Asegurate de que tomas solo el primer valor si es una lista
             if isinstance(condition_result, list):
-                condition_result = condition_result[0]
+                if condition_result:  # Verificar si la lista no está vacía
+                    condition_result = condition_result[0]
+                else:
+                    print("La condición resultó en una lista vacía. Saliendo del bucle While.")
+                    break
+
+            if condition_result is None:
+                print("Saliendo del bucle While")
+                break  # Salir del bucle si el resultado de la condición es None
 
             if not condition_result:
                 print("Saliendo del bucle While")
