@@ -586,6 +586,35 @@ class ASTVisitor:
     def visit_equalstatement(self, node):
         left = node.left.accept(self)
         right = node.right.accept(self)
+
+        # Verificación de contexto para left
+        if isinstance(node.left.value, IdExpression):
+            referenced_var_name = node.left.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Verificación de contexto para right
+        if isinstance(node.right.value, IdExpression):
+            referenced_var_name = node.right.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
         result = left == right
         print(result)
         return result
@@ -593,6 +622,35 @@ class ASTVisitor:
     def visit_andstatement(self, node):
         left = node.left.accept(self)
         right = node.right.accept(self)
+
+        # Verificación de contexto para left
+        if isinstance(node.left.value, IdExpression):
+            referenced_var_name = node.left.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Verificación de contexto para right
+        if isinstance(node.right.value, IdExpression):
+            referenced_var_name = node.right.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
         result = bool(left) and bool(right)
         print(result)
         return result
@@ -600,6 +658,35 @@ class ASTVisitor:
     def visit_orstatement(self, node):
         left = node.left.accept(self)
         right = node.right.accept(self)
+
+        # Verificación de contexto para left
+        if isinstance(node.left.value, IdExpression):
+            referenced_var_name = node.left.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Verificación de contexto para right
+        if isinstance(node.right.value, IdExpression):
+            referenced_var_name = node.right.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
         result = bool(left) or bool(right)
         print(result)
         return result

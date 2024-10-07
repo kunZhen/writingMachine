@@ -367,7 +367,7 @@ if __name__ == "__main__":
     
     Proc ayu2 (bueno)
     [
-    UseColor bueno;
+    Or (sii, car);
     ];
     end;
     
