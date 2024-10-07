@@ -81,7 +81,7 @@ Rule 69    case_statement -> CASE ID when_clauses ELSE LBRACKET program RBRACKET
 Rule 70    when_clauses -> when_clause
 Rule 71    when_clauses -> when_clauses when_clause
 Rule 72    when_clause -> WHEN expression THEN LBRACKET program RBRACKET
-Rule 73    repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+Rule 73    repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
 Rule 74    while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 Rule 75    procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
 Rule 76    call_statement -> CALL ID LPAREN parameter_list RPAREN
@@ -172,10 +172,10 @@ pos_statement        : 15
 posx_statement       : 16
 posy_statement       : 17
 procedure_statement  : 6
-program              : 3 4 66 69 72 73 73 74 74 75 0
+program              : 3 4 66 69 72 73 74 74 75 0
 put_statement        : 9
 repeat_statement     : 24
-statement            : 1 2 3 4 33 34 36 37 38 39 40 41 41 42 43 44 48 48 49 49 50 50 51 51 52 52 53 53 54 55 55 56 56 57 57 62 63 67
+statement            : 1 2 3 4 33 34 36 37 38 39 40 41 41 42 43 44 48 48 49 49 50 50 51 51 52 52 53 53 54 55 55 56 56 57 57 62 63 67 73
 up_statement         : 20
 usecolor_statement   : 18
 when_clause          : 70 71
@@ -253,7 +253,7 @@ state 0
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -382,7 +382,7 @@ state 1
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -1520,7 +1520,7 @@ state 25
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -1908,7 +1908,7 @@ state 43
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -2034,7 +2034,7 @@ state 44
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -2160,7 +2160,7 @@ state 45
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -2286,7 +2286,7 @@ state 46
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -2419,7 +2419,7 @@ state 48
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -2545,7 +2545,7 @@ state 49
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -2671,7 +2671,7 @@ state 50
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -2884,7 +2884,7 @@ state 55
 
 state 56
 
-    (73) repeat_statement -> REPEAT . LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> REPEAT . LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
 
     LBRACKET        shift and go to state 94
 
@@ -3341,7 +3341,7 @@ state 67
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -3468,7 +3468,7 @@ state 68
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     RPAREN          shift and go to state 105
@@ -3636,7 +3636,7 @@ state 70
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -3762,7 +3762,7 @@ state 71
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -3888,7 +3888,7 @@ state 72
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -4014,7 +4014,7 @@ state 73
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -4140,7 +4140,7 @@ state 74
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -4266,7 +4266,7 @@ state 75
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -4392,7 +4392,7 @@ state 76
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -4518,7 +4518,7 @@ state 77
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -4644,7 +4644,7 @@ state 78
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -4986,7 +4986,7 @@ state 88
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -5204,7 +5204,7 @@ state 93
 
 state 94
 
-    (73) repeat_statement -> REPEAT LBRACKET . program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> REPEAT LBRACKET . program RBRACKET UNTIL LBRACKET statement RBRACKET
     (1) program -> . statement SEMI
     (2) program -> . statement
     (3) program -> . program statement SEMI
@@ -5271,7 +5271,7 @@ state 94
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -5402,7 +5402,7 @@ state 95
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -6388,7 +6388,7 @@ state 125
 
 state 126
 
-    (73) repeat_statement -> REPEAT LBRACKET program . RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> REPEAT LBRACKET program . RBRACKET UNTIL LBRACKET statement RBRACKET
     (3) program -> program . statement SEMI
     (4) program -> program . statement
     (5) statement -> . expression
@@ -6453,7 +6453,7 @@ state 126
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 151
@@ -6582,7 +6582,7 @@ state 127
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 152
@@ -6709,7 +6709,7 @@ state 128
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -6835,7 +6835,7 @@ state 129
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -6961,7 +6961,7 @@ state 130
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -7087,7 +7087,7 @@ state 131
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -7213,7 +7213,7 @@ state 132
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -7339,7 +7339,7 @@ state 133
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -7519,7 +7519,7 @@ state 135
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -7645,7 +7645,7 @@ state 136
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -7771,7 +7771,7 @@ state 137
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -7937,7 +7937,7 @@ state 141
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -8063,7 +8063,7 @@ state 142
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -8234,7 +8234,7 @@ state 144
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -8360,7 +8360,7 @@ state 145
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -8488,7 +8488,7 @@ state 150
 
 state 151
 
-    (73) repeat_statement -> REPEAT LBRACKET program RBRACKET . UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> REPEAT LBRACKET program RBRACKET . UNTIL LBRACKET statement RBRACKET
 
     UNTIL           shift and go to state 173
 
@@ -8841,7 +8841,7 @@ state 171
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -8912,7 +8912,7 @@ state 172
 
 state 173
 
-    (73) repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL . LBRACKET program RBRACKET
+    (73) repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL . LBRACKET statement RBRACKET
 
     LBRACKET        shift and go to state 193
 
@@ -8986,7 +8986,7 @@ state 174
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -9603,7 +9603,7 @@ state 184
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -9955,7 +9955,7 @@ state 191
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 197
@@ -10086,7 +10086,7 @@ state 192
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -10150,11 +10150,7 @@ state 192
 
 state 193
 
-    (73) repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET . program RBRACKET
-    (1) program -> . statement SEMI
-    (2) program -> . statement
-    (3) program -> . program statement SEMI
-    (4) program -> . program statement
+    (73) repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET . statement RBRACKET
     (5) statement -> . expression
     (6) statement -> . procedure_statement
     (7) statement -> . call_statement
@@ -10217,7 +10213,7 @@ state 193
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -10255,8 +10251,7 @@ state 193
     REPEAT          shift and go to state 56
     WHILE           shift and go to state 57
 
-    program                        shift and go to state 199
-    statement                      shift and go to state 2
+    statement                      shift and go to state 199
     expression                     shift and go to state 3
     procedure_statement            shift and go to state 4
     call_statement                 shift and go to state 5
@@ -10346,7 +10341,7 @@ state 194
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 200
@@ -10475,7 +10470,7 @@ state 195
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 201
@@ -10618,7 +10613,7 @@ state 198
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 204
@@ -10682,132 +10677,10 @@ state 198
 
 state 199
 
-    (73) repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program . RBRACKET
-    (3) program -> program . statement SEMI
-    (4) program -> program . statement
-    (5) statement -> . expression
-    (6) statement -> . procedure_statement
-    (7) statement -> . call_statement
-    (8) statement -> . def_statement
-    (9) statement -> . put_statement
-    (10) statement -> . add_statement
-    (11) statement -> . continueup_statement
-    (12) statement -> . continuedown_statement
-    (13) statement -> . continueright_statement
-    (14) statement -> . continueleft_statement
-    (15) statement -> . pos_statement
-    (16) statement -> . posx_statement
-    (17) statement -> . posy_statement
-    (18) statement -> . usecolor_statement
-    (19) statement -> . down_statement
-    (20) statement -> . up_statement
-    (21) statement -> . beginning_statement
-    (22) statement -> . for_statement
-    (23) statement -> . case_statement
-    (24) statement -> . repeat_statement
-    (25) statement -> . while_statement
-    (26) expression -> . expression PLUS expression
-    (27) expression -> . expression MINUS expression
-    (28) expression -> . expression MULT_OP expression
-    (29) expression -> . expression DIV_OP expression
-    (30) expression -> . expression LT expression
-    (31) expression -> . expression GT expression
-    (32) expression -> . expression EQUALS expression
-    (48) expression -> . EQUAL LPAREN statement COMMA statement RPAREN
-    (49) expression -> . AND LPAREN statement COMMA statement RPAREN
-    (50) expression -> . OR LPAREN statement COMMA statement RPAREN
-    (51) expression -> . GREATER LPAREN statement COMMA statement RPAREN
-    (52) expression -> . SMALLER LPAREN statement COMMA statement RPAREN
-    (53) expression -> . SUBSTR LPAREN statement COMMA statement RPAREN
-    (54) expression -> . RANDOM LPAREN statement RPAREN
-    (55) expression -> . MULT LPAREN statement COMMA statement RPAREN
-    (56) expression -> . DIV LPAREN statement COMMA statement RPAREN
-    (57) expression -> . SUM LPAREN statement COMMA statement RPAREN
-    (58) expression -> . LPAREN expression_list RPAREN
-    (61) expression -> . BOOLEAN
-    (64) expression -> . NUMBER
-    (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
-    (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
-    (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
-    (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
-    (35) add_statement -> . ADD LPAREN ID RPAREN
-    (36) add_statement -> . ADD LPAREN ID COMMA statement RPAREN
-    (37) continueup_statement -> . CONTINUEUP statement
-    (38) continuedown_statement -> . CONTINUEDOWN statement
-    (39) continueright_statement -> . CONTINUERIGHT statement
-    (40) continueleft_statement -> . CONTINUELEFT statement
-    (41) pos_statement -> . POS LPAREN statement COMMA statement RPAREN
-    (42) posx_statement -> . POSX statement
-    (43) posy_statement -> . POSY statement
-    (44) usecolor_statement -> . USECOLOR statement
-    (45) down_statement -> . DOWN
-    (46) up_statement -> . UP
-    (47) beginning_statement -> . BEGINNING
-    (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
-    (68) case_statement -> . CASE ID when_clauses END CASE
-    (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
-    (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (73) repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement . RBRACKET
 
     RBRACKET        shift and go to state 205
-    EQUAL           shift and go to state 24
-    AND             shift and go to state 26
-    OR              shift and go to state 27
-    GREATER         shift and go to state 28
-    SMALLER         shift and go to state 29
-    SUBSTR          shift and go to state 30
-    RANDOM          shift and go to state 31
-    MULT            shift and go to state 32
-    DIV             shift and go to state 33
-    SUM             shift and go to state 34
-    LPAREN          shift and go to state 25
-    BOOLEAN         shift and go to state 35
-    NUMBER          shift and go to state 36
-    ID              shift and go to state 37
-    PROC            shift and go to state 38
-    CALL            shift and go to state 39
-    DEF             shift and go to state 40
-    PUT             shift and go to state 41
-    ADD             shift and go to state 42
-    CONTINUEUP      shift and go to state 43
-    CONTINUEDOWN    shift and go to state 44
-    CONTINUERIGHT   shift and go to state 45
-    CONTINUELEFT    shift and go to state 46
-    POS             shift and go to state 47
-    POSX            shift and go to state 48
-    POSY            shift and go to state 49
-    USECOLOR        shift and go to state 50
-    DOWN            shift and go to state 51
-    UP              shift and go to state 52
-    BEGINNING       shift and go to state 53
-    FOR             shift and go to state 54
-    CASE            shift and go to state 55
-    REPEAT          shift and go to state 56
-    WHILE           shift and go to state 57
 
-    statement                      shift and go to state 58
-    expression                     shift and go to state 3
-    procedure_statement            shift and go to state 4
-    call_statement                 shift and go to state 5
-    def_statement                  shift and go to state 6
-    put_statement                  shift and go to state 7
-    add_statement                  shift and go to state 8
-    continueup_statement           shift and go to state 9
-    continuedown_statement         shift and go to state 10
-    continueright_statement        shift and go to state 11
-    continueleft_statement         shift and go to state 12
-    pos_statement                  shift and go to state 13
-    posx_statement                 shift and go to state 14
-    posy_statement                 shift and go to state 15
-    usecolor_statement             shift and go to state 16
-    down_statement                 shift and go to state 17
-    up_statement                   shift and go to state 18
-    beginning_statement            shift and go to state 19
-    for_statement                  shift and go to state 20
-    case_statement                 shift and go to state 21
-    repeat_statement               shift and go to state 22
-    while_statement                shift and go to state 23
 
 state 200
 
@@ -10848,47 +10721,47 @@ state 204
 
 state 205
 
-    (73) repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .
+    (73) repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .
 
-    SEMI            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    EQUAL           reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    AND             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    OR              reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    GREATER         reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    SMALLER         reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    SUBSTR          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    RANDOM          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    MULT            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    DIV             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    SUM             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    LPAREN          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    BOOLEAN         reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    NUMBER          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    ID              reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    PROC            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    CALL            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    DEF             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    PUT             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    ADD             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    CONTINUEUP      reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    CONTINUEDOWN    reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    CONTINUERIGHT   reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    CONTINUELEFT    reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    POS             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    POSX            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    POSY            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    USECOLOR        reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    DOWN            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    UP              reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    BEGINNING       reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    FOR             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    CASE            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    REPEAT          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    WHILE           reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    $end            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    RPAREN          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    COMMA           reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
-    RBRACKET        reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET .)
+    SEMI            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    EQUAL           reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    AND             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    OR              reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    GREATER         reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    SMALLER         reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    SUBSTR          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    RANDOM          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    MULT            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    DIV             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    SUM             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    LPAREN          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    BOOLEAN         reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    NUMBER          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    ID              reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    PROC            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    CALL            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    DEF             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    PUT             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    ADD             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    CONTINUEUP      reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    CONTINUEDOWN    reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    CONTINUERIGHT   reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    CONTINUELEFT    reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    POS             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    POSX            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    POSY            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    USECOLOR        reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    DOWN            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    UP              reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    BEGINNING       reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    FOR             reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    CASE            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    REPEAT          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    WHILE           reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    $end            reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    RPAREN          reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    COMMA           reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
+    RBRACKET        reduce using rule 73 (repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET .)
 
 
 state 206
@@ -11012,7 +10885,7 @@ state 208
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 24
@@ -11231,7 +11104,7 @@ state 211
     (66) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
     (68) case_statement -> . CASE ID when_clauses END CASE
     (69) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
+    (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 212

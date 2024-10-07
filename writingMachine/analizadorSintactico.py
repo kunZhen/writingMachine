@@ -302,7 +302,7 @@ def p_when_clause(p):
     p[0] = WhenClause(condition=p[2], body=p[5])
 # Regla para el control repeat
 def p_repeat_statement(p):
-    '''repeat_statement : REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET'''
+    '''repeat_statement : REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET'''
     p[0] = RepeatStatement(body=p[3], condition=p[7])
 # Regla para el control While
 def p_while_statement(p):
@@ -367,12 +367,13 @@ if __name__ == "__main__":
     
     Proc ayu2 (bueno)
     [
-    Case car
-        When true Then
-        [Add(bueno,1);]
-    Else
-        [Add(bueno, 3);]
-    End Case;
+    Def(xxx,4);
+    Put(xxx,8);
+    Add(xxx, Sum(xxx,Substr(xxx,bueno)));
+    Repeat
+        [Add(xxx)]
+    Until
+        [xxx = 55];
     ];
     end;
     
@@ -399,7 +400,7 @@ if __name__ == "__main__":
     visitor.visit(ast_root)  # Ejecuta el arbol AST
 
     #visitor.print_ast(ast_root)
-    #visitor.print_symbol_table()
+    visitor.print_symbol_table()
 
     #visitor.print_procedure_tracker()
 
