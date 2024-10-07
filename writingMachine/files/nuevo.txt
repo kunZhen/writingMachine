@@ -1,4 +1,32 @@
-Def(var5,6);
+//hola
+    Proc ayu (chamoy, pro)
+    [
+    Def(car, 2);
+    Def(sii,1);
+    ];
+    end;
 
+    Proc ayu2 (bueno)
+    [
+    While [bueno < 5]
+        [Add(bueno);
+        ContinueLeft 3;]
+    Whend;
+    ];
+    end;
+
+    Proc Main ()
+    [
+    Def(car,false);
+    call ayu (2,car);
+    call ayu2(1);
+    ];
+    end;
+    call Main ();
+
+
+
+
+//buenas
 
 

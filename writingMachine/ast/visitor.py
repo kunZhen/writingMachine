@@ -37,6 +37,8 @@ from writingMachine.ast.repeat_statement import RepeatStatement
 from writingMachine.ast.smaller_statement import SmallerStatement
 from writingMachine.ast.substr_statement import SubstrStatement
 from writingMachine.ast.sum_statement import SumStatement
+from writingMachine.ast.turnleft_statement import TurnLeftStatement
+from writingMachine.ast.turnright_statement import TurnRightStatement
 from writingMachine.ast.up_statement import UpStatement
 from writingMachine.ast.usecolor_statement import UseColorStatement
 from writingMachine.ast.variable_context import VariableContext
@@ -52,6 +54,7 @@ class ASTVisitor:
         self.proc_var_tracker = ProcedureVariableTracker()
         self.x_position = 0
         self.y_position = 0
+        self.angle = 0
         self.current_color = 1  # 1 para negro, 2 para rojo
         self.pen_down = False
         self.semantic_errors = []
@@ -94,7 +97,7 @@ class ASTVisitor:
                                    PosStatement, PosXStatement, PosYStatement, PutStatement, RandomStatement,
                                    SmallerStatement, SubstrStatement, UpStatement, UseColorStatement,
                                    RepeatStatement, VariableContext, WhileStatement, ForStatement,
-                                   CaseStatement, WhenClause, ProcedureStatement, CallStatement)):
+                                   CaseStatement, WhenClause, ProcedureStatement, CallStatement, TurnRightStatement, TurnLeftStatement)):
             return self.visit(node.value)
         return node.value
 
@@ -276,6 +279,11 @@ class ASTVisitor:
                     else f"{referenced_var_name}_Main"
 
                 referenced_value = self.variable_context.get_variable(referenced_full_name)
+                if isinstance(referenced_value, bool):
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
                 if isinstance(referenced_value, (int, float)):
                     self.y_position += referenced_value
                     result = f"Movido {referenced_value} unidades hacia arriba. Nueva posicion en Y: {self.y_position}"
@@ -316,6 +324,11 @@ class ASTVisitor:
                     else f"{referenced_var_name}_Main"
 
                 referenced_value = self.variable_context.get_variable(referenced_full_name)
+                if isinstance(referenced_value, bool):
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
                 if isinstance(referenced_value, (int, float)):
                     self.y_position -= referenced_value
                     result = f"Movido {referenced_value} unidades hacia abajo. Nueva posicion en Y: {self.y_position}"
@@ -355,6 +368,11 @@ class ASTVisitor:
                     else f"{referenced_var_name}_Main"
 
                 referenced_value = self.variable_context.get_variable(referenced_full_name)
+                if isinstance(referenced_value, bool):
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
                 if isinstance(referenced_value, (int, float)):
                     self.x_position += referenced_value
                     result = f"Movido {referenced_value} unidades hacia la derecha. Nueva posicion en X: {self.x_position}"
@@ -394,6 +412,11 @@ class ASTVisitor:
                     else f"{referenced_var_name}_Main"
 
                 referenced_value = self.variable_context.get_variable(referenced_full_name)
+                if isinstance(referenced_value, bool):
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
                 if isinstance(referenced_value, (int, float)):
                     self.x_position -= referenced_value
                     result = f"Movido {referenced_value} unidades hacia la izquierda. Nueva posicion en X: {self.x_position}"
@@ -412,6 +435,94 @@ class ASTVisitor:
             move_units_value = self.visit(move_units)
             if isinstance(move_units_value, (int, float)):
                 self.x_position -= move_units_value
+                result = f"Movido {move_units_value} unidades hacia la izquierda. Nueva posicion en X: {self.x_position}"
+                print(result)
+                return result
+            else:
+                print(f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                self.semantic_errors.append(
+                    f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                return None
+
+    def visit_turnrightstatement(self, node):
+        move_units = node.move_units
+
+        if isinstance(move_units.value, IdExpression):
+            referenced_var_name = move_units.value.var_name
+            if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
+                    f"{referenced_var_name}_Main" in self.variable_context.variables:
+                referenced_full_name = f"{referenced_var_name}_{self.variable_context.current_procedure}" \
+                    if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+                    else f"{referenced_var_name}_Main"
+
+                referenced_value = self.variable_context.get_variable(referenced_full_name)
+                if isinstance(referenced_value, bool):
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
+                if isinstance(referenced_value, (int, float)):
+                    self.angle = referenced_value
+                    result = f"Movido {referenced_value} unidades hacia la derecha. Nueva posicion en X: {self.x_position}"
+                    print(result)
+                    return result
+                else:
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
+            else:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+        else:
+            move_units_value = self.visit(move_units)
+            if isinstance(move_units_value, (int, float)):
+                self.angle = move_units_value
+                result = f"Movido {move_units_value} unidades hacia la derecha. Nueva posicion en X: {self.x_position}"
+                print(result)
+                return result
+            else:
+                print(f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                self.semantic_errors.append(
+                    f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                return None
+
+    def visit_turnleftstatement(self, node):
+        move_units = node.move_units
+
+        if isinstance(move_units.value, IdExpression):
+            referenced_var_name = move_units.value.var_name
+            if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
+                    f"{referenced_var_name}_Main" in self.variable_context.variables:
+                referenced_full_name = f"{referenced_var_name}_{self.variable_context.current_procedure}" \
+                    if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+                    else f"{referenced_var_name}_Main"
+
+                referenced_value = self.variable_context.get_variable(referenced_full_name)
+                if isinstance(referenced_value, bool):
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
+                if isinstance(referenced_value, (int, float)):
+                    self.angle -= referenced_value
+                    result = f"Movido {referenced_value} unidades hacia la izquierda. Nueva posicion en X: {self.x_position}"
+                    print(result)
+                    return result
+                else:
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
+            else:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+        else:
+            move_units_value = self.visit(move_units)
+            if isinstance(move_units_value, (int, float)):
+                self.angle -= move_units_value
                 result = f"Movido {move_units_value} unidades hacia la izquierda. Nueva posicion en X: {self.x_position}"
                 print(result)
                 return result

@@ -1,24 +1,179 @@
 Tokens encontrados:
-[('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('var5', 'ID', 5, 5), (',', 'COMMA', 5, 9), (6, 'NUMBER', 5, 10), (')', 'RPAREN', 5, 11), (';', 'SEMI', 5, 12)]
+[('Proc', 'PROC', 2, 5), ('ayu', 'ID', 2, 10), ('(', 'LPAREN', 2, 14), ('chamoy', 'ID', 2, 15), (',', 'COMMA', 2, 21), ('pro', 'ID', 2, 23), (')', 'RPAREN', 2, 26), ('[', 'LBRACKET', 3, 5), ('Def', 'DEF', 4, 5), ('(', 'LPAREN', 4, 8), ('car', 'ID', 4, 9), (',', 'COMMA', 4, 12), (2, 'NUMBER', 4, 14), (')', 'RPAREN', 4, 15), (';', 'SEMI', 4, 16), ('Def', 'DEF', 5, 5), ('(', 'LPAREN', 5, 8), ('sii', 'ID', 5, 9), (',', 'COMMA', 5, 12), (1, 'NUMBER', 5, 13), (')', 'RPAREN', 5, 14), (';', 'SEMI', 5, 15), (']', 'RBRACKET', 6, 5), (';', 'SEMI', 6, 6), ('end', 'END', 7, 5), (';', 'SEMI', 7, 8), ('Proc', 'PROC', 9, 5), ('ayu2', 'ID', 9, 10), ('(', 'LPAREN', 9, 15), ('bueno', 'ID', 9, 16), (')', 'RPAREN', 9, 21), ('[', 'LBRACKET', 10, 5), ('While', 'WHILE', 11, 5), ('[', 'LBRACKET', 11, 11), ('bueno', 'ID', 11, 12), ('<', 'LT', 11, 18), (5, 'NUMBER', 11, 20), (']', 'RBRACKET', 11, 21), ('[', 'LBRACKET', 12, 9), ('Add', 'ADD', 12, 10), ('(', 'LPAREN', 12, 13), ('bueno', 'ID', 12, 14), (')', 'RPAREN', 12, 19), (';', 'SEMI', 12, 20), ('ContinueLeft', 'CONTINUELEFT', 13, 9), (3, 'NUMBER', 13, 22), (';', 'SEMI', 13, 23), (']', 'RBRACKET', 13, 24), ('Whend', 'WHEND', 14, 5), (';', 'SEMI', 14, 10), (']', 'RBRACKET', 15, 5), (';', 'SEMI', 15, 6), ('end', 'END', 16, 5), (';', 'SEMI', 16, 8), ('Proc', 'PROC', 18, 5), ('Main', 'ID', 18, 10), ('(', 'LPAREN', 18, 15), (')', 'RPAREN', 18, 16), ('[', 'LBRACKET', 19, 5), ('Def', 'DEF', 20, 5), ('(', 'LPAREN', 20, 8), ('car', 'ID', 20, 9), (',', 'COMMA', 20, 12), ('false', 'BOOLEAN', 20, 13), (')', 'RPAREN', 20, 18), (';', 'SEMI', 20, 19), ('call', 'CALL', 21, 5), ('ayu', 'ID', 21, 10), ('(', 'LPAREN', 21, 14), (2, 'NUMBER', 21, 15), (',', 'COMMA', 21, 16), ('car', 'ID', 21, 17), (')', 'RPAREN', 21, 20), (';', 'SEMI', 21, 21), ('call', 'CALL', 22, 5), ('ayu2', 'ID', 22, 10), ('(', 'LPAREN', 22, 14), (1, 'NUMBER', 22, 15), (')', 'RPAREN', 22, 16), (';', 'SEMI', 22, 17), (']', 'RBRACKET', 23, 5), (';', 'SEMI', 23, 6), ('end', 'END', 24, 5), (';', 'SEMI', 24, 8), ('call', 'CALL', 25, 5), ('Main', 'ID', 25, 10), ('(', 'LPAREN', 25, 15), (')', 'RPAREN', 25, 16), (';', 'SEMI', 25, 17)]
 
-AST: <writingMachine.ast.program.Program object at 0x000001F22A6C5670>
-Definido var5 = 6 (Tipo: NUMBER)
+AST: <writingMachine.ast.program.Program object at 0x000001AACAF09E80>
+Registrando procedimiento: ayu
+Procedimiento ayu registrado con 2 parámetros: ['chamoy', 'pro']
+Registrando procedimiento: ayu2
+Procedimiento ayu2 registrado con 1 parámetros: ['bueno']
+Registrando procedimiento: Main
+Procedimiento Main registrado con 0 parámetros: []
+
+Ejecutando llamada al procedimiento: Main con 0 argumentos
+Ejecutando cuerpo del procedimiento Main
+Definido car = False (Tipo: BOOLEAN)
+
+Ejecutando llamada al procedimiento: ayu con 2 argumentos
+Asignando parámetro chamoy = 2
+Asignando parámetro pro = False
+Ejecutando cuerpo del procedimiento ayu
+Error Semántico: La variable 'car_Main' ya está definida como 'BOOLEAN', pero se intenta redefinir como 'NUMBER'.
+Definido sii = 1 (Tipo: NUMBER)
+Finalizada la ejecución del procedimiento ayu
+
+
+Ejecutando llamada al procedimiento: ayu2 con 1 argumentos
+Asignando parámetro bueno = 1
+Ejecutando cuerpo del procedimiento ayu2
+Iteracion While 1
+Operando izquierdo: 1, Operando derecho: 5, Operador: <
+True
+  Resultado de la condicion: [True]
+Actualizado bueno_ayu2 = 2
+Movido 3 unidades hacia la izquierda. Nueva posicion en X: -3
+Iteracion While 2
+Operando izquierdo: 2, Operando derecho: 5, Operador: <
+True
+  Resultado de la condicion: [True]
+Actualizado bueno_ayu2 = 3
+Movido 3 unidades hacia la izquierda. Nueva posicion en X: -6
+Iteracion While 3
+Operando izquierdo: 3, Operando derecho: 5, Operador: <
+True
+  Resultado de la condicion: [True]
+Actualizado bueno_ayu2 = 4
+Movido 3 unidades hacia la izquierda. Nueva posicion en X: -9
+Iteracion While 4
+Operando izquierdo: 4, Operando derecho: 5, Operador: <
+True
+  Resultado de la condicion: [True]
+Actualizado bueno_ayu2 = 5
+Movido 3 unidades hacia la izquierda. Nueva posicion en X: -12
+Iteracion While 5
+Operando izquierdo: 5, Operando derecho: 5, Operador: <
+False
+  Resultado de la condicion: [False]
+Saliendo del bucle While
+Finalizada la ejecución del procedimiento ayu2
+
+Finalizada la ejecución del procedimiento Main
+
 
 AST:
 Program
   statements: [
-  DefStatement
-    var_name: var5
-    value:
-    Expression
-      value:
-      NumberExpression
-        value: 6
+  ProcedureStatement
+    name: ayu
+    parameters: [
+    IdExpression
+      var_name: chamoy
+    IdExpression
+      var_name: pro
+    ]
+    body: [
+    Program
+      statements: [
+      DefStatement
+        var_name: car
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 2
+      DefStatement
+        var_name: sii
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      ]
+    ]
+  ProcedureStatement
+    name: ayu2
+    parameters: [
+    IdExpression
+      var_name: bueno
+    ]
+    body: [
+    Program
+      statements: [
+      Expression
+        value:
+        WhileStatement
+          condition:
+          Program
+            statements: [
+            Expression
+              value:
+              BinaryOperation
+                left:
+                IdExpression
+                  var_name: bueno
+                operator: <
+                right:
+                NumberExpression
+                  value: 5
+            ]
+          body: [
+          Program
+            statements: [
+            AddStatement
+              var_name: bueno
+              increment_value: None
+            ContinueLeftStatement
+              move_units:
+              Expression
+                value:
+                NumberExpression
+                  value: 3
+            ]
+          ]
+      ]
+    ]
+  ProcedureStatement
+    name: Main
+    parameters: [
+    ]
+    body: [
+    Program
+      statements: [
+      DefStatement
+        var_name: car
+        value:
+        Expression
+          value:
+          BooleanExpression
+            value: False
+      CallStatement
+        procedure_name: ayu
+        arguments: [
+        NumberExpression
+          value: 2
+        IdExpression
+          var_name: car
+        ]
+      CallStatement
+        procedure_name: ayu2
+        arguments: [
+        NumberExpression
+          value: 1
+        ]
+      ]
+    ]
+  CallStatement
+    procedure_name: Main
+    arguments: [
+    ]
   ]
 Symbol Table:
-Name       Type       Value
-----------------------------------------
-var5       NUMBER     6
+Name       Type       Procedure       Value
+--------------------------------------------------
+car        BOOLEAN    Main            False
+chamoy     NUMBER     ayu             2
+pro        BOOLEAN    ayu             False
+sii        NUMBER     ayu             1
+bueno      NUMBER     ayu2            5
 
-Errores lexicos:
-Error Léxico: El programa debe comenzar con un comentario en la línea 5
+Errores semanticos:
+Error Semántico: La variable 'car_Main' ya está definida como 'BOOLEAN', pero se intenta redefinir como 'NUMBER'.

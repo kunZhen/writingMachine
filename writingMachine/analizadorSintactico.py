@@ -90,6 +90,8 @@ def p_statement(p):
                  | continuedown_statement
                  | continueright_statement
                  | continueleft_statement
+                 | turnright_statement
+                 | turnleft_statement
                  | pos_statement
                  | posx_statement
                  | posy_statement
@@ -165,6 +167,16 @@ def p_continueright_statement(p):
 # Regla para el continueleft
 def p_continueleft_statement(p):
     '''continueleft_statement : CONTINUELEFT statement'''
+    p[0] = ContinueLeftStatement(p[2])
+
+# Regla para el TurnRight
+def p_turnright_statement(p):
+    '''turnright_statement : TURNRIGHT statement'''
+    p[0] = ContinueLeftStatement(p[2])
+
+# Regla para el TurnLeft
+def p_turnleft_statement(p):
+    '''turnleft_statement : TURNLEFT statement'''
     p[0] = ContinueLeftStatement(p[2])
 
 # Regla que modifica la posicion del lapiz
@@ -376,8 +388,11 @@ if __name__ == "__main__":
     
     Proc Main ()
     [
-    Def(car,false);
+    Def(car,5);
     call ayu (2,car);
+    ContinueRight car*sii;
+    TurnRight car*4;
+    TurnLeft 5;
     call ayu2(1);
     ];
     end;
