@@ -367,7 +367,7 @@ if __name__ == "__main__":
     
     Proc ayu2 (bueno)
     [
-    Pos (bueno, bueno);
+    UseColor bueno;
     ];
     end;
     
@@ -393,10 +393,10 @@ if __name__ == "__main__":
     visitor = ASTVisitor()  # Usa tu clase de visitor
     visitor.visit(ast_root)  # Ejecuta el arbol AST
 
-    visitor.print_ast(ast_root)
-    visitor.print_symbol_table()
+    #visitor.print_ast(ast_root)
+    #visitor.print_symbol_table()
 
-    visitor.print_procedure_tracker()
+    #visitor.print_procedure_tracker()
 
 
 

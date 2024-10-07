@@ -486,9 +486,12 @@ class ASTVisitor:
     def visit_posxstatement(self, node):
         x_val = node.x_val
 
+        # Evaluar x_val
+        x = self.visit(x_val)
+
         # Validar contexto para x_val
-        if isinstance(x_val, IdExpression):
-            referenced_var_name = x_val.var_name
+        if isinstance(x_val.value, IdExpression):
+            referenced_var_name = x_val.value.var_name
             referenced_full_name = (
                 f"{referenced_var_name}_{self.variable_context.current_procedure}"
                 if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
@@ -503,14 +506,14 @@ class ASTVisitor:
                 return None
 
         # Verificación de tipo booleano
-        if isinstance(x_val, bool):
+        if isinstance(x, bool):
             print(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
+                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x}' de tipo '{type(x).__name__}'.")
             self.semantic_errors.append(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
+                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x}' de tipo '{type(x).__name__}'.")
             return None
 
-        self.x_position = x_val
+        self.x_position = x
         result = f"Posicion actualizada a X: {self.x_position}, Y: {self.y_position}"
         print(result)
         return result
@@ -518,9 +521,12 @@ class ASTVisitor:
     def visit_posystatement(self, node):
         y_val = node.y_val
 
+        # Evaluar y_val
+        y = self.visit(y_val)
+
         # Validar contexto para y_val
-        if isinstance(y_val, IdExpression):
-            referenced_var_name = y_val.var_name
+        if isinstance(y_val.value, IdExpression):
+            referenced_var_name = y_val.value.var_name
             referenced_full_name = (
                 f"{referenced_var_name}_{self.variable_context.current_procedure}"
                 if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
@@ -535,14 +541,14 @@ class ASTVisitor:
                 return None
 
         # Verificación de tipo booleano
-        if isinstance(y_val, bool):
+        if isinstance(y, bool):
             print(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
+                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y}' de tipo '{type(y).__name__}'.")
             self.semantic_errors.append(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
+                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y}' de tipo '{type(y).__name__}'.")
             return None
 
-        self.y_position = y_val
+        self.y_position = y
         result = f"Posicion actualizada a X: {self.x_position}, Y: {self.y_position}"
         print(result)
         return result
