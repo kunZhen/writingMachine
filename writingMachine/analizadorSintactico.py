@@ -367,7 +367,7 @@ if __name__ == "__main__":
     
     Proc ayu2 (bueno)
     [
-    Or (sii, car);
+    Smaller (sii, 2);
     ];
     end;
     
