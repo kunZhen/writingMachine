@@ -124,6 +124,26 @@ class ASTVisitor:
         else:
             var_type = "UNKNOWN"
 
+            # Verificar si la variable ya existe en el contexto actual o en Main
+        if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
+                f"{var_name}_Main" in self.variable_context.variables:
+
+            # Comprobar el tipo de la variable existente
+            existing_var_name = f"{var_name}_{self.variable_context.current_procedure}" \
+                if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+                else f"{var_name}_Main"
+
+            existing_type = self.variable_context.get_variable_type(existing_var_name)
+
+            # Verificar si el tipo coincide
+            if existing_type != var_type:
+                error_msg = (
+                    f"Error Semántico: La variable '{existing_var_name}' ya está definida como '{existing_type}', "
+                    f"pero se intenta redefinir como '{var_type}'.")
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
+                return None
+
         # Usar el procedimiento actual al definir la variable
         self.variable_context.set_variable(var_name, value, var_type)
         print(f"Definido {var_name} = {value} (Tipo: {var_type})")
@@ -135,12 +155,19 @@ class ASTVisitor:
         print(var_name)
         print(self.variable_context.variables)
 
-        if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or f"{var_name}_Main" in self.variable_context.variables:
-            current_type = self.variable_context.get_variable_type(var_name)
+        # Verificar si la variable está definida en el contexto actual o en Main
+        if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
+                f"{var_name}_Main" in self.variable_context.variables:
+
+            # Obtener el nombre de la variable existente
+            existing_var_name = f"{var_name}_{self.variable_context.current_procedure}" \
+                if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+                else f"{var_name}_Main"
+
+            current_type = self.variable_context.get_variable_type(existing_var_name)
+
             # Determinar el tipo del nuevo valor
-            if str(value) == 'True':
-                new_type = "BOOLEAN"
-            elif str(value) == 'False':
+            if isinstance(value, bool):
                 new_type = "BOOLEAN"
             elif isinstance(value, int):
                 new_type = "NUMBER"
@@ -152,12 +179,13 @@ class ASTVisitor:
             # Comprobar si los tipos coinciden
             if new_type != current_type:
                 print(f"Error Semantico: No se puede asignar '{value}' de tipo '{new_type}' a "
-                      f"la variable '{var_name}' que es de tipo '{current_type}'.")
-                return None  # O lanza una excepcion segun tu diseño
+                      f"la variable '{existing_var_name}' que es de tipo '{current_type}'.")
+                return None  # O lanza una excepción según tu diseño
 
             # Si los tipos coinciden, actualiza la variable
-            self.variable_context.set_variable(var_name, value, current_type)
-            print(f"Actualizado {var_name} = {value}")
+            self.variable_context.set_variable(existing_var_name, value, current_type)
+            print(f"Actualizado {existing_var_name} = {value}")
+
         else:
             print(f"Error Semantico: La variable '{var_name}' no esta definida.")
             self.semantic_errors.append(

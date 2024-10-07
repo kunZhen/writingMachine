@@ -360,8 +360,8 @@ if __name__ == "__main__":
     //hola
     Proc ayu (chamoy, pro)
     [
-    Def(juan,3);
-    Put(car, 1);
+    Def(car, 2);
+
     ];
     end;
     
