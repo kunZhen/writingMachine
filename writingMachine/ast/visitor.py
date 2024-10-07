@@ -667,6 +667,9 @@ class ASTVisitor:
             self.semantic_errors.append(error_msg)
             return None
 
+        # Establecer el procedimiento actual
+        self.variable_context.set_current_procedure(procedure_name)
+
         # Obtener la información del procedimiento
         proc_info = self.proc_var_tracker.procedures[procedure_name]
         expected_params = proc_info["params"]
@@ -678,22 +681,15 @@ class ASTVisitor:
             self.semantic_errors.append(error_msg)
             return None
 
-        # Guardar el contexto actual
-        previous_context = self.variable_context
-
-        # Crear un nuevo contexto para el procedimiento
-        self.variable_context = VariableContext()  # Aquí no se pasa el contexto anterior
-
         # Evaluar y asignar los argumentos a los parámetros
         for param_name, arg in zip(expected_params, node.arguments):
             if isinstance(arg, IdExpression):
-                # Si el argumento es una variable, obtener su valor del contexto anterior
-                arg_value = previous_context.get_variable(arg.var_name)
+                # Si el argumento es una variable, obtener su valor del contexto
+                arg_value = self.variable_context.get_variable(arg.var_name)
                 if arg_value is None:
                     error_msg = f"Error Semántico: La variable '{arg.var_name}' no está definida."
                     print(error_msg)
                     self.semantic_errors.append(error_msg)
-                    self.variable_context = previous_context  # Restaurar el contexto anterior
                     return None
                 value = arg_value
             else:
@@ -710,7 +706,7 @@ class ASTVisitor:
             else:
                 var_type = "UNKNOWN"
 
-            # Asignar el valor al parámetro en el nuevo contexto
+            # Asignar el valor al parámetro en el contexto
             self.variable_context.set_variable(param_name, value, var_type)
 
         # Buscar y ejecutar el cuerpo del procedimiento
@@ -722,8 +718,9 @@ class ASTVisitor:
                     self.visit(statement)
                 break
 
-        # Restaurar el contexto original
-        self.variable_context = previous_context
+        # Limpiar el procedimiento actual después de la ejecución
+        self.variable_context.clear_current_procedure()
+
         print(f"Finalizada la ejecución del procedimiento {procedure_name}\n")
 
     def visit_binaryoperation(self, node):
