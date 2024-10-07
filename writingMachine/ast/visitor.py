@@ -101,11 +101,11 @@ class ASTVisitor:
     def visit_defstatement(self, node):
         var_name = node.var_name
         value = self.visit(node.value)  # Llama a visit para obtener el valor
-        print(
-            f"current_procedure: {getattr(self, 'current_procedure', None)}")  # Imprime el procedimiento actual, si existe
 
-        # Reglas para el nombre de la variable: min 3, max 10, empieza con minúscula,
-        # contiene letras, números, * y @.
+        # Imprimir el procedimiento actual
+        print(f"current_procedure: {getattr(self, 'current_procedure', None)}")
+
+        # Reglas para el nombre de la variable
         if not re.match(r'^[a-z][a-zA-Z0-9*@]{2,9}$', var_name):
             error_msg = (f"Error Semántico: El nombre de la variable '{var_name}' no cumple "
                          "con las reglas. Debe tener entre 3 y 10 caracteres, comenzar con "
@@ -115,29 +115,16 @@ class ASTVisitor:
             return None
 
         # Determinar el tipo basado en el valor del nodo
-        if str(value) == 'True' or str(value) == 'False':
+        if isinstance(value, bool):
             var_type = "BOOLEAN"
-        elif isinstance(value, int):
+        elif isinstance(value, (int, float)):
             var_type = "NUMBER"
         elif isinstance(node.value, IdExpression):
             var_type = "ID"
         else:
             var_type = "UNKNOWN"
 
-        if hasattr(self, 'current_procedure'):
-            self.proc_var_tracker.register_variable(var_name, self.current_procedure)
-
-        # Verificar si la variable ya está definida y si el tipo coincide
-        if var_name in self.variable_context.variables:
-            existing_type = self.variable_context.get_variable_type(var_name)
-            if existing_type != var_type:
-                error_msg = (f"Error Semántico: La variable '{var_name}' ya está definida como '{existing_type}', "
-                             f"pero se intenta redefinir como '{var_type}'.")
-                print(error_msg)
-                self.semantic_errors.append(error_msg)
-                return None
-
-        # Si la variable no está definida o los tipos coinciden, se define o redefine
+        # Usar el procedimiento actual al definir la variable
         self.variable_context.set_variable(var_name, value, var_type)
         print(f"Definido {var_name} = {value} (Tipo: {var_type})")
         return value
@@ -145,8 +132,10 @@ class ASTVisitor:
     def visit_putstatement(self, node):
         var_name = node.var_name
         value = self.visit(node.value)
+        print(var_name)
+        print(self.variable_context.variables)
 
-        if var_name in self.variable_context.variables:
+        if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or f"{var_name}_Main" in self.variable_context.variables:
             current_type = self.variable_context.get_variable_type(var_name)
             # Determinar el tipo del nuevo valor
             if str(value) == 'True':

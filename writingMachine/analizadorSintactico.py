@@ -358,21 +358,22 @@ def parse(input_string):
 if __name__ == "__main__":
     code = """
     //hola
-    Def(car,5);
     Proc ayu (chamoy, pro)
     [
     Def(juan,3);
-    Put(chamoy, 1);
+    Put(car, 1);
     ];
     end;
     
-    Proc ayu4 (chamoy, pro)
+    Proc Main ()
     [
-    Def(obs, chamoy);
+    Def(car,5);
+    call ayu (2,car);
     ];
     end;
-    call ayu4(4,car);
-    call ayu (obs,car);
+    call Main ();
+    
+    
 
     
     //buenas

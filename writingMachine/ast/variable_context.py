@@ -7,24 +7,38 @@ class VariableContext:
         self.current_procedure = None
 
     def set_variable(self, var_name, value, var_type):
-        self.variables[var_name] = {
+        # Crear una clave única combinando el nombre de la variable y el procedimiento
+        key = f"{var_name}_{self.current_procedure}" if self.current_procedure else var_name
+        self.variables[key] = {
             "value": value,
             "type": var_type,
             "procedure": self.current_procedure
         }
 
     def get_variable(self, var_name):
-        return self.variables.get(var_name, {}).get("value")
+        # Retorna el valor de la variable, buscando en todos los procedimientos
+        for key, info in self.variables.items():
+            if key.startswith(var_name):
+                return info["value"]
+        return None
 
     def get_variable_type(self, var_name):
-        return self.variables.get(var_name, {}).get("type")
+        for key, info in self.variables.items():
+            if key.startswith(var_name):
+                return info["type"]
+        return None
 
     def get_variable_procedure(self, var_name):
-        return self.variables.get(var_name, {}).get("procedure")
+        for key, info in self.variables.items():
+            if key.startswith(var_name):
+                return info["procedure"]
+        return None
 
     def remove_variable(self, var_name):
-        if var_name in self.variables:
-            del self.variables[var_name]
+        # Eliminar la variable específica para el procedimiento actual
+        key = f"{var_name}_{self.current_procedure}" if self.current_procedure else var_name
+        if key in self.variables:
+            del self.variables[key]
 
     def set_current_procedure(self, procedure_name):
         self.current_procedure = procedure_name
@@ -38,7 +52,7 @@ class VariableContext:
         print("-" * 50)
         for name, info in self.variables.items():
             proc = info['procedure'] if info['procedure'] else "Global"
-            print("{:<10} {:<10} {:<15} {}".format(name, info['type'], proc, info['value']))
+            print("{:<10} {:<10} {:<15} {}".format(name.split('_')[0], info['type'], proc, info['value']))
         self.show_symbol_table_gui()
 
     def show_symbol_table_gui(self):
