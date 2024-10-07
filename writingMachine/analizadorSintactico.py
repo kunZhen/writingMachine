@@ -363,16 +363,16 @@ if __name__ == "__main__":
     [
     Def(juan,3);
     Put(chamoy, 1);
-    Add(chamoy, pro);
-    call ayu(chamoy, pro, 2);
     ];
     end;
-    Proc ayu (chamoy, pro, pro4)
+    
+    Proc ayu4 (chamoy, pro)
     [
-    ContinueRight 4;
+    Def(obs, chamoy);
     ];
     end;
-    call ayu(4,car);
+    call ayu4(4,car);
+    call ayu (obs,car);
 
     
     //buenas

@@ -101,6 +101,8 @@ class ASTVisitor:
     def visit_defstatement(self, node):
         var_name = node.var_name
         value = self.visit(node.value)  # Llama a visit para obtener el valor
+        print(
+            f"current_procedure: {getattr(self, 'current_procedure', None)}")  # Imprime el procedimiento actual, si existe
 
         # Reglas para el nombre de la variable: min 3, max 10, empieza con minúscula,
         # contiene letras, números, * y @.
@@ -669,6 +671,8 @@ class ASTVisitor:
     def visit_callstatement(self, node):
         procedure_name = node.procedure_name
         param_count = len(node.arguments)
+        self.current_procedure = node.procedure_name
+        self.variable_context.set_current_procedure(node.procedure_name)
 
         print(f"\nEjecutando llamada al procedimiento: {procedure_name} con {param_count} argumentos")
 
@@ -733,7 +737,6 @@ class ASTVisitor:
 
         # Limpiar el procedimiento actual después de la ejecución
         self.variable_context.clear_current_procedure()
-
         print(f"Finalizada la ejecución del procedimiento {procedure_name}\n")
 
     def visit_binaryoperation(self, node):
