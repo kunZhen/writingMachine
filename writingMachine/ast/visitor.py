@@ -423,19 +423,58 @@ class ASTVisitor:
                 return None
 
     def visit_posstatement(self, node):
-        x_val = self.visit(node.x_val)
-        y_val = self.visit(node.y_val)
+        # Obtener valores de X e Y
+        x_val = node.x_val
+        y_val = node.y_val
 
-        if str(x_val) == 'True' or str(x_val) == 'False':
+        x = self.visit(x_val)
+        y = self.visit(y_val)
+
+        # Validar contexto para x_val
+        if isinstance(x_val.value, IdExpression):
+            referenced_var_name = x_val.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name in self.variable_context.variables:
+                x_val = self.variable_context.get_variable(referenced_full_name)
+            else:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Validar contexto para y_val
+        if isinstance(y_val.value, IdExpression):
+            referenced_var_name = y_val.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name in self.variable_context.variables:
+                y_val = self.variable_context.get_variable(referenced_full_name)
+            else:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Verificación de tipo booleano
+        if isinstance(x, bool):
             print(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
-            self.semantic_errors.append(f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
+                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x}' de tipo '{type(x_val).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x}' de tipo '{type(x_val).__name__}'.")
             return None
 
-        if str(y_val) == 'True' or str(y_val) == 'False':
+        if isinstance(y, bool):
             print(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
-            self.semantic_errors.append(f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
+                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y}' de tipo '{type(y_val).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y}' de tipo '{type(y_val).__name__}'.")
             return None
 
         self.x_position = x_val
@@ -445,12 +484,30 @@ class ASTVisitor:
         return result
 
     def visit_posxstatement(self, node):
-        x_val = self.visit(node.x_val)
+        x_val = node.x_val
 
-        if str(x_val) == 'True' or str(x_val) == 'False':
+        # Validar contexto para x_val
+        if isinstance(x_val, IdExpression):
+            referenced_var_name = x_val.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name in self.variable_context.variables:
+                x_val = self.variable_context.get_variable(referenced_full_name)
+            else:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Verificación de tipo booleano
+        if isinstance(x_val, bool):
             print(
                 f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
-            self.semantic_errors.append(f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
             return None
 
         self.x_position = x_val
@@ -459,12 +516,30 @@ class ASTVisitor:
         return result
 
     def visit_posystatement(self, node):
-        y_val = self.visit(node.y_val)
+        y_val = node.y_val
 
-        if str(y_val) == 'True' or str(y_val) == 'False':
+        # Validar contexto para y_val
+        if isinstance(y_val, IdExpression):
+            referenced_var_name = y_val.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name in self.variable_context.variables:
+                y_val = self.variable_context.get_variable(referenced_full_name)
+            else:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Verificación de tipo booleano
+        if isinstance(y_val, bool):
             print(
                 f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
-            self.semantic_errors.append(f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
             return None
 
         self.y_position = y_val

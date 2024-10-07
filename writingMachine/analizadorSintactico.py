@@ -367,10 +367,7 @@ if __name__ == "__main__":
     
     Proc ayu2 (bueno)
     [
-    ContinueUp bueno*8;
-    ContinueDown bueno*8;
-    ContinueRight bueno*car;
-    ContinueLeft sii;
+    Pos (bueno, bueno);
     ];
     end;
     
