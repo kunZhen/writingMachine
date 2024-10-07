@@ -361,7 +361,16 @@ if __name__ == "__main__":
     Proc ayu (chamoy, pro)
     [
     Def(car, 2);
-
+    Def(sii,1);
+    ];
+    end;
+    
+    Proc ayu2 (bueno)
+    [
+    ContinueUp bueno*8;
+    ContinueDown bueno*8;
+    ContinueRight bueno*car;
+    ContinueLeft sii;
     ];
     end;
     
@@ -369,6 +378,7 @@ if __name__ == "__main__":
     [
     Def(car,5);
     call ayu (2,car);
+    call ayu2(1);
     ];
     end;
     call Main ();

@@ -102,9 +102,6 @@ class ASTVisitor:
         var_name = node.var_name
         value = self.visit(node.value)  # Llama a visit para obtener el valor
 
-        # Imprimir el procedimiento actual
-        print(f"current_procedure: {getattr(self, 'current_procedure', None)}")
-
         # Reglas para el nombre de la variable
         if not re.match(r'^[a-z][a-zA-Z0-9*@]{2,9}$', var_name):
             error_msg = (f"Error Semántico: El nombre de la variable '{var_name}' no cumple "
@@ -192,108 +189,238 @@ class ASTVisitor:
                 f"Error Semantico: La variable '{var_name}' no esta definida.")
 
     def visit_addstatement(self, node):
-        if node.var_name not in self.variable_context.variables:
+        # Verificar si la variable está definida en el contexto actual o en Main
+        if f"{node.var_name}_{self.variable_context.current_procedure}" not in self.variable_context.variables and \
+                f"{node.var_name}_Main" not in self.variable_context.variables:
             print(f"Error Semantico: '{node.var_name}' no es una variable valida.")
-            self.semantic_errors.append(
-                f"Error Semantico: '{node.var_name}' no es una variable valida.")
+            self.semantic_errors.append(f"Error Semantico: '{node.var_name}' no es una variable valida.")
             return None
 
-        current_value = self.variable_context.get_variable(node.var_name)
-        current_type = self.variable_context.get_variable_type(node.var_name)
+        # Obtener el nombre completo de la variable en el contexto actual o en Main
+        existing_var_name = f"{node.var_name}_{self.variable_context.current_procedure}" \
+            if f"{node.var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+            else f"{node.var_name}_Main"
+
+        current_value = self.variable_context.get_variable(existing_var_name)
+        current_type = self.variable_context.get_variable_type(existing_var_name)
 
         # Comprobar si la variable es de tipo numerico
         if current_type != "NUMBER":
             print(f"Error Semantico: No se puede incrementar '{node.var_name}' de tipo '{current_type}'.")
-            self.semantic_errors.append(f"Error Semantico: No se puede incrementar '{node.var_name}' de tipo '{current_type}'.")
+            self.semantic_errors.append(
+                f"Error Semantico: No se puede incrementar '{node.var_name}' de tipo '{current_type}'.")
             return None
-
+        # Si no hay un valor de incremento, incrementar por 1
         if node.increment_value is None:
             new_value = current_value + 1
         else:
-            increment = self.visit(node.increment_value)
+            # Verificar si la expresión es un ID (nombre de una variable) antes de evaluarla
+            if isinstance(node.increment_value.value, IdExpression):
+                increment_var_name = node.increment_value.value.var_name  # Obtener el nombre del ID usando var_name
+                # Obtener el valor y tipo de la variable del contexto
+                if f"{increment_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
+                        f"{increment_var_name}_Main" in self.variable_context.variables:
 
-            # Verificar que el incremento sea un numero
-            if str(increment) == 'True':
-                print(
-                    f"Error Semantico: El incremento debe ser un numero, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
-                self.semantic_errors.append(f"Error Semantico: El incremento debe ser un numero, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
+                    # Obtener valor y tipo de la variable referenciada
+                    referenced_var_name = f"{increment_var_name}_{self.variable_context.current_procedure}" \
+                        if f"{increment_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+                        else f"{increment_var_name}_Main"
+                    referenced_value = self.variable_context.get_variable(referenced_var_name)
+                    referenced_type = self.variable_context.get_variable_type(referenced_var_name)
 
-                return None
-            elif str(increment) == 'False':
-                print(
-                    f"Error Semantico: El incremento debe ser un numero, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
-                self.semantic_errors.append(
-                    f"Error Semantico: El incremento debe ser un numero, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
-                return None
+                    # Verificar que el tipo de la variable referenciada sea NUMÉRICO
+                    if referenced_type != "NUMBER":
+                        print(
+                            f"Error Semantico: El incremento debe ser un número, pero '{increment_var_name}' es de tipo '{referenced_type}'.")
+                        self.semantic_errors.append(
+                            f"Error Semantico: El incremento debe ser un número, pero '{increment_var_name}' es de tipo '{referenced_type}'.")
+                        return None
 
+                    # Asignar el valor referenciado como el incremento
+                    increment = referenced_value
+                else:
+                    print(f"Error Semantico: La variable '{increment_var_name}' no está definida.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: La variable '{increment_var_name}' no está definida.")
+                    return None
+            else:
+                # Si no es un IdExpression, visitar la expresión para evaluarla
+                increment = self.visit(node.increment_value)
+
+                # Verificar que el incremento sea un número
+                if not isinstance(increment, (int, float)):
+                    print(
+                        f"Error Semantico: El incremento debe ser un número, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: El incremento debe ser un número, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
+                    return None
+
+            # Sumar el incremento
             new_value = current_value + increment
 
-        # Actualizar la variable en el contexto
-        self.variable_context.set_variable(node.var_name, new_value, current_type)
-        print(f"Incrementado {node.var_name} de {current_value} a {new_value}")
-
-        # Retornar el nuevo valor
-        return new_value
+        # Actualizar el valor de la variable
+        self.variable_context.set_variable(existing_var_name, new_value, current_type)
+        print(f"Actualizado {existing_var_name} = {new_value}")
 
     def visit_continueupstatement(self, node):
-        move_units = self.visit(node.move_units)
-        if str(move_units) == 'True' or str(move_units) == 'False':
-            print(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            self.semantic_errors.append(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            return None
-        elif isinstance(move_units, (int, float)):
-            self.y_position += move_units
-            result = f"Movido {move_units} unidades hacia arriba. Nueva posicion en Y: {self.y_position}"
-            print(result)
-            return result
+        move_units = node.move_units  # No evaluamos aún para verificar si es IdExpression
+
+        # Verificación del tipo de move_units
+        if isinstance(move_units.value, IdExpression):
+            # Si es un IdExpression, verificar si la variable referenciada está definida
+            referenced_var_name = move_units.value.var_name
+
+            if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
+                    f"{referenced_var_name}_Main" in self.variable_context.variables:
+                referenced_full_name = f"{referenced_var_name}_{self.variable_context.current_procedure}" \
+                    if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+                    else f"{referenced_var_name}_Main"
+
+                referenced_value = self.variable_context.get_variable(referenced_full_name)
+                if isinstance(referenced_value, (int, float)):
+                    self.y_position += referenced_value
+                    result = f"Movido {referenced_value} unidades hacia arriba. Nueva posicion en Y: {self.y_position}"
+                    print(result)
+                    return result
+                else:
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
+            else:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
         else:
-            print(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            return None
+            # Evaluar el valor directamente
+            move_units_value = self.visit(move_units)
+            if isinstance(move_units_value, (int, float)):
+                self.y_position += move_units_value
+                result = f"Movido {move_units_value} unidades hacia arriba. Nueva posicion en Y: {self.y_position}"
+                print(result)
+                return result
+            else:
+                print(f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                self.semantic_errors.append(
+                    f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                return None
 
     def visit_continuedownstatement(self, node):
-        move_units = self.visit(node.move_units)
-        if str(move_units) == 'True' or str(move_units) == 'False':
-            print(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            self.semantic_errors.append(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            return None
-        elif isinstance(move_units, (int, float)):
-            self.y_position -= move_units
-            result = f"Movido {move_units} unidades hacia abajo. Nueva posicion en Y: {self.y_position}"
-            print(result)
-            return result
+        move_units = node.move_units
+
+        if isinstance(move_units.value, IdExpression):
+            referenced_var_name = move_units.value.var_name
+            if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
+                    f"{referenced_var_name}_Main" in self.variable_context.variables:
+                referenced_full_name = f"{referenced_var_name}_{self.variable_context.current_procedure}" \
+                    if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+                    else f"{referenced_var_name}_Main"
+
+                referenced_value = self.variable_context.get_variable(referenced_full_name)
+                if isinstance(referenced_value, (int, float)):
+                    self.y_position -= referenced_value
+                    result = f"Movido {referenced_value} unidades hacia abajo. Nueva posicion en Y: {self.y_position}"
+                    print(result)
+                    return result
+                else:
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
+            else:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
         else:
-            print(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            return None
+            move_units_value = self.visit(move_units)
+            if isinstance(move_units_value, (int, float)):
+                self.y_position -= move_units_value
+                result = f"Movido {move_units_value} unidades hacia abajo. Nueva posicion en Y: {self.y_position}"
+                print(result)
+                return result
+            else:
+                print(f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                self.semantic_errors.append(
+                    f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                return None
 
     def visit_continuerightstatement(self, node):
-        move_units = self.visit(node.move_units)
-        if str(move_units) == 'True' or str(move_units) == 'False':
-            print(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            self.semantic_errors.append(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            return None
-        elif isinstance(move_units, (int, float)):
-            self.x_position += move_units
-            result = f"Movido {move_units} unidades hacia la derecha. Nueva posicion en X: {self.x_position}"
-            print(result)
-            return result
+        move_units = node.move_units
+
+        if isinstance(move_units.value, IdExpression):
+            referenced_var_name = move_units.value.var_name
+            if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
+                    f"{referenced_var_name}_Main" in self.variable_context.variables:
+                referenced_full_name = f"{referenced_var_name}_{self.variable_context.current_procedure}" \
+                    if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+                    else f"{referenced_var_name}_Main"
+
+                referenced_value = self.variable_context.get_variable(referenced_full_name)
+                if isinstance(referenced_value, (int, float)):
+                    self.x_position += referenced_value
+                    result = f"Movido {referenced_value} unidades hacia la derecha. Nueva posicion en X: {self.x_position}"
+                    print(result)
+                    return result
+                else:
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
+            else:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
         else:
-            print(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            return None
+            move_units_value = self.visit(move_units)
+            if isinstance(move_units_value, (int, float)):
+                self.x_position += move_units_value
+                result = f"Movido {move_units_value} unidades hacia la derecha. Nueva posicion en X: {self.x_position}"
+                print(result)
+                return result
+            else:
+                print(f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                self.semantic_errors.append(
+                    f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                return None
 
     def visit_continueleftstatement(self, node):
-        move_units = self.visit(node.move_units)
-        if str(move_units) == 'True' or str(move_units) == 'False':
-            print(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            self.semantic_errors.append(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            return None
-        elif isinstance(move_units, (int, float)):
-            self.x_position -= move_units
-            result = f"Movido {move_units} unidades hacia la izquierda. Nueva posicion en X: {self.x_position}"
-            print(result)
-            return result
+        move_units = node.move_units
+
+        if isinstance(move_units.value, IdExpression):
+            referenced_var_name = move_units.value.var_name
+            if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
+                    f"{referenced_var_name}_Main" in self.variable_context.variables:
+                referenced_full_name = f"{referenced_var_name}_{self.variable_context.current_procedure}" \
+                    if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+                    else f"{referenced_var_name}_Main"
+
+                referenced_value = self.variable_context.get_variable(referenced_full_name)
+                if isinstance(referenced_value, (int, float)):
+                    self.x_position -= referenced_value
+                    result = f"Movido {referenced_value} unidades hacia la izquierda. Nueva posicion en X: {self.x_position}"
+                    print(result)
+                    return result
+                else:
+                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    self.semantic_errors.append(
+                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    return None
+            else:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
         else:
-            print(f"Error Semantico: No se puede mover '{move_units}' unidades. Se esperaba un numero.")
-            return None
+            move_units_value = self.visit(move_units)
+            if isinstance(move_units_value, (int, float)):
+                self.x_position -= move_units_value
+                result = f"Movido {move_units_value} unidades hacia la izquierda. Nueva posicion en X: {self.x_position}"
+                print(result)
+                return result
+            else:
+                print(f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                self.semantic_errors.append(
+                    f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                return None
 
     def visit_posstatement(self, node):
         x_val = self.visit(node.x_val)
