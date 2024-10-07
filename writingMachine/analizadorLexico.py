@@ -16,7 +16,7 @@ tokens = (
     'CONTINUEDOWN', 'CONTINUEUP', 'ADD', 'PUT', 'FOR',
     'TO', 'LOOP', 'END', 'CASE', 'WHEN', 'THEN', 'ELSE',
     'REPEAT', 'UNTIL', 'WHILE', 'WHEND', 'EQUALS',
-    'LT', 'GT', 'TURNLEFT', 'TURNRIGHT','COMMENT', 'PROC'
+    'LT', 'GT', 'TURNLEFT', 'TURNRIGHT','COMMENT', 'PROC', 'CALL'
 )
 
 # Expresiones regulares para los tokens
@@ -68,6 +68,7 @@ t_THEN = r'Then'
 t_ELSE = r'Else'
 t_REPEAT = r'Repeat'
 t_UNTIL = r'Until'
+t_CALL = r'call'
 t_WHILE = r'While'
 t_WHEND = r'Whend'
 t_TURNLEFT = r'TurnLeft'
@@ -92,7 +93,7 @@ def t_ID(t):
                    'Beginning', 'Up', 'Down', 'UseColor', 'PosY', 'PosX', 'Pos', 'ContinueLeft',
                    'ContinueRight', 'ContinueDown', 'ContinueUp', 'Add', 'Put', 'For', 'to', 'Loop', 'End',
                    'Case', 'When', 'Then', 'Else', 'Repeat', 'Until', 'While', 'Whend', 'Def', 'PUT', 'ADD',
-                   'case', 'TurnLeft', 'TurnRight', 'Proc', 'end'):
+                   'case', 'call', 'TurnLeft', 'TurnRight', 'Proc', 'end'):
         t.type = t.value.upper()  # Cambiar el tipo a MULT, DIV o SUM
     return t
 
@@ -160,6 +161,7 @@ if __name__ == '__main__':
         Proc aguacate (banano)
         []
         end;
+        call aguacate(2);
         """
     print("Tokens encontrados:")
     print(analysis(code))

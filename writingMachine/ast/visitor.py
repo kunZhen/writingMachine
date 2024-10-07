@@ -5,6 +5,7 @@ from writingMachine.ast.and_statement import AndStatement
 from writingMachine.ast.beginning_statement import BeginningStatement
 from writingMachine.ast.binary_operation import BinaryOperation
 from writingMachine.ast.boolean_expression import BooleanExpression
+from writingMachine.ast.call_statement import CallStatement
 from writingMachine.ast.case_statement import CaseStatement
 from writingMachine.ast.continuedown_statement import ContinueDownStatement
 from writingMachine.ast.continueleft_statement import ContinueLeftStatement
@@ -29,6 +30,7 @@ from writingMachine.ast.pos_statement import PosStatement
 from writingMachine.ast.posx_statement import PosXStatement
 from writingMachine.ast.posy_statement import PosYStatement
 from writingMachine.ast.procedure_statement import ProcedureStatement
+from writingMachine.ast.procedure_variable_tracker import ProcedureVariableTracker
 from writingMachine.ast.put_statement import PutStatement
 from writingMachine.ast.random_statement import RandomStatement
 from writingMachine.ast.repeat_statement import RepeatStatement
@@ -47,11 +49,13 @@ class ASTVisitor:
 
     def __init__(self):
         self.variable_context = VariableContext()
+        self.proc_var_tracker = ProcedureVariableTracker()
         self.x_position = 0
         self.y_position = 0
         self.current_color = 1  # 1 para negro, 2 para rojo
         self.pen_down = False
         self.semantic_errors = []
+        self.ast = None
 
     def visit(self, node):
         if node is None:
@@ -69,6 +73,10 @@ class ASTVisitor:
         raise NotImplementedError(f'No se ha implementado visit_{type(node).__name__.lower()}')
 
     def visit_program(self, node):
+        # Guardar el AST completo en la primera visita
+        if self.ast is None:
+            self.ast = node
+
         results = []
         for statement in node.statements:
             result = self.visit(statement)
@@ -86,7 +94,7 @@ class ASTVisitor:
                                    PosStatement, PosXStatement, PosYStatement, PutStatement, RandomStatement,
                                    SmallerStatement, SubstrStatement, UpStatement, UseColorStatement,
                                    RepeatStatement, VariableContext, WhileStatement, ForStatement,
-                                   CaseStatement, WhenClause, ProcedureStatement)):
+                                   CaseStatement, WhenClause, ProcedureStatement, CallStatement)):
             return self.visit(node.value)
         return node.value
 
@@ -95,8 +103,8 @@ class ASTVisitor:
         value = self.visit(node.value)  # Llama a visit para obtener el valor
 
         # Reglas para el nombre de la variable: min 3, max 10, empieza con minúscula,
-        # contiene letras, números, _ y @.
-        if not re.match(r'^[a-z][a-zA-Z0-9_@]{2,9}$', var_name):
+        # contiene letras, números, * y @.
+        if not re.match(r'^[a-z][a-zA-Z0-9*@]{2,9}$', var_name):
             error_msg = (f"Error Semántico: El nombre de la variable '{var_name}' no cumple "
                          "con las reglas. Debe tener entre 3 y 10 caracteres, comenzar con "
                          "una letra minúscula, y puede contener letras, números, '_' y '@'.")
@@ -114,6 +122,9 @@ class ASTVisitor:
         else:
             var_type = "UNKNOWN"
 
+        if hasattr(self, 'current_procedure'):
+            self.proc_var_tracker.register_variable(var_name, self.current_procedure)
+
         # Verificar si la variable ya está definida y si el tipo coincide
         if var_name in self.variable_context.variables:
             existing_type = self.variable_context.get_variable_type(var_name)
@@ -122,12 +133,11 @@ class ASTVisitor:
                              f"pero se intenta redefinir como '{var_type}'.")
                 print(error_msg)
                 self.semantic_errors.append(error_msg)
-                return None  # O lanza una excepción, según tu diseño
+                return None
 
         # Si la variable no está definida o los tipos coinciden, se define o redefine
         self.variable_context.set_variable(var_name, value, var_type)
         print(f"Definido {var_name} = {value} (Tipo: {var_type})")
-
         return value
 
     def visit_putstatement(self, node):
@@ -631,11 +641,90 @@ class ASTVisitor:
                 self.visit(statement)
 
     def visit_procedurestatement(self, node):
-        print(f"Ejecutando procedimiento: {node.name}")
+        print(f"Registrando procedimiento: {node.name}")
 
-        # Ejecutar cada instrucción en el cuerpo del procedimiento
-        for statement in node.body:
-            self.visit(statement)
+        # Extraer los nombres de los parámetros
+        parameters = []
+        for param in node.parameters:
+            if isinstance(param, IdExpression):
+                parameters.append(param.var_name)
+            else:
+                parameters.append(str(param))
+
+        # Solo registrar el procedimiento en el tracker
+        self.proc_var_tracker.register_procedure(node.name, parameters)
+
+        print(f"Procedimiento {node.name} registrado con parámetros: {parameters}")
+
+    def visit_callstatement(self, node):
+        procedure_name = node.procedure_name
+        print(f"\nEjecutando llamada al procedimiento: {procedure_name}")
+
+        # Verificar si el procedimiento existe
+        if procedure_name not in self.proc_var_tracker.procedures:
+            error_msg = f"Error Semántico: El procedimiento '{procedure_name}' no está definido."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
+
+        # Obtener la información del procedimiento
+        proc_info = self.proc_var_tracker.procedures[procedure_name]
+        expected_params = proc_info["params"]
+
+        # Verificar el número de argumentos
+        if len(node.arguments) != len(expected_params):
+            error_msg = f"Error Semántico: El procedimiento '{procedure_name}' espera {len(expected_params)} parámetros, pero se proporcionaron {len(node.arguments)}."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
+
+        # Guardar el contexto actual
+        previous_context = self.variable_context
+
+        # Crear un nuevo contexto para el procedimiento
+        self.variable_context = VariableContext()  # Aquí no se pasa el contexto anterior
+
+        # Evaluar y asignar los argumentos a los parámetros
+        for param_name, arg in zip(expected_params, node.arguments):
+            if isinstance(arg, IdExpression):
+                # Si el argumento es una variable, obtener su valor del contexto anterior
+                arg_value = previous_context.get_variable(arg.var_name)
+                if arg_value is None:
+                    error_msg = f"Error Semántico: La variable '{arg.var_name}' no está definida."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
+                    self.variable_context = previous_context  # Restaurar el contexto anterior
+                    return None
+                value = arg_value
+            else:
+                # Si es un valor directo, evaluarlo
+                value = self.visit(arg)
+
+            print(f"Asignando parámetro {param_name} = {value}")
+
+            # Determinar el tipo del valor
+            if isinstance(value, bool):
+                var_type = "BOOLEAN"
+            elif isinstance(value, (int, float)):
+                var_type = "NUMBER"
+            else:
+                var_type = "UNKNOWN"
+
+            # Asignar el valor al parámetro en el nuevo contexto
+            self.variable_context.set_variable(param_name, value, var_type)
+
+        # Buscar y ejecutar el cuerpo del procedimiento
+        for stmt in self.ast.statements:
+            if isinstance(stmt, ProcedureStatement) and stmt.name == procedure_name:
+                print(f"Ejecutando cuerpo del procedimiento {procedure_name}")
+                # Ejecutar cada statement en el cuerpo del procedimiento
+                for statement in stmt.body[0].statements:  # Nota el [0] aquí
+                    self.visit(statement)
+                break
+
+        # Restaurar el contexto original
+        self.variable_context = previous_context
+        print(f"Finalizada la ejecución del procedimiento {procedure_name}\n")
 
     def visit_binaryoperation(self, node):
         left = self.visit(node.left)
@@ -743,3 +832,6 @@ class ASTVisitor:
 
     def print_symbol_table(self):
         self.variable_context.print_symbol_table()
+
+    def print_procedure_tracker(self):
+        self.proc_var_tracker.print_summary()

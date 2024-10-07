@@ -2,6 +2,7 @@ import random
 
 import ply.yacc as yacc
 from analizadorLexico import tokens
+from writingMachine.ast.call_statement import CallStatement
 from writingMachine.ast.case_statement import CaseStatement
 from writingMachine.ast.expression_list import ExpressionList
 from writingMachine.ast.procedure_statement import ProcedureStatement
@@ -81,6 +82,7 @@ def p_program(p):
 def p_statement(p):
     '''statement : expression
                  | procedure_statement
+                 | call_statement
                  | def_statement
                  | put_statement
                  | add_statement
@@ -102,7 +104,7 @@ def p_statement(p):
     if isinstance(p[1], (DefStatement, PutStatement, AddStatement,
                          ContinueUpStatement, ContinueDownStatement, ContinueRightStatement, ContinueLeftStatement,
                          PosStatement, PosXStatement, PosYStatement, UseColorStatement,
-                         DownStatement, UpStatement, BeginningStatement)):
+                         DownStatement, UpStatement, BeginningStatement, ProcedureStatement, CallStatement)):
         p[0] = p[1]
     elif len(p) == 3 and p[2] == ';':
         p[0] = p[1]
@@ -311,6 +313,10 @@ def p_procedure_statement(p):
     '''procedure_statement : PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI'''
     p[0] = ProcedureStatement(name=p[2], parameters=p[4], body=p[7])
 
+def p_call_statement(p):
+    '''call_statement : CALL ID LPAREN parameter_list RPAREN'''
+    p[0] = CallStatement(procedure_name=p[2], arguments=p[4])
+
 def p_parameter_list(p):
     '''parameter_list : expression
                       | parameter_list COMMA expression
@@ -321,6 +327,7 @@ def p_parameter_list(p):
         p[0] = p[1] + [p[3]]  # Agrega la expresión a la lista existente
     else:
         p[0] = []  # No hay parámetros, lista vacía
+
 # Regla para manejo de errores
 def p_error(p):
     global syntax_errors
@@ -351,12 +358,18 @@ def parse(input_string):
 if __name__ == "__main__":
     code = """
     //hola
-    Proc ayu ()
+    Proc ayu (chamoy, pro)
     [
-    Def(var1, 1);
-    Put(var1, 1);
+    Def(juan,3);
+    Put(chamoy, 1);
+    Add(chamoy, pro);
     ];
-    end; 
+    end;
+    Def(xdd,2);
+    call ayu(xdd, xdd);
+    call ayu(4,4);
+
+    
     //buenas
     """
     # Analizar el codigo y obtener el AST
@@ -368,7 +381,9 @@ if __name__ == "__main__":
     visitor.visit(ast_root)  # Ejecuta el arbol AST
 
     visitor.print_ast(ast_root)
-    #visitor.print_symbol_table()
+    visitor.print_symbol_table()
+
+    visitor.print_procedure_tracker()
 
 
 
