@@ -651,32 +651,44 @@ class ASTVisitor:
             else:
                 parameters.append(str(param))
 
-        # Solo registrar el procedimiento en el tracker
+        param_count = len(parameters)
+
+        # Verificar si ya existe un procedimiento con el mismo nombre y cantidad de parámetros
+        if self.proc_var_tracker.get_procedure(node.name, param_count):
+            error_msg = (f"Error Semántico: El procedimiento '{node.name}' ya está definido "
+                         f"con {param_count} parámetros.")
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None  # Salir si ya existe un procedimiento con el mismo nombre y número de parámetros
+
+        # Registrar el procedimiento en el tracker
         self.proc_var_tracker.register_procedure(node.name, parameters)
 
-        print(f"Procedimiento {node.name} registrado con parámetros: {parameters}")
+        print(f"Procedimiento {node.name} registrado con {param_count} parámetros: {parameters}")
 
     def visit_callstatement(self, node):
         procedure_name = node.procedure_name
-        print(f"\nEjecutando llamada al procedimiento: {procedure_name}")
+        param_count = len(node.arguments)
 
-        # Verificar si el procedimiento existe
-        if procedure_name not in self.proc_var_tracker.procedures:
-            error_msg = f"Error Semántico: El procedimiento '{procedure_name}' no está definido."
+        print(f"\nEjecutando llamada al procedimiento: {procedure_name} con {param_count} argumentos")
+
+        # Verificar si existe un procedimiento con el nombre y cantidad de parámetros
+        proc_info = self.proc_var_tracker.get_procedure(procedure_name, param_count)
+
+        if proc_info is None:
+            error_msg = (f"Error Semántico: El procedimiento '{procedure_name}' no está definido "
+                         f"con {param_count} parámetros.")
             print(error_msg)
             self.semantic_errors.append(error_msg)
             return None
 
-        # Establecer el procedimiento actual
-        self.variable_context.set_current_procedure(procedure_name)
-
-        # Obtener la información del procedimiento
-        proc_info = self.proc_var_tracker.procedures[procedure_name]
         expected_params = proc_info["params"]
 
         # Verificar el número de argumentos
         if len(node.arguments) != len(expected_params):
-            error_msg = f"Error Semántico: El procedimiento '{procedure_name}' espera {len(expected_params)} parámetros, pero se proporcionaron {len(node.arguments)}."
+            error_msg = (
+                f"Error Semántico: El procedimiento '{procedure_name}' espera {len(expected_params)} parámetros, "
+                f"pero se proporcionaron {len(node.arguments)}.")
             print(error_msg)
             self.semantic_errors.append(error_msg)
             return None
@@ -706,12 +718,13 @@ class ASTVisitor:
             else:
                 var_type = "UNKNOWN"
 
-            # Asignar el valor al parámetro en el contexto
+            # Asignar el valor al parámetro en el contexto con su tipo
             self.variable_context.set_variable(param_name, value, var_type)
 
         # Buscar y ejecutar el cuerpo del procedimiento
         for stmt in self.ast.statements:
-            if isinstance(stmt, ProcedureStatement) and stmt.name == procedure_name:
+            if isinstance(stmt, ProcedureStatement) and stmt.name == procedure_name and len(
+                    stmt.parameters) == param_count:
                 print(f"Ejecutando cuerpo del procedimiento {procedure_name}")
                 # Ejecutar cada statement en el cuerpo del procedimiento
                 for statement in stmt.body[0].statements:  # Nota el [0] aquí

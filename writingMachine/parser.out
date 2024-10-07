@@ -83,7 +83,7 @@ Rule 71    when_clauses -> when_clauses when_clause
 Rule 72    when_clause -> WHEN expression THEN LBRACKET program RBRACKET
 Rule 73    repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
 Rule 74    while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
-Rule 75    procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+Rule 75    procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
 Rule 76    call_statement -> CALL ID LPAREN parameter_list RPAREN
 Rule 77    parameter_list -> expression
 Rule 78    parameter_list -> parameter_list COMMA expression
@@ -134,7 +134,7 @@ RANDOM               : 54
 RBRACKET             : 59 60 66 69 72 73 73 74 74 75
 REPEAT               : 73
 RPAREN               : 33 34 35 36 41 48 49 50 51 52 53 54 55 56 57 58 66 75 76
-SEMI                 : 1 3 60 75 75
+SEMI                 : 1 3 60 75
 SMALLER              : 52
 SUBSTR               : 53
 SUM                  : 57
@@ -233,7 +233,7 @@ state 0
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -362,7 +362,7 @@ state 1
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -1500,7 +1500,7 @@ state 25
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -1809,7 +1809,7 @@ state 37
 
 state 38
 
-    (75) procedure_statement -> PROC . ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> PROC . ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
 
     ID              shift and go to state 79
 
@@ -1888,7 +1888,7 @@ state 43
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -2014,7 +2014,7 @@ state 44
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -2140,7 +2140,7 @@ state 45
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -2266,7 +2266,7 @@ state 46
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -2399,7 +2399,7 @@ state 48
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -2525,7 +2525,7 @@ state 49
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -2651,7 +2651,7 @@ state 50
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -3321,7 +3321,7 @@ state 67
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -3448,7 +3448,7 @@ state 68
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -3616,7 +3616,7 @@ state 70
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -3742,7 +3742,7 @@ state 71
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -3868,7 +3868,7 @@ state 72
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -3994,7 +3994,7 @@ state 73
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -4120,7 +4120,7 @@ state 74
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -4246,7 +4246,7 @@ state 75
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -4372,7 +4372,7 @@ state 76
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -4498,7 +4498,7 @@ state 77
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -4624,7 +4624,7 @@ state 78
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -4707,7 +4707,7 @@ state 78
 
 state 79
 
-    (75) procedure_statement -> PROC ID . LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> PROC ID . LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
 
     LPAREN          shift and go to state 116
 
@@ -4966,7 +4966,7 @@ state 88
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -5251,7 +5251,7 @@ state 94
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -5382,7 +5382,7 @@ state 95
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -6156,7 +6156,7 @@ state 115
 
 state 116
 
-    (75) procedure_statement -> PROC ID LPAREN . parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> PROC ID LPAREN . parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (77) parameter_list -> . expression
     (78) parameter_list -> . parameter_list COMMA expression
     (79) parameter_list -> .
@@ -6433,7 +6433,7 @@ state 126
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -6562,7 +6562,7 @@ state 127
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -6689,7 +6689,7 @@ state 128
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -6815,7 +6815,7 @@ state 129
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -6941,7 +6941,7 @@ state 130
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -7067,7 +7067,7 @@ state 131
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -7193,7 +7193,7 @@ state 132
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -7319,7 +7319,7 @@ state 133
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -7499,7 +7499,7 @@ state 135
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -7625,7 +7625,7 @@ state 136
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -7751,7 +7751,7 @@ state 137
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -7834,7 +7834,7 @@ state 137
 
 state 138
 
-    (75) procedure_statement -> PROC ID LPAREN parameter_list . RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> PROC ID LPAREN parameter_list . RPAREN LBRACKET program RBRACKET SEMI END
     (78) parameter_list -> parameter_list . COMMA expression
 
     RPAREN          shift and go to state 162
@@ -7917,7 +7917,7 @@ state 141
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -8043,7 +8043,7 @@ state 142
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -8214,7 +8214,7 @@ state 144
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -8340,7 +8340,7 @@ state 145
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -8565,7 +8565,7 @@ state 161
 
 state 162
 
-    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN . LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN . LBRACKET program RBRACKET SEMI END
 
     LBRACKET        shift and go to state 184
 
@@ -8821,7 +8821,7 @@ state 171
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -8966,7 +8966,7 @@ state 174
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -9536,7 +9536,7 @@ state 183
 
 state 184
 
-    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET . program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET . program RBRACKET SEMI END
     (1) program -> . statement SEMI
     (2) program -> . statement
     (3) program -> . program statement SEMI
@@ -9583,7 +9583,7 @@ state 184
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -9935,7 +9935,7 @@ state 191
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -10066,7 +10066,7 @@ state 192
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -10197,7 +10197,7 @@ state 193
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -10326,7 +10326,7 @@ state 194
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -10410,7 +10410,7 @@ state 194
 
 state 195
 
-    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program . RBRACKET SEMI END SEMI
+    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program . RBRACKET SEMI END
     (3) program -> program . statement SEMI
     (4) program -> program . statement
     (5) statement -> . expression
@@ -10455,7 +10455,7 @@ state 195
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -10598,7 +10598,7 @@ state 198
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -10727,7 +10727,7 @@ state 199
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -10818,7 +10818,7 @@ state 200
 
 state 201
 
-    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET . SEMI END SEMI
+    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET . SEMI END
 
     SEMI            shift and go to state 207
 
@@ -10938,7 +10938,7 @@ state 206
 
 state 207
 
-    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI . END SEMI
+    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI . END
 
     END             shift and go to state 210
 
@@ -10992,7 +10992,7 @@ state 208
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -11121,9 +11121,47 @@ state 209
 
 state 210
 
-    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END . SEMI
+    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .
 
-    SEMI            shift and go to state 212
+    SEMI            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    EQUAL           reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    AND             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    OR              reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    GREATER         reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    SMALLER         reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    SUBSTR          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    RANDOM          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    MULT            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    DIV             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    SUM             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    LPAREN          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    BOOLEAN         reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    NUMBER          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    ID              reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    PROC            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    CALL            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    DEF             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    PUT             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    ADD             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    CONTINUEUP      reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    CONTINUEDOWN    reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    CONTINUERIGHT   reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    CONTINUELEFT    reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    POS             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    POSX            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    POSY            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    USECOLOR        reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    DOWN            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    UP              reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    BEGINNING       reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    FOR             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    CASE            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    REPEAT          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    WHILE           reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    $end            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    RPAREN          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    COMMA           reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
+    RBRACKET        reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END .)
 
 
 state 211
@@ -11173,7 +11211,7 @@ state 211
     (61) expression -> . BOOLEAN
     (64) expression -> . NUMBER
     (65) expression -> . ID
-    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI
+    (75) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
     (76) call_statement -> . CALL ID LPAREN parameter_list RPAREN
     (33) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
     (34) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
@@ -11196,7 +11234,7 @@ state 211
     (73) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET program RBRACKET
     (74) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
 
-    RBRACKET        shift and go to state 213
+    RBRACKET        shift and go to state 212
     EQUAL           shift and go to state 24
     AND             shift and go to state 26
     OR              shift and go to state 27
@@ -11257,64 +11295,19 @@ state 211
 
 state 212
 
-    (75) procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .
+    (66) for_statement -> FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET . END LOOP
 
-    SEMI            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    EQUAL           reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    AND             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    OR              reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    GREATER         reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    SMALLER         reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    SUBSTR          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    RANDOM          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    MULT            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    DIV             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    SUM             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    LPAREN          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    BOOLEAN         reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    NUMBER          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    ID              reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    PROC            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    CALL            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    DEF             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    PUT             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    ADD             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    CONTINUEUP      reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    CONTINUEDOWN    reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    CONTINUERIGHT   reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    CONTINUELEFT    reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    POS             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    POSX            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    POSY            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    USECOLOR        reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    DOWN            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    UP              reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    BEGINNING       reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    FOR             reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    CASE            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    REPEAT          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    WHILE           reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    $end            reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    RPAREN          reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    COMMA           reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
-    RBRACKET        reduce using rule 75 (procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI .)
+    END             shift and go to state 213
 
 
 state 213
 
-    (66) for_statement -> FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET . END LOOP
+    (66) for_statement -> FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END . LOOP
 
-    END             shift and go to state 214
+    LOOP            shift and go to state 214
 
 
 state 214
-
-    (66) for_statement -> FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END . LOOP
-
-    LOOP            shift and go to state 215
-
-
-state 215
 
     (66) for_statement -> FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP .
 

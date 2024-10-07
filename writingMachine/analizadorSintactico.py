@@ -310,7 +310,7 @@ def p_while_statement(p):
     p[0] = WhileStatement(condition=p[3], body=p[6])  # La condicion se toma de p[3] y el cuerpo de p[6]
 
 def p_procedure_statement(p):
-    '''procedure_statement : PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END SEMI'''
+    '''procedure_statement : PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END'''
     p[0] = ProcedureStatement(name=p[2], parameters=p[4], body=p[7])
 
 def p_call_statement(p):
@@ -358,16 +358,21 @@ def parse(input_string):
 if __name__ == "__main__":
     code = """
     //hola
+    Def(car,5);
     Proc ayu (chamoy, pro)
     [
     Def(juan,3);
     Put(chamoy, 1);
     Add(chamoy, pro);
+    call ayu(chamoy, pro, 2);
     ];
     end;
-    Def(xdd,2);
-    call ayu(xdd, xdd);
-    call ayu(4,4);
+    Proc ayu (chamoy, pro, pro4)
+    [
+    ContinueRight 4;
+    ];
+    end;
+    call ayu(4,car);
 
     
     //buenas
