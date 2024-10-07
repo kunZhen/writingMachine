@@ -367,7 +367,7 @@ if __name__ == "__main__":
     
     Proc ayu2 (bueno)
     [
-    Random (4);
+    Sum (bueno, bueno);
     ];
     end;
     

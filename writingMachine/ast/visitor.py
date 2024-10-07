@@ -887,6 +887,34 @@ class ASTVisitor:
         left = self.visit(node.left)
         right = self.visit(node.right)
 
+        # Verificación de contexto para left
+        if isinstance(node.left.value, IdExpression):
+            referenced_var_name = node.left.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Verificación de contexto para right
+        if isinstance(node.right.value, IdExpression):
+            referenced_var_name = node.right.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
         # Verificar que left y right no sean booleanos
         if str(left) == 'True' or str(left) == 'False':
             print(
@@ -910,6 +938,34 @@ class ASTVisitor:
         left = self.visit(node.left)
         right = self.visit(node.right)
 
+        # Verificación de contexto para left
+        if isinstance(node.left.value, IdExpression):
+            referenced_var_name = node.left.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Verificación de contexto para right
+        if isinstance(node.right.value, IdExpression):
+            referenced_var_name = node.right.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
         # Verificar que left y right no sean booleanos
         if str(left) == 'True' or str(left) == 'False':
             print(
@@ -926,8 +982,11 @@ class ASTVisitor:
             return None
 
         if right == 0:
-            raise ValueError("Error: Division por cero no permitida.")
-
+            print(
+                f"Error Semantico: Division por cero.")
+            self.semantic_errors.append(
+                f"Error Semantico: Division por cero.")
+            return None
         result = left // right
         print(f"Division: {left} // {right} = {result}")
         return result
@@ -935,6 +994,34 @@ class ASTVisitor:
     def visit_sumstatement(self, node):
         left = self.visit(node.left)
         right = self.visit(node.right)
+
+        # Verificación de contexto para left
+        if isinstance(node.left.value, IdExpression):
+            referenced_var_name = node.left.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
+
+        # Verificación de contexto para right
+        if isinstance(node.right.value, IdExpression):
+            referenced_var_name = node.right.value.var_name
+            referenced_full_name = (
+                f"{referenced_var_name}_{self.variable_context.current_procedure}"
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{referenced_var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
+                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                return None
 
         # Verificar que left y right no sean booleanos
         if str(left) == 'True' or str(left) == 'False':
@@ -947,7 +1034,8 @@ class ASTVisitor:
         if str(right) == 'True' or str(right) == 'False':
             print(
                 f"Error Semantico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
-            self.semantic_errors.append(f"Error Semantico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
+            self.semantic_errors.append(
+                f"Error Semantico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
         result = left + right
