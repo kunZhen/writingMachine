@@ -13,6 +13,9 @@ class Analyzer:
         self.semantic_errors = []
 
     def process_code(self):
+        self.lexical_errors = []
+        self.syntax_errors = []
+        self.semantic_errors = []
         # Leer el contenido del archivo
         try:
             with open(self.input_file, 'r') as file:
@@ -70,6 +73,7 @@ class Analyzer:
                     self.semantic_errors.append(error)
         except Exception as e:
             print(f"Error durante el análisis semántico: {str(e)}")
+
 
     def generate_log(self, output_log="output_log.txt"):
         original_stdout = sys.stdout

@@ -124,6 +124,9 @@ def t_error(t):
     t.lexer.skip(1)
 
 
+
+
+
 # Construir el lexer
 lexer = lex.lex()
 

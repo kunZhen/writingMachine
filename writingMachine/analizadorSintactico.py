@@ -366,6 +366,7 @@ def parse(input_string):
 
     # Ahora, parsear el código procesado
     return parser.parse(processed_code, tracking=True)
+
 # Ejemplo de prueba
 if __name__ == "__main__":
     code = """

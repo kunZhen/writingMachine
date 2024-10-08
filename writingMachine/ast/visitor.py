@@ -1590,6 +1590,7 @@ class ASTVisitor:
             else:
                 print(f"{indent}  {attr}: {value}")  # Si es un valor basico, lo imprime directamente
 
+
     def print_symbol_table(self):
         self.variable_context.print_symbol_table()
         self.check_main()
