@@ -323,7 +323,7 @@ def p_while_statement(p):
 
 def p_procedure_statement(p):
     '''procedure_statement : PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END'''
-    p[0] = ProcedureStatement(name=p[2], parameters=p[4], body=p[7])
+    p[0] = ProcedureStatement(procedure_name=p[2], arguments=p[4], body=p[7])
 
 def p_call_statement(p):
     '''call_statement : CALL ID LPAREN parameter_list RPAREN'''
@@ -396,7 +396,6 @@ if __name__ == "__main__":
     call ayu2(1);
     ];
     end;
-    call Main ();
     
     
 

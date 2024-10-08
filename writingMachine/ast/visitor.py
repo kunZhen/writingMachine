@@ -1323,11 +1323,11 @@ class ASTVisitor:
                 self.visit(statement)
 
     def visit_procedurestatement(self, node):
-        print(f"Registrando procedimiento: {node.name}")
+        print(f"Registrando procedimiento: {node.procedure_name}")
 
         # Extraer los nombres de los parámetros
         parameters = []
-        for param in node.parameters:
+        for param in node.arguments:
             if isinstance(param, IdExpression):
                 parameters.append(param.var_name)
             else:
@@ -1336,7 +1336,7 @@ class ASTVisitor:
         param_count = len(parameters)
 
         # Verificar si ya existe un procedimiento con el mismo nombre y cantidad de parámetros
-        if self.proc_var_tracker.get_procedure(node.name, param_count):
+        if self.proc_var_tracker.get_procedure(node.procedure_name, param_count):
             error_msg = (f"Error Semántico: El procedimiento '{node.name}' ya está definido "
                          f"con {param_count} parámetros.")
             print(error_msg)
@@ -1344,10 +1344,12 @@ class ASTVisitor:
             return None  # Salir si ya existe un procedimiento con el mismo nombre y número de parámetros
 
         # Registrar el procedimiento en el tracker
-        self.proc_var_tracker.register_procedure(node.name, parameters)
+        self.proc_var_tracker.register_procedure(node.procedure_name, parameters)
 
-        print(f"Procedimiento {node.name} registrado con {param_count} parámetros: {parameters}")
-
+        print(f"Procedimiento {node.procedure_name} registrado con {param_count} parámetros: {parameters}")
+        if node.procedure_name == "Main":
+            print("Ejecutando el procedimiento 'Main'...")
+            self.visit_callstatement(node)
     def visit_callstatement(self, node):
         procedure_name = node.procedure_name
         param_count = len(node.arguments)
@@ -1407,8 +1409,8 @@ class ASTVisitor:
 
         # Buscar y ejecutar el cuerpo del procedimiento
         for stmt in self.ast.statements:
-            if isinstance(stmt, ProcedureStatement) and stmt.name == procedure_name and len(
-                    stmt.parameters) == param_count:
+            if isinstance(stmt, ProcedureStatement) and stmt.procedure_name == procedure_name and len(
+                    stmt.arguments) == param_count:
                 print(f"Ejecutando cuerpo del procedimiento {procedure_name}")
                 # Ejecutar cada statement en el cuerpo del procedimiento
                 for statement in stmt.body[0].statements:  # Nota el [0] aquí
