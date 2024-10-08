@@ -130,11 +130,16 @@ def t_error(t):
 # Construir el lexer
 lexer = lex.lex()
 
-# Funcion de analisis lexico
-# Funcion de analisis lexico
+def reset_lexer():
+    global errors_description, lexical_errors, first_token_checked
+    errors_description = []
+    lexical_errors = []
+    first_token_checked = False
+    # Reiniciar el lexer
+    lexer.lineno = 1
 def analysis(input):
-    global first_token_checked
-    first_token_checked = False  # Restablecer flag para cada análisis
+    global errors_description, lexical_errors, first_token_checked
+    reset_lexer()  # Llamar a la función de reinicio al inicio del análisis
     lexer.input(input)
     tokens = []
 
@@ -159,7 +164,7 @@ def analysis(input):
 
 # Ejemplo de prueba
 if __name__ == '__main__':
-    code = """
+    code1 = """
         //vamos
         Proc aguacate (banano)
         []
@@ -167,10 +172,21 @@ if __name__ == '__main__':
         call aguacate(2);
         ADD(X)l%
         """
-    print("Tokens encontrados:")
-    print(analysis(code))
-
+    print("Análisis del primer código:")
+    print(analysis(code1))
     if lexical_errors:
-        print("\nErrores lexicos:")
+        print("\nErrores lexicos del primer código:")
+        for error in lexical_errors:
+            print(error)
+
+    code2 = """
+        //otro ejemplo
+        Def(x, 5);%%
+        Put(x, 10);
+        """
+    print("\nAnálisis del segundo código:")
+    print(analysis(code2))
+    if lexical_errors:
+        print("\nErrores lexicos del segundo código:")
         for error in lexical_errors:
             print(error)

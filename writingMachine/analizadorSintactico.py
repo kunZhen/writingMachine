@@ -1,7 +1,7 @@
 import random
 
 import ply.yacc as yacc
-from analizadorLexico import tokens
+from analizadorLexico import tokens, reset_lexer  # Asegúrate de importar reset_lexer del lexer
 from writingMachine.ast.call_statement import CallStatement
 from writingMachine.ast.case_statement import CaseStatement
 from writingMachine.ast.expression_list import ExpressionList
@@ -353,8 +353,21 @@ def p_error(p):
 # Construir el parser
 parser = yacc.yacc()
 
-# Funcion para realizar el analisis sintactico
+
+def reset_parser():
+    global variables, x_position, y_position, current_color, syntax_errors
+    variables = {}
+    x_position = 1
+    y_position = 1
+    current_color = 1
+    syntax_errors = []
+    reset_lexer()  # Reinicia también el lexer
+
+
+# Modificar la función de análisis sintáctico
 def parse(input_string):
+    reset_parser()  # Reinicia el estado del parser y lexer
+
     # Separar el input en líneas
     lines = input_string.strip().splitlines()
 
@@ -366,6 +379,7 @@ def parse(input_string):
 
     # Ahora, parsear el código procesado
     return parser.parse(processed_code, tracking=True)
+
 
 # Ejemplo de prueba
 if __name__ == "__main__":
