@@ -93,7 +93,7 @@ def t_ID(t):
                    'Beginning', 'Up', 'Down', 'UseColor', 'PosY', 'PosX', 'Pos', 'ContinueLeft',
                    'ContinueRight', 'ContinueDown', 'ContinueUp', 'Add', 'Put', 'For', 'to', 'Loop', 'End',
                    'Case', 'When', 'Then', 'Else', 'Repeat', 'Until', 'While', 'Whend', 'Def', 'PUT', 'ADD',
-                   'case', 'call', 'TurnLeft', 'TurnRight', 'Proc', 'end'):
+                   'case', 'call', 'TurnLeft', 'TurnRight', 'Proc', 'end', 'DEF', 'PUT', 'ADD', 'or', 'and', 'equal'):
         t.type = t.value.upper()  # Cambiar el tipo a MULT, DIV o SUM
     return t
 
@@ -140,7 +140,7 @@ def analysis(input):
             # Verificar si el primer token no es un comentario
             if tok.type != 'COMMENT':
                 lexical_errors.append(
-                    f"Error Léxico: El programa debe comenzar con un comentario en la línea {tok.lineno}")
+                    f"Error Lexico: El programa debe comenzar con un comentario en la linea {tok.lineno}")
             # Si es comentario o no, marcamos que ya revisamos el primer token
             first_token_checked = True
             # Saltamos el comentario sin agregarlo a la lista de tokens
@@ -162,6 +162,7 @@ if __name__ == '__main__':
         []
         end;
         call aguacate(2);
+        ADD(X)l%
         """
     print("Tokens encontrados:")
     print(analysis(code))

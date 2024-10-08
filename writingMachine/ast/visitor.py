@@ -1337,7 +1337,7 @@ class ASTVisitor:
 
         # Verificar si ya existe un procedimiento con el mismo nombre y cantidad de parámetros
         if self.proc_var_tracker.get_procedure(node.procedure_name, param_count):
-            error_msg = (f"Error Semántico: El procedimiento '{node.name}' ya está definido "
+            error_msg = (f"Error Semántico: El procedimiento '{node.procedure_name}' ya está definido "
                          f"con {param_count} parámetros.")
             print(error_msg)
             self.semantic_errors.append(error_msg)
@@ -1546,6 +1546,32 @@ class ASTVisitor:
     def visit_booleanexpression(self, node):
         return node.value
 
+    def check_main(self):
+        # Inicializamos las variables de conteo
+        main_count = 0
+        main_parameters = None
+
+        # Iterar sobre todas las claves (procedimientos) en el tracker
+        for proc_key in self.proc_var_tracker.procedures:
+            if proc_key[0] == "Main":  # Verificamos si el nombre del procedimiento es "Main"
+                main_count += 1
+                main_parameters = self.proc_var_tracker.procedures[proc_key]["params"]
+
+        # Verificar si no se encontró el procedimiento Main
+        if main_count == 0:
+            print("Error Semántico: No se ha registrado el procedimiento 'Main'.")
+            self.semantic_errors.append("Error Semántico: No se ha registrado el procedimiento 'Main'.")
+
+        # Verificar si hay más de un Main
+        elif main_count > 1:
+            print("Error Semántico: Hay más de un procedimiento 'Main' registrado.")
+            self.semantic_errors.append("Error Semántico: Hay más de un procedimiento 'Main' registrado.")
+
+        # Verificar si Main tiene parámetros
+        elif main_parameters and len(main_parameters) > 0:
+            print("Error Semántico: El procedimiento 'Main' no debe tener parámetros.")
+            self.semantic_errors.append("Error Semántico: El procedimiento 'Main' no debe tener parámetros.")
+
     def print_ast(self, node, level=0):
         indent = "  " * level  # Indentar de acuerdo al nivel de profundidad
         print(f"{indent}{type(node).__name__}")  # Imprimir el tipo del nodo
@@ -1566,6 +1592,7 @@ class ASTVisitor:
 
     def print_symbol_table(self):
         self.variable_context.print_symbol_table()
+        self.check_main()
 
     def print_procedure_tracker(self):
         self.proc_var_tracker.print_summary()

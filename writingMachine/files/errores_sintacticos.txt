@@ -1,3 +1,4 @@
+//Si
 Def(Var,3);;
 Put(Var,true];
 PosX (var;
@@ -7,3 +8,4 @@ Case var
     When 1 Then
         [Add(var)]
 End;
+

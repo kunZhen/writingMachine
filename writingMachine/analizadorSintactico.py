@@ -370,36 +370,21 @@ def parse(input_string):
 if __name__ == "__main__":
     code = """
     //hola
-    Proc ayu (chamoy, pro)
+    Proc Ayu ()
     [
     Def(car, 2);
-    Def(sii,1);
+    Def(car,1);
+    Or(true,true);
     ];
     end;
     
-    Proc ayu2 (bueno)
-    [
-    While [bueno < 5]
-        [Add(bueno);
-        ContinueLeft 3;]
-    Whend;
-    ];
-    end;
     
     Proc Main ()
     [
     Def(car,5);
-    call ayu (2,car);
-    ContinueRight car*sii;
-    TurnRight car*4;
-    TurnLeft 5;
-    call ayu2(1);
+    call Ayu ();
     ];
     end;
-    
-    
-
-    
     //buenas
     """
     # Analizar el codigo y obtener el AST
