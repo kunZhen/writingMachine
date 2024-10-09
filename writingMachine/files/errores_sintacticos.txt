@@ -1,0 +1,11 @@
+//Si
+Def(Var,3);;
+Put(Var,true];
+PosX (var;
+Sum(1,Sum(2,));
+Def(var,1);
+Case var
+    When 1 Then
+        [Add(var)]
+End;
+
