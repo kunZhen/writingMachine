@@ -1,0 +1,16 @@
+Tokens encontrados:
+[('Def', 'DEF', 2, 1), ('(', 'LPAREN', 2, 4), ('Var', 'ID', 2, 5), (',', 'COMMA', 2, 8), (3, 'NUMBER', 2, 9), (')', 'RPAREN', 2, 10), (';', 'SEMI', 2, 11), (';', 'SEMI', 2, 12), ('Put', 'PUT', 3, 1), ('(', 'LPAREN', 3, 4), ('Var', 'ID', 3, 5), (',', 'COMMA', 3, 8), ('true', 'BOOLEAN', 3, 9), (']', 'RBRACKET', 3, 13), (';', 'SEMI', 3, 14), ('PosX', 'POSX', 4, 1), ('(', 'LPAREN', 4, 6), ('var', 'ID', 4, 7), (';', 'SEMI', 4, 10), ('Sum', 'SUM', 5, 1), ('(', 'LPAREN', 5, 4), (1, 'NUMBER', 5, 5), (',', 'COMMA', 5, 6), ('Sum', 'SUM', 5, 7), ('(', 'LPAREN', 5, 10), (2, 'NUMBER', 5, 11), (',', 'COMMA', 5, 12), (')', 'RPAREN', 5, 13), (')', 'RPAREN', 5, 14), (';', 'SEMI', 5, 15), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('var', 'ID', 6, 5), (',', 'COMMA', 6, 8), (1, 'NUMBER', 6, 9), (')', 'RPAREN', 6, 10), (';', 'SEMI', 6, 11), ('Case', 'CASE', 7, 1), ('var', 'ID', 7, 6), ('When', 'WHEN', 8, 5), (1, 'NUMBER', 8, 10), ('Then', 'THEN', 8, 12), ('[', 'LBRACKET', 9, 9), ('Add', 'ADD', 9, 10), ('(', 'LPAREN', 9, 13), ('var', 'ID', 9, 14), (')', 'RPAREN', 9, 17), (']', 'RBRACKET', 9, 18), ('End', 'END', 10, 1), (';', 'SEMI', 10, 4)]
+Error de sintaxis: simbolo inesperado ';' en la linea 1
+Error de sintaxis: simbolo inesperado ']' en la linea 2
+Error de sintaxis: simbolo inesperado ';' en la linea 3
+Error de sintaxis: simbolo inesperado ')' en la linea 4
+Error de sintaxis: simbolo inesperado ';' en la linea 9
+
+AST: None
+
+Errores de sintaxis:
+Error de sintaxis: simbolo inesperado ';' en la linea 1
+Error de sintaxis: simbolo inesperado ']' en la linea 2
+Error de sintaxis: simbolo inesperado ';' en la linea 3
+Error de sintaxis: simbolo inesperado ')' en la linea 4
+Error de sintaxis: simbolo inesperado ';' en la linea 9
