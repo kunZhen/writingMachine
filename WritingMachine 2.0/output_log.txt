@@ -1,1 +1,1005 @@
-Error: El archivo 'errores_lexicos.txt' no se encontró.
+Tokens encontrados:
+[('Proc', 'PROC', 3, 1), ('linea1', 'ID', 3, 6), ('(', 'LPAREN', 3, 12), (')', 'RPAREN', 3, 13), ('[', 'LBRACKET', 4, 1), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('varLocal1', 'ID', 6, 5), (',', 'COMMA', 6, 14), (1, 'NUMBER', 6, 16), (')', 'RPAREN', 6, 17), (';', 'SEMI', 6, 18), ('PosY', 'POSY', 7, 1), ('varLocal1', 'ID', 7, 6), (';', 'SEMI', 7, 15), (']', 'RBRACKET', 8, 1), (';', 'SEMI', 8, 2), ('end', 'END', 9, 1), (';', 'SEMI', 9, 4), ('Proc', 'PROC', 11, 1), ('linea2', 'ID', 11, 6), ('(', 'LPAREN', 11, 12), (')', 'RPAREN', 11, 13), ('[', 'LBRACKET', 12, 1), ('Def', 'DEF', 13, 1), ('(', 'LPAREN', 13, 4), ('varLocal1', 'ID', 13, 5), (',', 'COMMA', 13, 14), (1, 'NUMBER', 13, 16), (')', 'RPAREN', 13, 17), (';', 'SEMI', 13, 18), ('PosY', 'POSY', 14, 1), ('varLocal1', 'ID', 14, 6), (';', 'SEMI', 14, 15), (']', 'RBRACKET', 15, 1), (';', 'SEMI', 15, 2), ('end', 'END', 16, 1), (';', 'SEMI', 16, 4), ('Proc', 'PROC', 18, 1), ('linea3', 'ID', 18, 6), ('(', 'LPAREN', 18, 12), ('varLocal2', 'ID', 18, 13), (')', 'RPAREN', 18, 22), ('[', 'LBRACKET', 19, 1), ('Def', 'DEF', 20, 1), ('(', 'LPAREN', 20, 4), ('varLocal1', 'ID', 20, 5), (',', 'COMMA', 20, 14), (1, 'NUMBER', 20, 16), (')', 'RPAREN', 20, 17), (';', 'SEMI', 20, 18), ('PosY', 'POSY', 21, 1), ('varLocal1', 'ID', 21, 6), ('+', 'PLUS', 21, 16), ('varLocal2', 'ID', 21, 18), (';', 'SEMI', 21, 27), (']', 'RBRACKET', 22, 1), (';', 'SEMI', 22, 2), ('end', 'END', 23, 1), (';', 'SEMI', 23, 4), ('Proc', 'PROC', 26, 1), ('linea4', 'ID', 26, 6), ('(', 'LPAREN', 26, 12), ('varLocal2', 'ID', 26, 13), (',', 'COMMA', 26, 22), ('varLocal3', 'ID', 26, 24), (')', 'RPAREN', 26, 33), ('[', 'LBRACKET', 27, 1), ('Def', 'DEF', 28, 1), ('(', 'LPAREN', 28, 4), ('varLocal1', 'ID', 28, 5), (',', 'COMMA', 28, 14), (1, 'NUMBER', 28, 16), (')', 'RPAREN', 28, 17), (';', 'SEMI', 28, 18), ('call', 'CALL', 29, 1), ('linea3', 'ID', 29, 6), ('(', 'LPAREN', 29, 12), ('varLocal1', 'ID', 29, 13), (')', 'RPAREN', 29, 22), (';', 'SEMI', 29, 23), ('call', 'CALL', 30, 1), ('linea2', 'ID', 30, 6), ('(', 'LPAREN', 30, 12), (')', 'RPAREN', 30, 13), (';', 'SEMI', 30, 14), (']', 'RBRACKET', 31, 1), (';', 'SEMI', 31, 2), ('end', 'END', 32, 1), (';', 'SEMI', 32, 4), ('Proc', 'PROC', 36, 1), ('linea4', 'ID', 36, 6), ('(', 'LPAREN', 36, 12), ('varLocal2', 'ID', 36, 13), (',', 'COMMA', 36, 22), ('varLocal3', 'ID', 36, 24), (')', 'RPAREN', 36, 33), ('[', 'LBRACKET', 37, 1), ('Def', 'DEF', 38, 1), ('(', 'LPAREN', 38, 4), ('varLocal00', 'ID', 38, 5), (',', 'COMMA', 38, 15), (1, 'NUMBER', 38, 17), (')', 'RPAREN', 38, 18), (';', 'SEMI', 38, 19), ('Def', 'DEF', 39, 1), ('(', 'LPAREN', 39, 4), ('var', 'ID', 39, 5), (',', 'COMMA', 39, 8), (1, 'NUMBER', 39, 10), (')', 'RPAREN', 39, 11), (';', 'SEMI', 39, 12), ('Def', 'DEF', 40, 1), ('(', 'LPAREN', 40, 4), ('varIABLE', 'ID', 40, 5), (',', 'COMMA', 40, 13), (1, 'NUMBER', 40, 15), (')', 'RPAREN', 40, 16), (';', 'SEMI', 40, 17), ('Def', 'DEF', 41, 1), ('(', 'LPAREN', 41, 4), ('var1', 'ID', 41, 5), (',', 'COMMA', 41, 9), (1, 'NUMBER', 41, 11), (')', 'RPAREN', 41, 12), (';', 'SEMI', 41, 13), ('Def', 'DEF', 42, 1), ('(', 'LPAREN', 42, 4), ('v@Dato_1', 'ID', 42, 5), (',', 'COMMA', 42, 13), (1, 'NUMBER', 42, 15), (')', 'RPAREN', 42, 16), (';', 'SEMI', 42, 17), (']', 'RBRACKET', 43, 1), (';', 'SEMI', 43, 2), ('end', 'END', 44, 1), (';', 'SEMI', 44, 4), ('Proc', 'PROC', 48, 1), ('Principal', 'ID', 48, 6), ('(', 'LPAREN', 48, 15), (')', 'RPAREN', 48, 16), ('[', 'LBRACKET', 49, 1), ('Def', 'DEF', 51, 1), ('(', 'LPAREN', 51, 4), ('var1', 'ID', 51, 5), (',', 'COMMA', 51, 9), (5, 'NUMBER', 51, 11), (')', 'RPAREN', 51, 12), (';', 'SEMI', 51, 13), ('Def', 'DEF', 52, 1), ('(', 'LPAREN', 52, 4), ('variable3', 'ID', 52, 5), (',', 'COMMA', 52, 14), ('TRUE', 'BOOLEAN', 52, 15), (')', 'RPAREN', 52, 19), (';', 'SEMI', 52, 20), ('DEF', 'DEF', 55, 1), ('(', 'LPAREN', 55, 4), ('miVar', 'ID', 55, 5), (',', 'COMMA', 55, 10), (2, 'NUMBER', 55, 12), (')', 'RPAREN', 55, 13), (';', 'SEMI', 55, 14), ('PUT', 'PUT', 56, 1), ('(', 'LPAREN', 56, 4), ('miVar', 'ID', 56, 5), (',', 'COMMA', 56, 10), (100, 'NUMBER', 56, 12), (')', 'RPAREN', 56, 15), (';', 'SEMI', 56, 16), ('PUT', 'PUT', 57, 1), ('(', 'LPAREN', 57, 4), ('mivar', 'ID', 57, 5), (',', 'COMMA', 57, 10), ('Substr', 'SUBSTR', 57, 12), ('(', 'LPAREN', 57, 18), (100, 'NUMBER', 57, 19), (',', 'COMMA', 57, 22), (45, 'NUMBER', 57, 24), (')', 'RPAREN', 57, 26), (')', 'RPAREN', 57, 27), (';', 'SEMI', 57, 28), ('DEF', 'DEF', 60, 1), ('(', 'LPAREN', 60, 4), ('var', 'ID', 60, 5), (',', 'COMMA', 60, 8), (2, 'NUMBER', 60, 10), (')', 'RPAREN', 60, 11), (';', 'SEMI', 60, 12), ('DEF', 'DEF', 60, 13), ('(', 'LPAREN', 60, 16), ('var3', 'ID', 60, 17), (',', 'COMMA', 60, 21), (1, 'NUMBER', 60, 23), (')', 'RPAREN', 60, 24), (';', 'SEMI', 60, 25), ('ADD', 'ADD', 61, 1), ('(', 'LPAREN', 61, 4), ('var', 'ID', 61, 5), (')', 'RPAREN', 61, 8), (';', 'SEMI', 61, 9), ('ADD', 'ADD', 62, 1), ('(', 'LPAREN', 62, 4), ('var', 'ID', 62, 5), (',', 'COMMA', 62, 8), (5, 'NUMBER', 62, 10), (')', 'RPAREN', 62, 11), (';', 'SEMI', 62, 12), ('ADD', 'ADD', 63, 1), ('(', 'LPAREN', 63, 4), ('var', 'ID', 63, 5), (',', 'COMMA', 63, 8), ('var3', 'ID', 63, 10), (')', 'RPAREN', 63, 14), (';', 'SEMI', 63, 15), ('ContinueUp', 'CONTINUEUP', 67, 1), (10, 'NUMBER', 67, 12), (';', 'SEMI', 67, 14), ('ContinueUp', 'CONTINUEUP', 68, 1), (5, 'NUMBER', 68, 12), ('*', 'MULT_OP', 68, 13), (3, 'NUMBER', 68, 14), (';', 'SEMI', 68, 15), ('ContinueUp', 'CONTINUEUP', 69, 1), ('var1', 'ID', 69, 12), (';', 'SEMI', 69, 16), ('ContinueDown', 'CONTINUEDOWN', 72, 1), (10, 'NUMBER', 72, 14), (';', 'SEMI', 72, 16), ('ContinueDown', 'CONTINUEDOWN', 73, 1), (5, 'NUMBER', 73, 14), ('*', 'MULT_OP', 73, 15), (3, 'NUMBER', 73, 16), (';', 'SEMI', 73, 17), ('ContinueDown', 'CONTINUEDOWN', 74, 1), ('var1', 'ID', 74, 14), (';', 'SEMI', 74, 18), ('ContinueRight', 'CONTINUERIGHT', 78, 1), (10, 'NUMBER', 78, 15), (';', 'SEMI', 78, 17), ('ContinueRight', 'CONTINUERIGHT', 79, 1), (5, 'NUMBER', 79, 15), ('*', 'MULT_OP', 79, 16), (3, 'NUMBER', 79, 17), (';', 'SEMI', 79, 18), ('ContinueRight', 'CONTINUERIGHT', 80, 1), ('var1', 'ID', 80, 15), (';', 'SEMI', 80, 19), ('ContinueLeft', 'CONTINUELEFT', 83, 1), (10, 'NUMBER', 83, 14), (';', 'SEMI', 83, 16), ('ContinueLeft', 'CONTINUELEFT', 84, 1), (5, 'NUMBER', 84, 14), ('*', 'MULT_OP', 84, 15), (3, 'NUMBER', 84, 16), (';', 'SEMI', 84, 17), ('ContinueLeft', 'CONTINUELEFT', 85, 1), ('var1', 'ID', 85, 14), (';', 'SEMI', 85, 18), ('Pos', 'POS', 88, 1), ('(', 'LPAREN', 88, 4), (100, 'NUMBER', 88, 5), (',', 'COMMA', 88, 8), (0, 'NUMBER', 88, 9), (')', 'RPAREN', 88, 10), (';', 'SEMI', 88, 11), ('Pos', 'POS', 89, 1), ('(', 'LPAREN', 89, 4), ('var1', 'ID', 89, 5), (',', 'COMMA', 89, 9), (0, 'NUMBER', 89, 10), (')', 'RPAREN', 89, 11), (';', 'SEMI', 89, 12), ('Pos', 'POS', 90, 1), ('(', 'LPAREN', 90, 4), (100, 'NUMBER', 90, 5), (',', 'COMMA', 90, 8), ('var1', 'ID', 90, 9), (')', 'RPAREN', 90, 13), (';', 'SEMI', 90, 14), ('Pos', 'POS', 91, 1), ('(', 'LPAREN', 91, 4), ('var1', 'ID', 91, 5), (',', 'COMMA', 91, 9), ('var1', 'ID', 91, 10), (')', 'RPAREN', 91, 14), (';', 'SEMI', 91, 15), ('Pos', 'POS', 92, 1), ('(', 'LPAREN', 92, 4), ('var1', 'ID', 92, 5), (',', 'COMMA', 92, 9), ('var1', 'ID', 92, 10), ('+', 'PLUS', 92, 14), (10, 'NUMBER', 92, 15), (')', 'RPAREN', 92, 17), (';', 'SEMI', 92, 18), ('PosX', 'POSX', 95, 1), (100, 'NUMBER', 95, 6), (';', 'SEMI', 95, 9), ('PosX', 'POSX', 96, 1), ('var1', 'ID', 96, 6), (';', 'SEMI', 96, 10), ('PosX', 'POSX', 97, 1), ('var1', 'ID', 97, 6), ('+', 'PLUS', 97, 10), (1, 'NUMBER', 97, 11), (';', 'SEMI', 97, 12), ('PosY', 'POSY', 100, 1), (100, 'NUMBER', 100, 6), (';', 'SEMI', 100, 9), ('PosY', 'POSY', 101, 1), ('var1', 'ID', 101, 6), (';', 'SEMI', 101, 10), ('PosY', 'POSY', 102, 1), ('var1', 'ID', 102, 6), ('+', 'PLUS', 102, 10), (1, 'NUMBER', 102, 11), (';', 'SEMI', 102, 12), ('UseColor', 'USECOLOR', 104, 1), (1, 'NUMBER', 104, 10), (';', 'SEMI', 104, 11), ('UseColor', 'USECOLOR', 105, 1), (2, 'NUMBER', 105, 10), (';', 'SEMI', 105, 11), ('Down', 'DOWN', 108, 1), (';', 'SEMI', 108, 5), ('Up', 'UP', 110, 1), (';', 'SEMI', 110, 3), ('Beginning', 'BEGINNING', 113, 1), (';', 'SEMI', 113, 10), ('For', 'FOR', 116, 1), ('var6', 'ID', 116, 5), ('(', 'LPAREN', 116, 9), (1, 'NUMBER', 116, 10), ('to', 'TO', 116, 12), (5, 'NUMBER', 116, 15), (')', 'RPAREN', 116, 16), ('Loop', 'LOOP', 116, 18), ('[', 'LBRACKET', 117, 1), ('PoxY', 'ID', 117, 2), ('Add', 'ADD', 117, 7), ('(', 'LPAREN', 117, 10), ('var2', 'ID', 117, 11), (',', 'COMMA', 117, 15), ('var1', 'ID', 117, 17), (')', 'RPAREN', 117, 21), (';', 'SEMI', 117, 22), ('ContinueRight', 'CONTINUERIGHT', 118, 1), (9, 'NUMBER', 118, 15), (';', 'SEMI', 118, 16), (']', 'RBRACKET', 118, 17), ('End', 'END', 119, 1), ('Loop', 'LOOP', 119, 5), (';', 'SEMI', 119, 9), ('Case', 'CASE', 122, 1), ('var1', 'ID', 122, 6), ('When', 'WHEN', 123, 1), (1, 'NUMBER', 123, 6), ('Then', 'THEN', 123, 8), ('[', 'LBRACKET', 124, 1), ('Add', 'ADD', 124, 3), ('(', 'LPAREN', 124, 6), ('var1', 'ID', 124, 7), (',', 'COMMA', 124, 11), (1, 'NUMBER', 124, 13), (')', 'RPAREN', 124, 14), (';', 'SEMI', 124, 15), (']', 'RBRACKET', 124, 17), ('When', 'WHEN', 125, 1), (2, 'NUMBER', 125, 6), ('Then', 'THEN', 125, 8), ('[', 'LBRACKET', 126, 1), ('Add', 'ADD', 126, 3), ('(', 'LPAREN', 126, 6), ('var2', 'ID', 126, 7), (',', 'COMMA', 126, 11), (1, 'NUMBER', 126, 13), (')', 'RPAREN', 126, 14), (']', 'RBRACKET', 126, 16), ('When', 'WHEN', 127, 1), (3, 'NUMBER', 127, 6), ('Then', 'THEN', 127, 8), ('[', 'LBRACKET', 128, 1), ('Add', 'ADD', 128, 3), ('(', 'LPAREN', 128, 6), ('variale3', 'ID', 128, 7), (',', 'COMMA', 128, 15), (1, 'NUMBER', 128, 17), (')', 'RPAREN', 128, 18), (']', 'RBRACKET', 128, 20), ('End', 'END', 129, 1), ('case', 'CASE', 129, 5), (';', 'SEMI', 129, 9), ('Case', 'CASE', 132, 1), ('var5', 'ID', 132, 6), ('When', 'WHEN', 133, 1), ('True', 'BOOLEAN', 133, 6), ('Then', 'THEN', 133, 11), ('[', 'LBRACKET', 134, 1), ('Add', 'ADD', 134, 3), ('(', 'LPAREN', 134, 6), ('var2', 'ID', 134, 7), (',', 'COMMA', 134, 11), (1, 'NUMBER', 134, 13), (')', 'RPAREN', 134, 14), (';', 'SEMI', 134, 15), (']', 'RBRACKET', 134, 17), ('Else', 'ELSE', 135, 1), ('[', 'LBRACKET', 136, 1), ('Add', 'ADD', 136, 3), ('(', 'LPAREN', 136, 6), ('var', 'ID', 136, 7), (',', 'COMMA', 136, 10), (1, 'NUMBER', 136, 12), (')', 'RPAREN', 136, 13), (']', 'RBRACKET', 136, 15), ('End', 'END', 137, 1), ('case', 'CASE', 137, 5), (';', 'SEMI', 137, 9), ('DEF', 'DEF', 140, 1), ('(', 'LPAREN', 140, 4), ('bucle', 'ID', 140, 5), (',', 'COMMA', 140, 10), (2, 'NUMBER', 140, 12), (')', 'RPAREN', 140, 13), (';', 'SEMI', 140, 14), ('Repeat', 'REPEAT', 142, 1), ('[', 'LBRACKET', 143, 1), ('TurnRight', 'TURNRIGHT', 143, 2), (90, 'NUMBER', 143, 12), (']', 'RBRACKET', 143, 14), ('Until', 'UNTIL', 144, 1), ('[', 'LBRACKET', 145, 1), ('bucle', 'ID', 145, 2), ('=', 'EQUALS', 145, 8), (2, 'NUMBER', 145, 10), (']', 'RBRACKET', 145, 11), (';', 'SEMI', 145, 12), ('TurnLeft', 'TURNLEFT', 149, 1), ('Substr', 'SUBSTR', 149, 10), ('(', 'LPAREN', 149, 16), (100, 'NUMBER', 149, 17), (',', 'COMMA', 149, 20), (45, 'NUMBER', 149, 22), (')', 'RPAREN', 149, 24), (';', 'SEMI', 149, 25), ('TurnLeft', 'TURNLEFT', 150, 1), ('Substr', 'SUBSTR', 150, 10), ('(', 'LPAREN', 150, 16), ('var1', 'ID', 150, 17), (',', 'COMMA', 150, 21), (45, 'NUMBER', 150, 23), (')', 'RPAREN', 150, 25), (';', 'SEMI', 150, 26), ('TurnLeft', 'TURNLEFT', 151, 1), ('Substr', 'SUBSTR', 151, 10), ('(', 'LPAREN', 151, 16), ('var1', 'ID', 151, 17), (',', 'COMMA', 151, 21), ('var2', 'ID', 151, 23), (')', 'RPAREN', 151, 27), (';', 'SEMI', 151, 28), ('TurnLeft', 'TURNLEFT', 154, 1), ('Random', 'RANDOM', 154, 10), ('(', 'LPAREN', 154, 16), (360, 'NUMBER', 154, 17), (')', 'RPAREN', 154, 20), (';', 'SEMI', 154, 21), ('TurnLeft', 'TURNLEFT', 156, 1), ('Random', 'RANDOM', 156, 10), ('(', 'LPAREN', 156, 16), ('var1', 'ID', 156, 17), (')', 'RPAREN', 156, 21), (';', 'SEMI', 156, 22), ('TurnLeft', 'TURNLEFT', 159, 1), ('Mult', 'MULT', 159, 10), ('(', 'LPAREN', 159, 14), (2, 'NUMBER', 159, 15), (',', 'COMMA', 159, 16), (5, 'NUMBER', 159, 17), (')', 'RPAREN', 159, 18), (';', 'SEMI', 159, 19), ('TurnLeft', 'TURNLEFT', 160, 1), ('Mult', 'MULT', 160, 10), ('(', 'LPAREN', 160, 14), (2, 'NUMBER', 160, 15), (',', 'COMMA', 160, 16), ('Mult', 'MULT', 160, 17), ('(', 'LPAREN', 160, 21), (5, 'NUMBER', 160, 22), (',', 'COMMA', 160, 23), (3, 'NUMBER', 160, 24), (')', 'RPAREN', 160, 25), (')', 'RPAREN', 160, 27), (';', 'SEMI', 160, 28), ('TurnLeft', 'TURNLEFT', 161, 1), ('Mult', 'MULT', 161, 10), ('(', 'LPAREN', 161, 14), ('var1', 'ID', 161, 15), (',', 'COMMA', 161, 19), ('var2', 'ID', 161, 21), (')', 'RPAREN', 161, 25), (';', 'SEMI', 161, 26), ('TurnLeft', 'TURNLEFT', 164, 1), ('Div', 'DIV', 164, 10), ('(', 'LPAREN', 164, 13), (12, 'NUMBER', 164, 14), (',', 'COMMA', 164, 16), (4, 'NUMBER', 164, 18), (')', 'RPAREN', 164, 19), (';', 'SEMI', 164, 20), ('TurnLeft', 'TURNLEFT', 165, 1), ('Div', 'DIV', 165, 10), ('(', 'LPAREN', 165, 13), ('var1', 'ID', 165, 14), (',', 'COMMA', 165, 18), (4, 'NUMBER', 165, 20), (')', 'RPAREN', 165, 21), (';', 'SEMI', 165, 22), ('TurnLeft', 'TURNLEFT', 166, 1), ('Div', 'DIV', 166, 10), ('(', 'LPAREN', 166, 13), ('var1', 'ID', 166, 14), (',', 'COMMA', 166, 18), ('var2', 'ID', 166, 20), (')', 'RPAREN', 166, 24), (';', 'SEMI', 166, 25), ('TurnLeft', 'TURNLEFT', 169, 1), ('Sum', 'SUM', 169, 10), ('(', 'LPAREN', 169, 13), (12, 'NUMBER', 169, 14), (',', 'COMMA', 169, 16), (4, 'NUMBER', 169, 18), (')', 'RPAREN', 169, 19), (';', 'SEMI', 169, 20), ('TurnLeft', 'TURNLEFT', 170, 1), ('Sum', 'SUM', 170, 10), ('(', 'LPAREN', 170, 13), ('var1', 'ID', 170, 14), (',', 'COMMA', 170, 18), (4, 'NUMBER', 170, 20), (')', 'RPAREN', 170, 21), (';', 'SEMI', 170, 22), ('TurnLeft', 'TURNLEFT', 171, 1), ('Sum', 'SUM', 171, 10), ('(', 'LPAREN', 171, 13), ('var1', 'ID', 171, 14), (',', 'COMMA', 171, 18), ('var2', 'ID', 171, 20), (')', 'RPAREN', 171, 24), (';', 'SEMI', 171, 25), (']', 'RBRACKET', 174, 1), (';', 'SEMI', 174, 2), ('end', 'END', 175, 1), (';', 'SEMI', 175, 4), ('Proc', 'PROC', 179, 1), ('Main', 'ID', 179, 6), ('(', 'LPAREN', 179, 10), (')', 'RPAREN', 179, 11), ('[', 'LBRACKET', 180, 1), ('call', 'CALL', 181, 1), ('Principal', 'ID', 181, 6), ('(', 'LPAREN', 181, 15), (')', 'RPAREN', 181, 16), (';', 'SEMI', 181, 17), (']', 'RBRACKET', 183, 1), (';', 'SEMI', 183, 2), ('end', 'END', 184, 1), (';', 'SEMI', 184, 4)]
+
+AST: <ast_custom.program.Program object at 0x00000220A821C940>
+Registrando procedimiento: linea1
+Procedimiento linea1 registrado con 0 parámetros: []
+Registrando procedimiento: linea2
+Procedimiento linea2 registrado con 0 parámetros: []
+Registrando procedimiento: linea3
+Procedimiento linea3 registrado con 1 parámetros: ['varLocal2']
+Registrando procedimiento: linea4
+Procedimiento linea4 registrado con 2 parámetros: ['varLocal2', 'varLocal3']
+Registrando procedimiento: linea4
+Error Semántico: El procedimiento 'linea4' ya está definido con 2 parámetros.
+Registrando procedimiento: Principal
+Procedimiento Principal registrado con 0 parámetros: []
+Registrando procedimiento: Main
+Procedimiento Main registrado con 0 parámetros: []
+Ejecutando el procedimiento 'Main'...
+
+Ejecutando llamada al procedimiento: Main con 0 argumentos
+Ejecutando cuerpo del procedimiento Main
+
+Ejecutando llamada al procedimiento: Principal con 0 argumentos
+Ejecutando cuerpo del procedimiento Principal
+Definido var1 = 5 (Tipo: NUMBER)
+Definido variable3 = True (Tipo: BOOLEAN)
+Definido miVar = 2 (Tipo: NUMBER)
+Actualizado miVar_Principal = 100
+Sustraccion: 100 - 45 = 55
+Error Semantico: La variable 'mivar' no esta definida.
+Definido var = 2 (Tipo: NUMBER)
+Definido var3 = 1 (Tipo: NUMBER)
+Actualizado var_Principal = 3
+Actualizado var_Principal = 8
+Actualizado var_Principal = 9
+Movido 10 unidades hacia arriba. Nueva posicion en Y: 10
+Operando izquierdo: 5, Operando derecho: 3, Operador: *
+15
+Movido 15 unidades hacia arriba. Nueva posicion en Y: 25
+Movido 5 unidades hacia arriba. Nueva posicion en Y: 30
+Movido 10 unidades hacia abajo. Nueva posicion en Y: 20
+Operando izquierdo: 5, Operando derecho: 3, Operador: *
+15
+Movido 15 unidades hacia abajo. Nueva posicion en Y: 5
+Movido 5 unidades hacia abajo. Nueva posicion en Y: 0
+Movido 10 unidades hacia la derecha. Nueva posicion en X: 10
+Operando izquierdo: 5, Operando derecho: 3, Operador: *
+15
+Movido 15 unidades hacia la derecha. Nueva posicion en X: 25
+Movido 5 unidades hacia la derecha. Nueva posicion en X: 30
+Movido 10 unidades hacia la izquierda. Nueva posicion en X: 20
+Operando izquierdo: 5, Operando derecho: 3, Operador: *
+15
+Movido 15 unidades hacia la izquierda. Nueva posicion en X: 5
+Movido 5 unidades hacia la izquierda. Nueva posicion en X: 0
+Posicion actualizada a X: <ast_custom.expression.Expression object at 0x00000220A8221910>, Y: <ast_custom.expression.Expression object at 0x00000220A82217F0>
+Posicion actualizada a X: 5, Y: <ast_custom.expression.Expression object at 0x00000220A8221AC0>
+Posicion actualizada a X: <ast_custom.expression.Expression object at 0x00000220A8221C40>, Y: 5
+Posicion actualizada a X: 5, Y: 5
+Operando izquierdo: 5, Operando derecho: 10, Operador: +
+15
+Posicion actualizada a X: 5, Y: <ast_custom.expression.Expression object at 0x00000220A8222130>
+Posicion actualizada a X: 100, Y: <ast_custom.expression.Expression object at 0x00000220A8222130>
+Posicion actualizada a X: 5, Y: <ast_custom.expression.Expression object at 0x00000220A8222130>
+Operando izquierdo: 5, Operando derecho: 1, Operador: +
+6
+Posicion actualizada a X: 6, Y: <ast_custom.expression.Expression object at 0x00000220A8222130>
+Posicion actualizada a X: 6, Y: 100
+Posicion actualizada a X: 6, Y: 5
+Operando izquierdo: 5, Operando derecho: 1, Operador: +
+6
+Posicion actualizada a X: 6, Y: 6
+Color cambiado a Negro (Compartimiento 1)
+Color cambiado a Rojo (Compartimiento 2)
+Lapicero colocado en la superficie (Down)
+Lapicero levantado de la superficie (Up)
+Lapicero colocado en la posicion inicial: X: 1, Y: 1
+1
+Iteracion FOR: 1
+Error Semantico: 'var2' no es una variable valida.
+Movido 9 unidades hacia la derecha. Nueva posicion en X: 10
+Iteracion FOR: 2
+Error Semantico: 'var2' no es una variable valida.
+Movido 9 unidades hacia la derecha. Nueva posicion en X: 19
+Iteracion FOR: 3
+Error Semantico: 'var2' no es una variable valida.
+Movido 9 unidades hacia la derecha. Nueva posicion en X: 28
+Iteracion FOR: 4
+Error Semantico: 'var2' no es una variable valida.
+Movido 9 unidades hacia la derecha. Nueva posicion en X: 37
+Ejecutando Case para la variable: var1
+Valor de la variable: 5
+Evaluando condición: 1
+Evaluando condición: 2
+Evaluando condición: 3
+Ninguna condición cumplida, ejecutando cláusula Else
+Ejecutando Case para la variable: var5
+Error Semantico: La variable 'var5' no está definida.
+Definido bucle = 2 (Tipo: NUMBER)
+Iteracion Repeat 1
+Movido 90 unidades hacia la izquierda. Nueva posicion en X: -53
+Operando izquierdo: 2, Operando derecho: 2, Operador: =
+True
+  Resultado de la condicion: True
+Saliendo del bucle Repeat
+Sustraccion: 100 - 45 = 55
+Movido 55 unidades hacia la izquierda. Nueva posicion en X: -108
+Error Semantico: N1 debe ser mayor o igual a N2.
+Error Semantico: No se puede mover 'None' unidades. Se esperaba un numero.
+Error Semantico: La variable 'var2' no está definida.
+Error Semantico: No se puede mover 'None' unidades. Se esperaba un numero.
+26
+Movido 26 unidades hacia la izquierda. Nueva posicion en X: -134
+5
+Movido 5 unidades hacia la izquierda. Nueva posicion en X: -139
+Multiplicacion: 2 * 5 = 10
+Movido 10 unidades hacia la izquierda. Nueva posicion en X: -149
+Multiplicacion: 5 * 3 = 15
+Multiplicacion: 2 * 15 = 30
+Movido 30 unidades hacia la izquierda. Nueva posicion en X: -179
+Error Semantico: La variable 'var2' no está definida.
+Error Semantico: No se puede mover 'None' unidades. Se esperaba un numero.
+Division: 12 // 4 = 3
+Movido 3 unidades hacia la izquierda. Nueva posicion en X: -182
+Division: 5 // 4 = 1
+Movido 1 unidades hacia la izquierda. Nueva posicion en X: -183
+Error Semantico: La variable 'var2' no está definida.
+Error Semantico: No se puede mover 'None' unidades. Se esperaba un numero.
+Suma: 12 + 4 = 16
+Movido 16 unidades hacia la izquierda. Nueva posicion en X: -199
+Suma: 5 + 4 = 9
+Movido 9 unidades hacia la izquierda. Nueva posicion en X: -208
+Error Semantico: La variable 'var2' no está definida.
+Error Semantico: No se puede mover 'None' unidades. Se esperaba un numero.
+Finalizada la ejecución del procedimiento Principal
+
+Finalizada la ejecución del procedimiento Main
+
+
+AST:
+Program
+  statements: [
+  ProcedureStatement
+    procedure_name: linea1
+    arguments: [
+    ]
+    body: [
+    Program
+      statements: [
+      DefStatement
+        var_name: varLocal1
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      PosYStatement
+        y_val:
+        Expression
+          value:
+          IdExpression
+            var_name: varLocal1
+      ]
+    ]
+  ProcedureStatement
+    procedure_name: linea2
+    arguments: [
+    ]
+    body: [
+    Program
+      statements: [
+      DefStatement
+        var_name: varLocal1
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      PosYStatement
+        y_val:
+        Expression
+          value:
+          IdExpression
+            var_name: varLocal1
+      ]
+    ]
+  ProcedureStatement
+    procedure_name: linea3
+    arguments: [
+    IdExpression
+      var_name: varLocal2
+    ]
+    body: [
+    Program
+      statements: [
+      DefStatement
+        var_name: varLocal1
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      PosYStatement
+        y_val:
+        Expression
+          value:
+          BinaryOperation
+            left:
+            IdExpression
+              var_name: varLocal1
+            operator: +
+            right:
+            IdExpression
+              var_name: varLocal2
+      ]
+    ]
+  ProcedureStatement
+    procedure_name: linea4
+    arguments: [
+    IdExpression
+      var_name: varLocal2
+    IdExpression
+      var_name: varLocal3
+    ]
+    body: [
+    Program
+      statements: [
+      DefStatement
+        var_name: varLocal1
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      CallStatement
+        procedure_name: linea3
+        arguments: [
+        IdExpression
+          var_name: varLocal1
+        ]
+      CallStatement
+        procedure_name: linea2
+        arguments: [
+        ]
+      ]
+    ]
+  ProcedureStatement
+    procedure_name: linea4
+    arguments: [
+    IdExpression
+      var_name: varLocal2
+    IdExpression
+      var_name: varLocal3
+    ]
+    body: [
+    Program
+      statements: [
+      DefStatement
+        var_name: varLocal00
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      DefStatement
+        var_name: var
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      DefStatement
+        var_name: varIABLE
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      DefStatement
+        var_name: var1
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      DefStatement
+        var_name: v@Dato_1
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      ]
+    ]
+  ProcedureStatement
+    procedure_name: Principal
+    arguments: [
+    ]
+    body: [
+    Program
+      statements: [
+      DefStatement
+        var_name: var1
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 5
+      DefStatement
+        var_name: variable3
+        value:
+        Expression
+          value:
+          BooleanExpression
+            value: True
+      DefStatement
+        var_name: miVar
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 2
+      PutStatement
+        var_name: miVar
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 100
+      PutStatement
+        var_name: mivar
+        value:
+        Expression
+          value:
+          SubstrStatement
+            left:
+            Expression
+              value:
+              NumberExpression
+                value: 100
+            right:
+            Expression
+              value:
+              NumberExpression
+                value: 45
+      DefStatement
+        var_name: var
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 2
+      DefStatement
+        var_name: var3
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      AddStatement
+        var_name: var
+        increment_value: None
+      AddStatement
+        var_name: var
+        increment_value:
+        Expression
+          value:
+          NumberExpression
+            value: 5
+      AddStatement
+        var_name: var
+        increment_value:
+        Expression
+          value:
+          IdExpression
+            var_name: var3
+      ContinueUpStatement
+        move_units:
+        Expression
+          value:
+          NumberExpression
+            value: 10
+      ContinueUpStatement
+        move_units:
+        Expression
+          value:
+          BinaryOperation
+            left:
+            NumberExpression
+              value: 5
+            operator: *
+            right:
+            NumberExpression
+              value: 3
+      ContinueUpStatement
+        move_units:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+      ContinueDownStatement
+        move_units:
+        Expression
+          value:
+          NumberExpression
+            value: 10
+      ContinueDownStatement
+        move_units:
+        Expression
+          value:
+          BinaryOperation
+            left:
+            NumberExpression
+              value: 5
+            operator: *
+            right:
+            NumberExpression
+              value: 3
+      ContinueDownStatement
+        move_units:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+      ContinueRightStatement
+        move_units:
+        Expression
+          value:
+          NumberExpression
+            value: 10
+      ContinueRightStatement
+        move_units:
+        Expression
+          value:
+          BinaryOperation
+            left:
+            NumberExpression
+              value: 5
+            operator: *
+            right:
+            NumberExpression
+              value: 3
+      ContinueRightStatement
+        move_units:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          NumberExpression
+            value: 10
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          BinaryOperation
+            left:
+            NumberExpression
+              value: 5
+            operator: *
+            right:
+            NumberExpression
+              value: 3
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+      PosStatement
+        x_val:
+        Expression
+          value:
+          NumberExpression
+            value: 100
+        y_val:
+        Expression
+          value:
+          NumberExpression
+            value: 0
+      PosStatement
+        x_val:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+        y_val:
+        Expression
+          value:
+          NumberExpression
+            value: 0
+      PosStatement
+        x_val:
+        Expression
+          value:
+          NumberExpression
+            value: 100
+        y_val:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+      PosStatement
+        x_val:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+        y_val:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+      PosStatement
+        x_val:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+        y_val:
+        Expression
+          value:
+          BinaryOperation
+            left:
+            IdExpression
+              var_name: var1
+            operator: +
+            right:
+            NumberExpression
+              value: 10
+      PosXStatement
+        x_val:
+        Expression
+          value:
+          NumberExpression
+            value: 100
+      PosXStatement
+        x_val:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+      PosXStatement
+        x_val:
+        Expression
+          value:
+          BinaryOperation
+            left:
+            IdExpression
+              var_name: var1
+            operator: +
+            right:
+            NumberExpression
+              value: 1
+      PosYStatement
+        y_val:
+        Expression
+          value:
+          NumberExpression
+            value: 100
+      PosYStatement
+        y_val:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+      PosYStatement
+        y_val:
+        Expression
+          value:
+          BinaryOperation
+            left:
+            IdExpression
+              var_name: var1
+            operator: +
+            right:
+            NumberExpression
+              value: 1
+      UseColorStatement
+        color_value:
+        Expression
+          value:
+          NumberExpression
+            value: 1
+      UseColorStatement
+        color_value:
+        Expression
+          value:
+          NumberExpression
+            value: 2
+      DownStatement
+      UpStatement
+      BeginningStatement
+      Expression
+        value:
+        ForStatement
+          variable: var6
+          min_value:
+          NumberExpression
+            value: 1
+          max_value:
+          NumberExpression
+            value: 5
+          body: [
+          Program
+            statements: [
+            Expression
+              value:
+              IdExpression
+                var_name: PoxY
+            AddStatement
+              var_name: var2
+              increment_value:
+              Expression
+                value:
+                IdExpression
+                  var_name: var1
+            ContinueRightStatement
+              move_units:
+              Expression
+                value:
+                NumberExpression
+                  value: 9
+            ]
+          ]
+      Expression
+        value:
+        CaseStatement
+          variable: var1
+          when_clauses: [
+          WhenClause
+            condition:
+            NumberExpression
+              value: 1
+            body: [
+            Program
+              statements: [
+              AddStatement
+                var_name: var1
+                increment_value:
+                Expression
+                  value:
+                  NumberExpression
+                    value: 1
+              ]
+            ]
+          WhenClause
+            condition:
+            NumberExpression
+              value: 2
+            body: [
+            Program
+              statements: [
+              AddStatement
+                var_name: var2
+                increment_value:
+                Expression
+                  value:
+                  NumberExpression
+                    value: 1
+              ]
+            ]
+          WhenClause
+            condition:
+            NumberExpression
+              value: 3
+            body: [
+            Program
+              statements: [
+              AddStatement
+                var_name: variale3
+                increment_value:
+                Expression
+                  value:
+                  NumberExpression
+                    value: 1
+              ]
+            ]
+          ]
+          else_clause: [
+          ]
+      Expression
+        value:
+        CaseStatement
+          variable: var5
+          when_clauses: [
+          WhenClause
+            condition:
+            BooleanExpression
+              value: True
+            body: [
+            Program
+              statements: [
+              AddStatement
+                var_name: var2
+                increment_value:
+                Expression
+                  value:
+                  NumberExpression
+                    value: 1
+              ]
+            ]
+          ]
+          else_clause: [
+          Program
+            statements: [
+            AddStatement
+              var_name: var
+              increment_value:
+              Expression
+                value:
+                NumberExpression
+                  value: 1
+            ]
+          ]
+      DefStatement
+        var_name: bucle
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 2
+      Expression
+        value:
+        RepeatStatement
+          body: [
+          Program
+            statements: [
+            ContinueLeftStatement
+              move_units:
+              Expression
+                value:
+                NumberExpression
+                  value: 90
+            ]
+          ]
+          condition:
+          Expression
+            value:
+            BinaryOperation
+              left:
+              IdExpression
+                var_name: bucle
+              operator: =
+              right:
+              NumberExpression
+                value: 2
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          SubstrStatement
+            left:
+            Expression
+              value:
+              NumberExpression
+                value: 100
+            right:
+            Expression
+              value:
+              NumberExpression
+                value: 45
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          SubstrStatement
+            left:
+            Expression
+              value:
+              IdExpression
+                var_name: var1
+            right:
+            Expression
+              value:
+              NumberExpression
+                value: 45
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          SubstrStatement
+            left:
+            Expression
+              value:
+              IdExpression
+                var_name: var1
+            right:
+            Expression
+              value:
+              IdExpression
+                var_name: var2
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          RandomStatement
+            value:
+            Expression
+              value:
+              NumberExpression
+                value: 360
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          RandomStatement
+            value:
+            Expression
+              value:
+              IdExpression
+                var_name: var1
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          MultStatement
+            left:
+            Expression
+              value:
+              NumberExpression
+                value: 2
+            right:
+            Expression
+              value:
+              NumberExpression
+                value: 5
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          MultStatement
+            left:
+            Expression
+              value:
+              NumberExpression
+                value: 2
+            right:
+            Expression
+              value:
+              MultStatement
+                left:
+                Expression
+                  value:
+                  NumberExpression
+                    value: 5
+                right:
+                Expression
+                  value:
+                  NumberExpression
+                    value: 3
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          MultStatement
+            left:
+            Expression
+              value:
+              IdExpression
+                var_name: var1
+            right:
+            Expression
+              value:
+              IdExpression
+                var_name: var2
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          DivStatement
+            left:
+            Expression
+              value:
+              NumberExpression
+                value: 12
+            right:
+            Expression
+              value:
+              NumberExpression
+                value: 4
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          DivStatement
+            left:
+            Expression
+              value:
+              IdExpression
+                var_name: var1
+            right:
+            Expression
+              value:
+              NumberExpression
+                value: 4
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          DivStatement
+            left:
+            Expression
+              value:
+              IdExpression
+                var_name: var1
+            right:
+            Expression
+              value:
+              IdExpression
+                var_name: var2
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          SumStatement
+            left:
+            Expression
+              value:
+              NumberExpression
+                value: 12
+            right:
+            Expression
+              value:
+              NumberExpression
+                value: 4
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          SumStatement
+            left:
+            Expression
+              value:
+              IdExpression
+                var_name: var1
+            right:
+            Expression
+              value:
+              NumberExpression
+                value: 4
+      ContinueLeftStatement
+        move_units:
+        Expression
+          value:
+          SumStatement
+            left:
+            Expression
+              value:
+              IdExpression
+                var_name: var1
+            right:
+            Expression
+              value:
+              IdExpression
+                var_name: var2
+      ]
+    ]
+  ProcedureStatement
+    procedure_name: Main
+    arguments: [
+    ]
+    body: [
+    Program
+      statements: [
+      CallStatement
+        procedure_name: Principal
+        arguments: [
+        ]
+      ]
+    ]
+  ]
+Symbol Table:
+Name       Type       Procedure       Value
+--------------------------------------------------
+var1       NUMBER     Principal       5
+variable3  BOOLEAN    Principal       True
+miVar      NUMBER     Principal       100
+var        NUMBER     Principal       9
+var3       NUMBER     Principal       1
+bucle      NUMBER     Principal       2
+
+Errores semanticos:
+Error Semántico: El procedimiento 'linea4' ya está definido con 2 parámetros.
+Error Semantico: La variable 'mivar' no esta definida.
+Error Semantico: 'var2' no es una variable valida.
+Error Semantico: 'var2' no es una variable valida.
+Error Semantico: 'var2' no es una variable valida.
+Error Semantico: 'var2' no es una variable valida.
+Error Semantico: Se encontro un nodo 'None' en el AST.
+Error Semantico: La variable 'var5' no está definida.
+Error Semantico: N1 debe ser mayor o igual a N2.
+Error Semantico: No se puede mover 'None' unidades. Se esperaba un numero.
+Error Semantico: La variable 'var2' no está definida.
+Error Semantico: No se puede mover 'None' unidades. Se esperaba un numero.
+Error Semantico: La variable 'var2' no está definida.
+Error Semantico: No se puede mover 'None' unidades. Se esperaba un numero.
+Error Semantico: La variable 'var2' no está definida.
+Error Semantico: No se puede mover 'None' unidades. Se esperaba un numero.
+Error Semantico: La variable 'var2' no está definida.
+Error Semantico: No se puede mover 'None' unidades. Se esperaba un numero.
