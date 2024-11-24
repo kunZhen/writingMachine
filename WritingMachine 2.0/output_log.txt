@@ -1,7 +1,11 @@
 Tokens encontrados:
-[('Proc', 'PROC', 2, 1), ('Main', 'ID', 2, 6), ('(', 'LPAREN', 2, 10), (')', 'RPAREN', 2, 11), ('[', 'LBRACKET', 3, 1), ('Equal', 'EQUAL', 4, 1), ('(', 'LPAREN', 4, 6), ('True', 'BOOLEAN', 4, 7), (',', 'COMMA', 4, 11), ('false', 'BOOLEAN', 4, 12), (')', 'RPAREN', 4, 17), (';', 'SEMI', 4, 18), ('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('var', 'ID', 5, 5), (',', 'COMMA', 5, 8), (5, 'NUMBER', 5, 9), (')', 'RPAREN', 5, 10), (';', 'SEMI', 5, 11), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('var2', 'ID', 6, 5), (',', 'COMMA', 6, 9), ('true', 'BOOLEAN', 6, 10), (')', 'RPAREN', 6, 14), (';', 'SEMI', 6, 15), ('Def', 'DEF', 8, 1), ('(', 'LPAREN', 8, 4), ('bucle', 'ID', 8, 5), (',', 'COMMA', 8, 10), (0, 'NUMBER', 8, 12), (')', 'RPAREN', 8, 13), (';', 'SEMI', 8, 14), ('While', 'WHILE', 10, 1), ('[', 'LBRACKET', 10, 7), ('var', 'ID', 10, 8), ('<', 'LT', 10, 12), (5, 'NUMBER', 10, 14), ('*', 'MULT_OP', 10, 15), (4, 'NUMBER', 10, 16), (']', 'RBRACKET', 10, 17), ('[', 'LBRACKET', 11, 1), ('ContinueRight', 'CONTINUERIGHT', 11, 2), (90, 'NUMBER', 11, 16), (';', 'SEMI', 11, 18), ('Add', 'ADD', 12, 2), ('(', 'LPAREN', 12, 6), ('var', 'ID', 12, 7), (')', 'RPAREN', 12, 10), (';', 'SEMI', 12, 11), (']', 'RBRACKET', 12, 12), ('Whend', 'WHEND', 13, 1), (';', 'SEMI', 13, 6), (']', 'RBRACKET', 15, 1), (';', 'SEMI', 15, 2), ('end', 'END', 16, 1), (';', 'SEMI', 16, 4)]
+[('Proc', 'PROC', 3, 1), ('linea2', 'ID', 3, 6), ('(', 'LPAREN', 3, 12), (')', 'RPAREN', 3, 13), ('[', 'LBRACKET', 4, 1), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('varLocal2', 'ID', 6, 5), (',', 'COMMA', 6, 14), (3, 'NUMBER', 6, 16), (')', 'RPAREN', 6, 17), (';', 'SEMI', 6, 18), (']', 'RBRACKET', 8, 1), (';', 'SEMI', 8, 2), ('end', 'END', 9, 1), (';', 'SEMI', 9, 4), ('Proc', 'PROC', 11, 1), ('linea1', 'ID', 11, 6), ('(', 'LPAREN', 11, 12), ('aaa', 'ID', 11, 13), (')', 'RPAREN', 11, 16), ('[', 'LBRACKET', 12, 1), ('Def', 'DEF', 14, 1), ('(', 'LPAREN', 14, 4), ('varLocal1', 'ID', 14, 5), (',', 'COMMA', 14, 14), ('aaa', 'ID', 14, 16), (')', 'RPAREN', 14, 19), (';', 'SEMI', 14, 20), ('PosY', 'POSY', 15, 1), ('varLocal1', 'ID', 15, 6), (';', 'SEMI', 15, 15), ('For', 'FOR', 16, 1), ('var6', 'ID', 16, 5), ('(', 'LPAREN', 16, 9), (1, 'NUMBER', 16, 10), ('to', 'TO', 16, 12), (5, 'NUMBER', 16, 15), (')', 'RPAREN', 16, 16), ('Loop', 'LOOP', 16, 18), ('[', 'LBRACKET', 17, 1), ('PosY', 'POSY', 17, 2), ('Add', 'ADD', 17, 7), ('(', 'LPAREN', 17, 10), ('varLocal1', 'ID', 17, 11), (')', 'RPAREN', 17, 20), (';', 'SEMI', 17, 21), ('ContinueRight', 'CONTINUERIGHT', 18, 1), (9, 'NUMBER', 18, 15), (';', 'SEMI', 18, 16), (']', 'RBRACKET', 18, 17), ('End', 'END', 19, 1), ('Loop', 'LOOP', 19, 5), (';', 'SEMI', 19, 9), ('call', 'CALL', 20, 1), ('linea2', 'ID', 20, 6), ('(', 'LPAREN', 20, 12), (')', 'RPAREN', 20, 13), (';', 'SEMI', 20, 14), (']', 'RBRACKET', 21, 1), (';', 'SEMI', 21, 2), ('end', 'END', 22, 1), (';', 'SEMI', 22, 4), ('Proc', 'PROC', 25, 1), ('Main', 'ID', 25, 6), ('(', 'LPAREN', 25, 10), (')', 'RPAREN', 25, 11), ('[', 'LBRACKET', 26, 1), ('Equal', 'EQUAL', 27, 1), ('(', 'LPAREN', 27, 6), ('True', 'BOOLEAN', 27, 7), (',', 'COMMA', 27, 11), ('false', 'BOOLEAN', 27, 12), (')', 'RPAREN', 27, 17), (';', 'SEMI', 27, 18), ('Def', 'DEF', 28, 1), ('(', 'LPAREN', 28, 4), ('var', 'ID', 28, 5), (',', 'COMMA', 28, 8), (5, 'NUMBER', 28, 9), (')', 'RPAREN', 28, 10), (';', 'SEMI', 28, 11), ('Def', 'DEF', 29, 1), ('(', 'LPAREN', 29, 4), ('var2', 'ID', 29, 5), (',', 'COMMA', 29, 9), ('true', 'BOOLEAN', 29, 10), (')', 'RPAREN', 29, 14), (';', 'SEMI', 29, 15), ('Def', 'DEF', 31, 1), ('(', 'LPAREN', 31, 4), ('bucle', 'ID', 31, 5), (',', 'COMMA', 31, 10), (0, 'NUMBER', 31, 12), (')', 'RPAREN', 31, 13), (';', 'SEMI', 31, 14), ('While', 'WHILE', 33, 1), ('[', 'LBRACKET', 33, 7), ('var', 'ID', 33, 8), ('<', 'LT', 33, 12), (5, 'NUMBER', 33, 14), ('*', 'MULT_OP', 33, 15), (4, 'NUMBER', 33, 16), (']', 'RBRACKET', 33, 17), ('[', 'LBRACKET', 34, 1), ('ContinueRight', 'CONTINUERIGHT', 34, 2), (90, 'NUMBER', 34, 16), (';', 'SEMI', 34, 18), ('Add', 'ADD', 35, 2), ('(', 'LPAREN', 35, 6), ('var', 'ID', 35, 7), (')', 'RPAREN', 35, 10), (';', 'SEMI', 35, 11), (']', 'RBRACKET', 35, 12), ('Whend', 'WHEND', 36, 1), (';', 'SEMI', 36, 6), ('call', 'CALL', 37, 1), ('linea1', 'ID', 37, 6), ('(', 'LPAREN', 37, 12), ('var', 'ID', 37, 13), ('*', 'MULT_OP', 37, 16), (3, 'NUMBER', 37, 17), (')', 'RPAREN', 37, 18), (';', 'SEMI', 37, 19), (']', 'RBRACKET', 38, 1), (';', 'SEMI', 38, 2), ('end', 'END', 39, 1), (';', 'SEMI', 39, 4)]
 
-AST: <ast_custom.program.Program object at 0x00000178966BAB50>
+AST: <ast_custom.program.Program object at 0x00000261AAE65CD0>
+Registrando procedimiento: linea2
+Procedimiento linea2 registrado con 0 parámetros: []
+Registrando procedimiento: linea1
+Procedimiento linea1 registrado con 1 parámetros: ['aaa']
 Registrando procedimiento: Main
 Procedimiento Main registrado con 0 parámetros: []
 Ejecutando el procedimiento 'Main'...
@@ -12,16 +16,105 @@ False
 Definido var = 5 (Tipo: NUMBER)
 Definido var2 = True (Tipo: BOOLEAN)
 Definido bucle = 0 (Tipo: NUMBER)
-Ejecutando While con condición: <ast_custom.expression.Expression object at 0x00000178966BA8E0>
+Ejecutando While con condición: <ast_custom.expression.Expression object at 0x00000261AAE72A30>
 Movido 90 unidades hacia la derecha. Nueva posicion en X: 90
 Actualizado var_Main = 6
 While ejecutado correctamente.
+
+Ejecutando llamada al procedimiento: linea1 con 1 argumentos
+Operando izquierdo: 6, Operando derecho: 3, Operador: *
+18
+Asignando parámetro aaa = 18
+Ejecutando cuerpo del procedimiento linea1
+Definido varLocal1 = 18 (Tipo: NUMBER)
+Posicion actualizada a X: 90, Y: 18
+Actualizado varLocal1_linea1 = 19
+Posicion actualizada a X: 90, Y: 19
+Movido 9 unidades hacia la derecha. Nueva posicion en X: 99
+
+Ejecutando llamada al procedimiento: linea2 con 0 argumentos
+Ejecutando cuerpo del procedimiento linea2
+Definido varLocal2 = 3 (Tipo: NUMBER)
+Finalizada la ejecución del procedimiento linea2
+
+Finalizada la ejecución del procedimiento linea1
+
 Finalizada la ejecución del procedimiento Main
 
 
 AST:
 Program
   statements: [
+  ProcedureStatement
+    procedure_name: linea2
+    arguments: [
+    ]
+    body: [
+    Program
+      statements: [
+      DefStatement
+        var_name: varLocal2
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 3
+      ]
+    ]
+  ProcedureStatement
+    procedure_name: linea1
+    arguments: [
+    IdExpression
+      var_name: aaa
+    ]
+    body: [
+    Program
+      statements: [
+      DefStatement
+        var_name: varLocal1
+        value:
+        Expression
+          value:
+          IdExpression
+            var_name: aaa
+      PosYStatement
+        y_val:
+        Expression
+          value:
+          IdExpression
+            var_name: varLocal1
+      Expression
+        value:
+        ForStatement
+          variable: var6
+          min_value:
+          NumberExpression
+            value: 1
+          max_value:
+          NumberExpression
+            value: 5
+          body: [
+          Program
+            statements: [
+            PosYStatement
+              y_val:
+              AddStatement
+                var_name: varLocal1
+                increment_value: None
+            ContinueRightStatement
+              move_units:
+              Expression
+                value:
+                NumberExpression
+                  value: 9
+            ]
+          ]
+      CallStatement
+        procedure_name: linea2
+        arguments: [
+        ]
+      ]
+    ]
   ProcedureStatement
     procedure_name: Main
     arguments: [
@@ -97,6 +190,18 @@ Program
               increment_value: None
             ]
           ]
+      CallStatement
+        procedure_name: linea1
+        arguments: [
+        BinaryOperation
+          left:
+          IdExpression
+            var_name: var
+          operator: *
+          right:
+          NumberExpression
+            value: 3
+        ]
       ]
     ]
   ]
@@ -106,40 +211,135 @@ Name       Type       Procedure       Value
 var        NUMBER     Main            6
 var2       BOOLEAN    Main            True
 bucle      NUMBER     Main            0
-El IR es válido.
-; ModuleID = "modulo_principal"
+aaa        NUMBER     linea1          18
+varLocal1  NUMBER     linea1          19
+varLocal2  NUMBER     linea2          3
+El IR es válido antes de optimización.
+Optimización completada. IR optimizado:
+; ModuleID = '<string>'
+source_filename = "<string>"
 target triple = "unknown-unknown-unknown"
-target datalayout = ""
 
-@"x_position" = common global i32 0
-@"y_position" = common global i32 0
-@"pen_down" = common global i1 0
-define void @"Main"()
-{
+@x_position = common global i32 0
+@y_position = common global i32 0
+@pen_down = common global i1 false
+
+define void @linea2() {
 entry:
-  %".2" = icmp eq i1 1, 0
-  %".3" = icmp eq i1 1, 0
-  %"var" = alloca i32
-  store i32 5, i32* %"var"
-  %"var2" = alloca i1
-  store i1 1, i1* %"var2"
-  %"bucle" = alloca i32
-  store i32 0, i32* %"bucle"
-  br label %"while_condition"
-while_condition:
-  %"var.1" = load i32, i32* %"var"
-  %".8" = mul i32 5, 4
-  %".9" = icmp slt i32 %"var.1", %".8"
-  br i1 %".9", label %"while_body", label %"while_end"
-while_body:
-  %".11" = load i32, i32* @"x_position"
-  %".12" = add i32 %".11", 90
-  store i32 %".12", i32* @"x_position"
-  %".14" = load i32, i32* %"var"
-  %".15" = add i32 %".14", 1
-  store i32 %".15", i32* %"var"
-  br label %"while_condition"
-while_end:
+  ret void
+}
+
+define void @linea1() {
+entry:
+  ret void
+}
+
+define void @Main() {
+entry:
+  %var = alloca i32, align 4
+  br label %while_condition
+
+while_condition:                                  ; preds = %while_body, %entry
+  %storemerge = phi i32 [ 5, %entry ], [ %.15, %while_body ]
+  store i32 %storemerge, i32* %var, align 4
+  %.9 = icmp slt i32 %storemerge, 20
+  br i1 %.9, label %while_body, label %while_end
+
+while_body:                                       ; preds = %while_condition
+  %.11 = load i32, i32* @x_position, align 4
+  %.12 = add i32 %.11, 90
+  store i32 %.12, i32* @x_position, align 4
+  %.14 = load i32, i32* %var, align 4
+  %.15 = add i32 %.14, 1
+  br label %while_condition
+
+while_end:                                        ; preds = %while_condition
+  %varLocal1 = alloca i32, align 4
+  store i32 18, i32* %varLocal1, align 4
+  store i32 18, i32* @y_position, align 4
+  br label %loop_head
+
+loop_head:                                        ; preds = %loop_body, %while_end
+  %storemerge1 = phi i32 [ 1, %while_end ], [ %.32, %loop_body ]
+  %.23 = icmp slt i32 %storemerge1, 5
+  br i1 %.23, label %loop_body, label %loop_end
+
+loop_body:                                        ; preds = %loop_head
+  %.25 = load i32, i32* %varLocal1, align 4
+  %.26 = add i32 %.25, 1
+  store i32 %.26, i32* %varLocal1, align 4
+  store i32 19, i32* @y_position, align 4
+  %.29 = load i32, i32* @x_position, align 4
+  %.30 = add i32 %.29, 9
+  store i32 %.30, i32* @x_position, align 4
+  %.32 = add i32 %storemerge1, 1
+  br label %loop_head
+
+loop_end:                                         ; preds = %loop_head
+  ret void
+}
+
+El IR es válido después de optimización.
+; ModuleID = '<string>'
+source_filename = "<string>"
+target triple = "unknown-unknown-unknown"
+
+@x_position = common global i32 0
+@y_position = common global i32 0
+@pen_down = common global i1 false
+
+define void @linea2() {
+entry:
+  ret void
+}
+
+define void @linea1() {
+entry:
+  ret void
+}
+
+define void @Main() {
+entry:
+  %var = alloca i32, align 4
+  br label %while_condition
+
+while_condition:                                  ; preds = %while_body, %entry
+  %storemerge = phi i32 [ 5, %entry ], [ %.15, %while_body ]
+  store i32 %storemerge, i32* %var, align 4
+  %.9 = icmp slt i32 %storemerge, 20
+  br i1 %.9, label %while_body, label %while_end
+
+while_body:                                       ; preds = %while_condition
+  %.11 = load i32, i32* @x_position, align 4
+  %.12 = add i32 %.11, 90
+  store i32 %.12, i32* @x_position, align 4
+  %.14 = load i32, i32* %var, align 4
+  %.15 = add i32 %.14, 1
+  br label %while_condition
+
+while_end:                                        ; preds = %while_condition
+  %varLocal1 = alloca i32, align 4
+  store i32 18, i32* %varLocal1, align 4
+  store i32 18, i32* @y_position, align 4
+  br label %loop_head
+
+loop_head:                                        ; preds = %loop_body, %while_end
+  %storemerge1 = phi i32 [ 1, %while_end ], [ %.32, %loop_body ]
+  %.23 = icmp slt i32 %storemerge1, 5
+  br i1 %.23, label %loop_body, label %loop_end
+
+loop_body:                                        ; preds = %loop_head
+  %.25 = load i32, i32* %varLocal1, align 4
+  %.26 = add i32 %.25, 1
+  store i32 %.26, i32* %varLocal1, align 4
+  store i32 19, i32* @y_position, align 4
+  %.29 = load i32, i32* @x_position, align 4
+  %.30 = add i32 %.29, 9
+  store i32 %.30, i32* @x_position, align 4
+  %.32 = add i32 %storemerge1, 1
+  br label %loop_head
+
+loop_end:                                         ; preds = %loop_head
   ret void
 }
 

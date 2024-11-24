@@ -2146,10 +2146,38 @@ class ASTVisitor:
 
     def validate_ir(self):
         try:
-            llvm_ir = str(self.module)
-            llvm_module = binding.parse_assembly(llvm_ir)
-            llvm_module.verify()
-            print("El IR es válido.")
-            print(self.module)
+            llvm_ir = str(self.module)  # Convierte el módulo actual a cadena
+            llvm_module = binding.parse_assembly(llvm_ir)  # Analiza el IR
+            llvm_module.verify()  # Verifica que sea válido
+            print("El IR es válido antes de optimización.")
+
+            # Llama a la función de optimización
+            self.optimize_module()
+
+            # Verifica nuevamente el IR optimizado
+            llvm_module_optimized = binding.parse_assembly(self.optimized_ir)
+            llvm_module_optimized.verify()
+            print("El IR es válido después de optimización.")
+            print(self.optimized_ir)  # Imprime el IR optimizado
+
         except Exception as e:
             print(f"Error de validación: {e}")
+
+
+    def optimize_module(self):
+        llvm_ir = str(self.module)  # Obtén el IR como cadena
+        llvm_mod = binding.parse_assembly(llvm_ir)  # Convierte el IR a un módulo LLVM
+        llvm_mod.verify()  # Verifica que sea válido
+
+        # Configura el optimizador
+        pass_manager = binding.ModulePassManager()
+        pass_manager.add_constant_merge_pass()
+        pass_manager.add_dead_code_elimination_pass()
+        pass_manager.add_instruction_combining_pass()
+        pass_manager.add_cfg_simplification_pass()
+        pass_manager.run(llvm_mod)  # Ejecuta las optimizaciones
+
+        # Guarda el IR optimizado como texto
+        self.optimized_ir = str(llvm_mod)  # Conserva el IR optimizado como cadena
+        print("Optimización completada. IR optimizado:")
+        print(self.optimized_ir)
