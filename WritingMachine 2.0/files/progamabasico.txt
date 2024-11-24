@@ -10,8 +10,20 @@ Or (var2,false);
 Up;
 Down;
 Beginning;
+Smaller(5,Substr(5,4));
+Random(var*5);
 ];
 end;
+
+
+
+
+
+
+
+
+
+
 
 
 

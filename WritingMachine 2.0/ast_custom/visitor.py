@@ -1145,6 +1145,16 @@ class ASTVisitor:
 
         result = left > right
         print(result)
+        # Generar IR LLVM para la comparación
+        if isinstance(left, int) and isinstance(right, int):  # Comparación entre enteros
+            left_value = ir.Constant(ir.IntType(32), left)  # Convertir a i32
+            right_value = ir.Constant(ir.IntType(32), right)  # Convertir a i32
+            llvm_result = self.builder.icmp_signed(">", left_value, right_value)
+        else:
+            error_msg = f"Error Semántico: Operación '>' no soportada para los tipos {type(left).__name__} y {type(right).__name__}."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
         return result
 
     def visit_smallerstatement(self, node):
@@ -1196,6 +1206,15 @@ class ASTVisitor:
 
         result = left < right
         print(result)
+        if isinstance(left, int) and isinstance(right, int):  # Comparación entre enteros
+            left_value = ir.Constant(ir.IntType(32), left)  # Convertir a i32
+            right_value = ir.Constant(ir.IntType(32), right)  # Convertir a i32
+            llvm_result = self.builder.icmp_signed("<", left_value, right_value)
+        else:
+            error_msg = f"Error Semántico: Operación '<' no soportada para los tipos {type(left).__name__} y {type(right).__name__}."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
         return result
 
     def visit_substrstatement(self, node):
@@ -1205,32 +1224,26 @@ class ASTVisitor:
         # Verificación de contexto para left
         if isinstance(node.left.value, IdExpression):
             referenced_var_name = node.left.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
-
-            if referenced_full_name not in self.variable_context.variables:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
+            if referenced_var_name in self.symbol_table:
+                left_value_ptr = self.symbol_table[referenced_var_name]
+                left_value = self.builder.load(left_value_ptr)
+            else:
+                left_value = ir.Constant(ir.IntType(32), int(left))
+        else:
+            left_value = ir.Constant(ir.IntType(32), int(left))
 
         # Verificación de contexto para right
         if isinstance(node.right.value, IdExpression):
             referenced_var_name = node.right.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
+            if referenced_var_name in self.symbol_table:
+                right_value_ptr = self.symbol_table[referenced_var_name]
+                right_value = self.builder.load(right_value_ptr)
+            else:
+                right_value = ir.Constant(ir.IntType(32), int(right))
+        else:
+            right_value = ir.Constant(ir.IntType(32), int(right))
 
-            if referenced_full_name not in self.variable_context.variables:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
-
-        # Verificar que left y right no sean booleanos
+        # Verificar que los valores no sean booleanos
         if str(left) == 'True' or str(left) == 'False':
             print(
                 f"Error Semantico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
@@ -1245,15 +1258,19 @@ class ASTVisitor:
                 f"Error Semantico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
+        # Verificar que N1 sea mayor o igual que N2
         if left < right:
-            print(
-                f"Error Semantico: N1 debe ser mayor o igual a N2.")
-            self.semantic_errors.append(
-                f"Error Semantico: N1 debe ser mayor o igual a N2.")
+            print(f"Error Semantico: N1 debe ser mayor o igual a N2.")
+            self.semantic_errors.append(f"Error Semantico: N1 debe ser mayor o igual a N2.")
             return None
-        result = left - right
-        print(f"Sustraccion: {left} - {right} = {result}")
-        return result
+
+        # Realizar la resta en LLVM IR
+        result = self.builder.sub(left_value, right_value)
+
+        # Actualizar el resultado en Python
+        python_result = left - right
+        print(f"Sustraccion: {left} - {right} = {python_result}")
+        return python_result
 
     def visit_randomstatement(self, node):
         # Obtener el valor de n
@@ -1295,32 +1312,26 @@ class ASTVisitor:
         # Verificación de contexto para left
         if isinstance(node.left.value, IdExpression):
             referenced_var_name = node.left.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
-
-            if referenced_full_name not in self.variable_context.variables:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
+            if referenced_var_name in self.symbol_table:
+                left_value_ptr = self.symbol_table[referenced_var_name]
+                left_value = self.builder.load(left_value_ptr)
+            else:
+                left_value = ir.Constant(ir.IntType(32), int(left))
+        else:
+            left_value = ir.Constant(ir.IntType(32), int(left))
 
         # Verificación de contexto para right
         if isinstance(node.right.value, IdExpression):
             referenced_var_name = node.right.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
+            if referenced_var_name in self.symbol_table:
+                right_value_ptr = self.symbol_table[referenced_var_name]
+                right_value = self.builder.load(right_value_ptr)
+            else:
+                right_value = ir.Constant(ir.IntType(32), int(right))
+        else:
+            right_value = ir.Constant(ir.IntType(32), int(right))
 
-            if referenced_full_name not in self.variable_context.variables:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
-
-        # Verificar que left y right no sean booleanos
+        # Verificar que los valores no sean booleanos
         if str(left) == 'True' or str(left) == 'False':
             print(
                 f"Error Semantico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
@@ -1335,9 +1346,13 @@ class ASTVisitor:
                 f"Error Semantico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
-        result = left * right
-        print(f"Multiplicacion: {left} * {right} = {result}")
-        return result
+        # Realizar la multiplicación en LLVM IR
+        result = self.builder.mul(left_value, right_value)
+
+        # Actualizar el resultado en Python
+        python_result = left * right
+        print(f"Multiplicacion: {left} * {right} = {python_result}")
+        return python_result
 
     def visit_divstatement(self, node):
         left = self.visit(node.left)
@@ -1346,32 +1361,26 @@ class ASTVisitor:
         # Verificación de contexto para left
         if isinstance(node.left.value, IdExpression):
             referenced_var_name = node.left.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
-
-            if referenced_full_name not in self.variable_context.variables:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
+            if referenced_var_name in self.symbol_table:
+                left_value_ptr = self.symbol_table[referenced_var_name]
+                left_value = self.builder.load(left_value_ptr)
+            else:
+                left_value = ir.Constant(ir.IntType(32), int(left))
+        else:
+            left_value = ir.Constant(ir.IntType(32), int(left))
 
         # Verificación de contexto para right
         if isinstance(node.right.value, IdExpression):
             referenced_var_name = node.right.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
+            if referenced_var_name in self.symbol_table:
+                right_value_ptr = self.symbol_table[referenced_var_name]
+                right_value = self.builder.load(right_value_ptr)
+            else:
+                right_value = ir.Constant(ir.IntType(32), int(right))
+        else:
+            right_value = ir.Constant(ir.IntType(32), int(right))
 
-            if referenced_full_name not in self.variable_context.variables:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
-
-        # Verificar que left y right no sean booleanos
+        # Verificar que los valores no sean booleanos
         if str(left) == 'True' or str(left) == 'False':
             print(
                 f"Error Semantico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
@@ -1386,15 +1395,19 @@ class ASTVisitor:
                 f"Error Semantico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
+        # Verificar división por cero
         if right == 0:
-            print(
-                f"Error Semantico: Division por cero.")
-            self.semantic_errors.append(
-                f"Error Semantico: Division por cero.")
+            print(f"Error Semantico: Division por cero.")
+            self.semantic_errors.append(f"Error Semantico: Division por cero.")
             return None
-        result = left // right
-        print(f"Division: {left} // {right} = {result}")
-        return result
+
+        # Realizar la división entera en LLVM IR
+        result = self.builder.sdiv(left_value, right_value)
+
+        # Actualizar el resultado en Python
+        python_result = left // right
+        print(f"Division: {left} // {right} = {python_result}")
+        return python_result
 
     def visit_sumstatement(self, node):
         left = self.visit(node.left)
@@ -1403,32 +1416,26 @@ class ASTVisitor:
         # Verificación de contexto para left
         if isinstance(node.left.value, IdExpression):
             referenced_var_name = node.left.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
-
-            if referenced_full_name not in self.variable_context.variables:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
+            if referenced_var_name in self.symbol_table:
+                left_value_ptr = self.symbol_table[referenced_var_name]
+                left_value = self.builder.load(left_value_ptr)
+            else:
+                left_value = ir.Constant(ir.IntType(32), int(left))
+        else:
+            left_value = ir.Constant(ir.IntType(32), int(left))
 
         # Verificación de contexto para right
         if isinstance(node.right.value, IdExpression):
             referenced_var_name = node.right.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
+            if referenced_var_name in self.symbol_table:
+                right_value_ptr = self.symbol_table[referenced_var_name]
+                right_value = self.builder.load(right_value_ptr)
+            else:
+                right_value = ir.Constant(ir.IntType(32), int(right))
+        else:
+            right_value = ir.Constant(ir.IntType(32), int(right))
 
-            if referenced_full_name not in self.variable_context.variables:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
-
-        # Verificar que left y right no sean booleanos
+        # Verificar que los valores no sean booleanos
         if str(left) == 'True' or str(left) == 'False':
             print(
                 f"Error Semantico: El valor izquierdo no puede ser un booleano. Se obtuvo '{left}' de tipo '{type(left).__name__}'.")
@@ -1443,9 +1450,13 @@ class ASTVisitor:
                 f"Error Semantico: El valor derecho no puede ser un booleano. Se obtuvo '{right}' de tipo '{type(right).__name__}'.")
             return None
 
-        result = left + right
-        print(f"Suma: {left} + {right} = {result}")
-        return result
+        # Realizar la suma en LLVM IR
+        result = self.builder.add(left_value, right_value)
+
+        # Actualizar el resultado en Python
+        python_result = left + right
+        print(f"Suma: {left} + {right} = {python_result}")
+        return python_result
 
     def visit_forstatement(self, node):
         # Obtener los valores de min_value y max_value

@@ -1,7 +1,7 @@
 Tokens encontrados:
-[('Proc', 'PROC', 2, 1), ('Main', 'ID', 2, 6), ('(', 'LPAREN', 2, 10), (')', 'RPAREN', 2, 11), ('[', 'LBRACKET', 3, 1), ('Equal', 'EQUAL', 4, 1), ('(', 'LPAREN', 4, 6), ('True', 'BOOLEAN', 4, 7), (',', 'COMMA', 4, 11), ('false', 'BOOLEAN', 4, 12), (')', 'RPAREN', 4, 17), (';', 'SEMI', 4, 18), ('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('var', 'ID', 5, 5), (',', 'COMMA', 5, 8), (5, 'NUMBER', 5, 9), (')', 'RPAREN', 5, 10), (';', 'SEMI', 5, 11), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('var2', 'ID', 6, 5), (',', 'COMMA', 6, 9), ('true', 'BOOLEAN', 6, 10), (')', 'RPAREN', 6, 14), (';', 'SEMI', 6, 15), ('Put', 'PUT', 7, 1), ('(', 'LPAREN', 7, 4), ('var', 'ID', 7, 5), (',', 'COMMA', 7, 8), (6, 'NUMBER', 7, 9), (')', 'RPAREN', 7, 10), (';', 'SEMI', 7, 11), ('Add', 'ADD', 8, 1), ('(', 'LPAREN', 8, 4), ('var', 'ID', 8, 5), (',', 'COMMA', 8, 8), ('var', 'ID', 8, 9), (')', 'RPAREN', 8, 12), (';', 'SEMI', 8, 13), ('Or', 'OR', 9, 1), ('(', 'LPAREN', 9, 4), ('var2', 'ID', 9, 5), (',', 'COMMA', 9, 9), ('false', 'BOOLEAN', 9, 10), (')', 'RPAREN', 9, 15), (';', 'SEMI', 9, 16), ('Up', 'UP', 10, 1), (';', 'SEMI', 10, 3), ('Down', 'DOWN', 11, 1), (';', 'SEMI', 11, 5), ('Beginning', 'BEGINNING', 12, 1), (';', 'SEMI', 12, 10), (']', 'RBRACKET', 13, 1), (';', 'SEMI', 13, 2), ('end', 'END', 14, 1), (';', 'SEMI', 14, 4)]
+[('Proc', 'PROC', 2, 1), ('Main', 'ID', 2, 6), ('(', 'LPAREN', 2, 10), (')', 'RPAREN', 2, 11), ('[', 'LBRACKET', 3, 1), ('Equal', 'EQUAL', 4, 1), ('(', 'LPAREN', 4, 6), ('True', 'BOOLEAN', 4, 7), (',', 'COMMA', 4, 11), ('false', 'BOOLEAN', 4, 12), (')', 'RPAREN', 4, 17), (';', 'SEMI', 4, 18), ('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('var', 'ID', 5, 5), (',', 'COMMA', 5, 8), (5, 'NUMBER', 5, 9), (')', 'RPAREN', 5, 10), (';', 'SEMI', 5, 11), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('var2', 'ID', 6, 5), (',', 'COMMA', 6, 9), ('true', 'BOOLEAN', 6, 10), (')', 'RPAREN', 6, 14), (';', 'SEMI', 6, 15), ('Put', 'PUT', 7, 1), ('(', 'LPAREN', 7, 4), ('var', 'ID', 7, 5), (',', 'COMMA', 7, 8), (6, 'NUMBER', 7, 9), (')', 'RPAREN', 7, 10), (';', 'SEMI', 7, 11), ('Add', 'ADD', 8, 1), ('(', 'LPAREN', 8, 4), ('var', 'ID', 8, 5), (',', 'COMMA', 8, 8), ('var', 'ID', 8, 9), (')', 'RPAREN', 8, 12), (';', 'SEMI', 8, 13), ('Or', 'OR', 9, 1), ('(', 'LPAREN', 9, 4), ('var2', 'ID', 9, 5), (',', 'COMMA', 9, 9), ('false', 'BOOLEAN', 9, 10), (')', 'RPAREN', 9, 15), (';', 'SEMI', 9, 16), ('Up', 'UP', 10, 1), (';', 'SEMI', 10, 3), ('Down', 'DOWN', 11, 1), (';', 'SEMI', 11, 5), ('Beginning', 'BEGINNING', 12, 1), (';', 'SEMI', 12, 10), ('Smaller', 'SMALLER', 13, 1), ('(', 'LPAREN', 13, 8), (5, 'NUMBER', 13, 9), (',', 'COMMA', 13, 10), ('Substr', 'SUBSTR', 13, 11), ('(', 'LPAREN', 13, 17), (5, 'NUMBER', 13, 18), (',', 'COMMA', 13, 19), (4, 'NUMBER', 13, 20), (')', 'RPAREN', 13, 21), (')', 'RPAREN', 13, 22), (';', 'SEMI', 13, 23), ('Random', 'RANDOM', 14, 1), ('(', 'LPAREN', 14, 7), ('var', 'ID', 14, 8), ('*', 'MULT_OP', 14, 11), (5, 'NUMBER', 14, 12), (')', 'RPAREN', 14, 13), (';', 'SEMI', 14, 14), (']', 'RBRACKET', 15, 1), (';', 'SEMI', 15, 2), ('end', 'END', 16, 1), (';', 'SEMI', 16, 4)]
 
-AST: <ast_custom.program.Program object at 0x000002C9D9C49D90>
+AST: <ast_custom.program.Program object at 0x000001F9C9B8BB50>
 Registrando procedimiento: Main
 Procedimiento Main registrado con 0 parámetros: []
 Ejecutando el procedimiento 'Main'...
@@ -17,6 +17,11 @@ True
 Lapicero levantado de la superficie (Up)
 Lapicero colocado en la superficie (Down)
 Lapicero colocado en la posicion inicial: X: 1, Y: 1
+Sustraccion: 5 - 4 = 1
+False
+Operando izquierdo: 12, Operando derecho: 5, Operador: *
+60
+59
 Finalizada la ejecución del procedimiento Main
 
 
@@ -87,6 +92,42 @@ Program
       UpStatement
       DownStatement
       BeginningStatement
+      Expression
+        value:
+        SmallerStatement
+          left:
+          Expression
+            value:
+            NumberExpression
+              value: 5
+          right:
+          Expression
+            value:
+            SubstrStatement
+              left:
+              Expression
+                value:
+                NumberExpression
+                  value: 5
+              right:
+              Expression
+                value:
+                NumberExpression
+                  value: 4
+      Expression
+        value:
+        RandomStatement
+          value:
+          Expression
+            value:
+            BinaryOperation
+              left:
+              IdExpression
+                var_name: var
+              operator: *
+              right:
+              NumberExpression
+                value: 5
       ]
     ]
   ]
@@ -117,6 +158,8 @@ entry:
   store i1 1, i1* @"pen_down"
   store i32 1, i32* @"x_position"
   store i32 1, i32* @"y_position"
+  %".11" = sub i32 5, 4
+  %".12" = icmp slt i32 5, 1
   ret void
 }
 
