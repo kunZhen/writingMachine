@@ -55,6 +55,11 @@ class ASTVisitor:
         self.symbol_table = {}
         self.variable_context = VariableContext()
         self.proc_var_tracker = ProcedureVariableTracker()
+        self.x_position = 0
+        self.y_position = 0
+        self.angle = 0
+        self.current_color = 1  # 1 para negro, 2 para rojo
+        self.pen_down = False
         self.semantic_errors = []
         self.ast = None
 
@@ -74,6 +79,8 @@ class ASTVisitor:
         for var in self.global_vars.values():
             var.linkage = "common"
             var.global_constant = False
+
+
 
     def visit(self, node):
         if node is None:
@@ -205,8 +212,6 @@ class ASTVisitor:
 
             elif isinstance(value, int):
                 new_type = "NUMBER"
-                constant = ir.Constant(ir.IntType(32), value)
-
             elif isinstance(node.value, IdExpression):
                 new_type = "ID"
             else:
@@ -310,13 +315,20 @@ class ASTVisitor:
         print(f"Actualizado {existing_var_name} = {new_value}")
 
         return new_value
-    
+
     def visit_continueupstatement(self, node):
-        move_units = node.move_units  # No evaluamos aún para verificar si es IdExpression
+        move_units = node.move_units
+
+        # Obtener la variable global y_position y asegurarse de que esté correctamente declarada
+        y_pos_global = self.global_vars["y_position"]
+        y_pos_global.linkage = "common"  # Asegurar que es visible externamente
+        y_pos_global.global_constant = False
+
+        if not hasattr(y_pos_global, 'initializer') or y_pos_global.initializer is None:
+            y_pos_global.initializer = ir.Constant(ir.IntType(32), 0)
 
         # Verificación del tipo de move_units
         if isinstance(move_units.value, IdExpression):
-            # Si es un IdExpression, verificar si la variable referenciada está definida
             referenced_var_name = move_units.value.var_name
 
             if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
@@ -326,42 +338,88 @@ class ASTVisitor:
                     else f"{referenced_var_name}_Main"
 
                 referenced_value = self.variable_context.get_variable(referenced_full_name)
+
                 if isinstance(referenced_value, bool):
-                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    error_msg = f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
                     return None
+
                 if isinstance(referenced_value, (int, float)):
+                    # Si la variable referenciada está en la tabla de símbolos
+                    if referenced_var_name in self.symbol_table:
+                        # Cargar el valor de la variable referenciada
+                        move_value_ptr = self.symbol_table[referenced_var_name]
+                        move_amount = self.builder.load(move_value_ptr)
+                    else:
+                        # Si no está en la tabla de símbolos, usar el valor directamente
+                        move_amount = ir.Constant(ir.IntType(32), int(referenced_value))
+
+                    # Cargar el valor actual de y_position
+                    current_y = self.builder.load(y_pos_global)
+
+                    # Realizar la suma
+                    new_y = self.builder.add(current_y, move_amount)
+
+                    # Almacenar el resultado en la variable global
+                    self.builder.store(new_y, y_pos_global)
+
+                    # Actualizar la variable de instancia
                     self.y_position += referenced_value
+
                     result = f"Movido {referenced_value} unidades hacia arriba. Nueva posicion en Y: {self.y_position}"
                     print(result)
                     return result
                 else:
-                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    error_msg = f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
                     return None
             else:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                error_msg = f"Error Semantico: La variable '{referenced_var_name}' no está definida."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
                 return None
         else:
             # Evaluar el valor directamente
             move_units_value = self.visit(move_units)
+
             if isinstance(move_units_value, (int, float)):
+                # Cargar el valor actual de y_position
+                current_y = self.builder.load(y_pos_global)
+
+                # Crear una constante LLVM con el valor de movimiento
+                move_amount = ir.Constant(ir.IntType(32), int(move_units_value))
+
+                # Realizar la suma
+                new_y = self.builder.add(current_y, move_amount)
+
+                # Almacenar el resultado en la variable global
+                self.builder.store(new_y, y_pos_global)
+
+                # Actualizar la variable de instancia
                 self.y_position += move_units_value
+
                 result = f"Movido {move_units_value} unidades hacia arriba. Nueva posicion en Y: {self.y_position}"
                 print(result)
                 return result
             else:
-                print(f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
-                self.semantic_errors.append(
-                    f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                error_msg = f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
                 return None
 
     def visit_continuedownstatement(self, node):
         move_units = node.move_units
 
+        # Obtener la variable global y_position
+        y_pos_global = self.global_vars["y_position"]
+        y_pos_global.linkage = "common"
+        y_pos_global.global_constant = False
+
+        if not hasattr(y_pos_global, 'initializer') or y_pos_global.initializer is None:
+            y_pos_global.initializer = ir.Constant(ir.IntType(32), 0)
+
         if isinstance(move_units.value, IdExpression):
             referenced_var_name = move_units.value.var_name
             if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
@@ -371,41 +429,86 @@ class ASTVisitor:
                     else f"{referenced_var_name}_Main"
 
                 referenced_value = self.variable_context.get_variable(referenced_full_name)
+
                 if isinstance(referenced_value, bool):
-                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    error_msg = f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
                     return None
+
                 if isinstance(referenced_value, (int, float)):
+                    # Si la variable referenciada está en la tabla de símbolos
+                    if referenced_var_name in self.symbol_table:
+                        move_value_ptr = self.symbol_table[referenced_var_name]
+                        move_amount = self.builder.load(move_value_ptr)
+                    else:
+                        move_amount = ir.Constant(ir.IntType(32), int(referenced_value))
+
+                    # Cargar el valor actual de y_position
+                    current_y = self.builder.load(y_pos_global)
+
+                    # Realizar la resta
+                    neg_move = self.builder.sub(ir.Constant(ir.IntType(32), 0), move_amount)
+                    new_y = self.builder.add(current_y, neg_move)
+
+                    # Almacenar el resultado
+                    self.builder.store(new_y, y_pos_global)
+
+                    # Actualizar la variable de instancia
                     self.y_position -= referenced_value
                     result = f"Movido {referenced_value} unidades hacia abajo. Nueva posicion en Y: {self.y_position}"
                     print(result)
                     return result
                 else:
-                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    error_msg = f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
                     return None
             else:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                error_msg = f"Error Semantico: La variable '{referenced_var_name}' no está definida."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
                 return None
         else:
             move_units_value = self.visit(move_units)
+
             if isinstance(move_units_value, (int, float)):
+                # Cargar el valor actual de y_position
+                current_y = self.builder.load(y_pos_global)
+
+                # Crear una constante negativa para el movimiento hacia abajo
+                neg_move = self.builder.sub(ir.Constant(ir.IntType(32), 0),
+                                            ir.Constant(ir.IntType(32), int(move_units_value)))
+
+                # Realizar la suma con el valor negativo (equivalente a resta)
+                new_y = self.builder.add(current_y, neg_move)
+
+                # Almacenar el resultado
+                self.builder.store(new_y, y_pos_global)
+
+                # Actualizar la variable de instancia
                 self.y_position -= move_units_value
+
                 result = f"Movido {move_units_value} unidades hacia abajo. Nueva posicion en Y: {self.y_position}"
                 print(result)
                 return result
             else:
-                print(f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
-                self.semantic_errors.append(
-                    f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                error_msg = f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
                 return None
 
     def visit_continuerightstatement(self, node):
         move_units = node.move_units
 
+        # Obtener la variable global x_position
+        x_pos_global = self.global_vars["x_position"]
+        x_pos_global.linkage = "common"
+        x_pos_global.global_constant = False
+
+        if not hasattr(x_pos_global, 'initializer') or x_pos_global.initializer is None:
+            x_pos_global.initializer = ir.Constant(ir.IntType(32), 0)
+
         if isinstance(move_units.value, IdExpression):
             referenced_var_name = move_units.value.var_name
             if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
@@ -415,40 +518,83 @@ class ASTVisitor:
                     else f"{referenced_var_name}_Main"
 
                 referenced_value = self.variable_context.get_variable(referenced_full_name)
+
                 if isinstance(referenced_value, bool):
-                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    error_msg = f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
                     return None
+
                 if isinstance(referenced_value, (int, float)):
+                    # Si la variable referenciada está en la tabla de símbolos
+                    if referenced_var_name in self.symbol_table:
+                        move_value_ptr = self.symbol_table[referenced_var_name]
+                        move_amount = self.builder.load(move_value_ptr)
+                    else:
+                        move_amount = ir.Constant(ir.IntType(32), int(referenced_value))
+
+                    # Cargar el valor actual de x_position
+                    current_x = self.builder.load(x_pos_global)
+
+                    # Realizar la suma
+                    new_x = self.builder.add(current_x, move_amount)
+
+                    # Almacenar el resultado
+                    self.builder.store(new_x, x_pos_global)
+
+                    # Actualizar la variable de instancia
                     self.x_position += referenced_value
                     result = f"Movido {referenced_value} unidades hacia la derecha. Nueva posicion en X: {self.x_position}"
                     print(result)
                     return result
                 else:
-                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    error_msg = f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
                     return None
             else:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                error_msg = f"Error Semantico: La variable '{referenced_var_name}' no está definida."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
                 return None
         else:
             move_units_value = self.visit(move_units)
+
             if isinstance(move_units_value, (int, float)):
+                # Cargar el valor actual de x_position
+                current_x = self.builder.load(x_pos_global)
+
+                # Crear constante para el movimiento
+                move_amount = ir.Constant(ir.IntType(32), int(move_units_value))
+
+                # Realizar la suma
+                new_x = self.builder.add(current_x, move_amount)
+
+                # Almacenar el resultado
+                self.builder.store(new_x, x_pos_global)
+
+                # Actualizar la variable de instancia
                 self.x_position += move_units_value
+
                 result = f"Movido {move_units_value} unidades hacia la derecha. Nueva posicion en X: {self.x_position}"
                 print(result)
                 return result
             else:
-                print(f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
-                self.semantic_errors.append(
-                    f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                error_msg = f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
                 return None
 
     def visit_continueleftstatement(self, node):
         move_units = node.move_units
+
+        # Obtener la variable global x_position
+        x_pos_global = self.global_vars["x_position"]
+        x_pos_global.linkage = "common"
+        x_pos_global.global_constant = False
+
+        if not hasattr(x_pos_global, 'initializer') or x_pos_global.initializer is None:
+            x_pos_global.initializer = ir.Constant(ir.IntType(32), 0)
 
         if isinstance(move_units.value, IdExpression):
             referenced_var_name = move_units.value.var_name
@@ -459,36 +605,73 @@ class ASTVisitor:
                     else f"{referenced_var_name}_Main"
 
                 referenced_value = self.variable_context.get_variable(referenced_full_name)
+
                 if isinstance(referenced_value, bool):
-                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    error_msg = f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
                     return None
+
                 if isinstance(referenced_value, (int, float)):
+                    # Si la variable referenciada está en la tabla de símbolos
+                    if referenced_var_name in self.symbol_table:
+                        move_value_ptr = self.symbol_table[referenced_var_name]
+                        move_amount = self.builder.load(move_value_ptr)
+                    else:
+                        move_amount = ir.Constant(ir.IntType(32), int(referenced_value))
+
+                    # Cargar el valor actual de x_position
+                    current_x = self.builder.load(x_pos_global)
+
+                    # Realizar la resta
+                    neg_move = self.builder.sub(ir.Constant(ir.IntType(32), 0), move_amount)
+                    new_x = self.builder.add(current_x, neg_move)
+
+                    # Almacenar el resultado
+                    self.builder.store(new_x, x_pos_global)
+
+                    # Actualizar la variable de instancia
                     self.x_position -= referenced_value
                     result = f"Movido {referenced_value} unidades hacia la izquierda. Nueva posicion en X: {self.x_position}"
                     print(result)
                     return result
                 else:
-                    print(f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero.")
+                    error_msg = f"Error Semantico: No se puede mover '{referenced_value}' unidades. Se esperaba un numero."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
                     return None
             else:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+                error_msg = f"Error Semantico: La variable '{referenced_var_name}' no está definida."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
                 return None
         else:
             move_units_value = self.visit(move_units)
+
             if isinstance(move_units_value, (int, float)):
+                # Cargar el valor actual de x_position
+                current_x = self.builder.load(x_pos_global)
+
+                # Crear una constante negativa para el movimiento hacia la izquierda
+                neg_move = self.builder.sub(ir.Constant(ir.IntType(32), 0),
+                                            ir.Constant(ir.IntType(32), int(move_units_value)))
+
+                # Realizar la suma con el valor negativo (equivalente a resta)
+                new_x = self.builder.add(current_x, neg_move)
+
+                # Almacenar el resultado
+                self.builder.store(new_x, x_pos_global)
+
+                # Actualizar la variable de instancia
                 self.x_position -= move_units_value
+
                 result = f"Movido {move_units_value} unidades hacia la izquierda. Nueva posicion en X: {self.x_position}"
                 print(result)
                 return result
             else:
-                print(f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
-                self.semantic_errors.append(
-                    f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero.")
+                error_msg = f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
                 return None
 
     def visit_turnrightstatement(self, node):
@@ -581,131 +764,106 @@ class ASTVisitor:
 
     def visit_posstatement(self, node):
         # Obtener valores de X e Y
-        x_val = node.x_val
-        y_val = node.y_val
+        x_val = self.visit(node.x_val)
+        y_val = self.visit(node.y_val)
 
-        x = self.visit(x_val)
-        y = self.visit(y_val)
+        # Obtener las variables globales
+        x_pos_global = self.global_vars["x_position"]
+        y_pos_global = self.global_vars["y_position"]
 
-        # Validar contexto para x_val
-        if isinstance(x_val.value, IdExpression):
-            referenced_var_name = x_val.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
+        # Asegurar que son modificables
+        x_pos_global.linkage = "common"
+        y_pos_global.linkage = "common"
+        x_pos_global.global_constant = False
+        y_pos_global.global_constant = False
 
-            if referenced_full_name in self.variable_context.variables:
-                x_val = self.variable_context.get_variable(referenced_full_name)
-            else:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
-
-        # Validar contexto para y_val
-        if isinstance(y_val.value, IdExpression):
-            referenced_var_name = y_val.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
-
-            if referenced_full_name in self.variable_context.variables:
-                y_val = self.variable_context.get_variable(referenced_full_name)
-            else:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
-
-        # Verificación de tipo booleano
-        if isinstance(x, bool):
+        # Validar contexto y tipos
+        if isinstance(x_val, bool):
             print(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x}' de tipo '{type(x_val).__name__}'.")
+                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
             self.semantic_errors.append(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x}' de tipo '{type(x_val).__name__}'.")
+                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
             return None
 
-        if isinstance(y, bool):
+        if isinstance(y_val, bool):
             print(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y}' de tipo '{type(y_val).__name__}'.")
+                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
             self.semantic_errors.append(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y}' de tipo '{type(y_val).__name__}'.")
+                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
             return None
 
+        # Crear constantes LLVM para los nuevos valores
+        x_constant = ir.Constant(ir.IntType(32), int(x_val))
+        y_constant = ir.Constant(ir.IntType(32), int(y_val))
+
+        # Almacenar los nuevos valores
+        self.builder.store(x_constant, x_pos_global)
+        self.builder.store(y_constant, y_pos_global)
+
+        # Actualizar las variables de instancia
         self.x_position = x_val
         self.y_position = y_val
+
         result = f"Posicion actualizada a X: {self.x_position}, Y: {self.y_position}"
         print(result)
         return result
 
     def visit_posxstatement(self, node):
-        x_val = node.x_val
+        # Obtener el valor de X
+        x_val = self.visit(node.x_val)
 
-        # Evaluar x_val
-        x = self.visit(x_val)
-
-        # Validar contexto para x_val
-        if isinstance(x_val.value, IdExpression):
-            referenced_var_name = x_val.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
-
-            if referenced_full_name in self.variable_context.variables:
-                x_val = self.variable_context.get_variable(referenced_full_name)
-            else:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
+        # Obtener la variable global x_position
+        x_pos_global = self.global_vars["x_position"]
+        x_pos_global.linkage = "common"
+        x_pos_global.global_constant = False
 
         # Verificación de tipo booleano
-        if isinstance(x, bool):
+        if isinstance(x_val, bool):
             print(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x}' de tipo '{type(x).__name__}'.")
+                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
             self.semantic_errors.append(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x}' de tipo '{type(x).__name__}'.")
+                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
             return None
 
-        self.x_position = x
+        # Crear constante LLVM para el nuevo valor
+        x_constant = ir.Constant(ir.IntType(32), int(x_val))
+
+        # Almacenar el nuevo valor
+        self.builder.store(x_constant, x_pos_global)
+
+        # Actualizar la variable de instancia
+        self.x_position = x_val
+
         result = f"Posicion actualizada a X: {self.x_position}, Y: {self.y_position}"
         print(result)
         return result
 
     def visit_posystatement(self, node):
-        y_val = node.y_val
+        # Obtener el valor de Y
+        y_val = self.visit(node.y_val)
 
-        # Evaluar y_val
-        y = self.visit(y_val)
-
-        # Validar contexto para y_val
-        if isinstance(y_val.value, IdExpression):
-            referenced_var_name = y_val.value.var_name
-            referenced_full_name = (
-                f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                else f"{referenced_var_name}_Main"
-            )
-
-            if referenced_full_name in self.variable_context.variables:
-                y_val = self.variable_context.get_variable(referenced_full_name)
-            else:
-                print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                return None
+        # Obtener la variable global y_position
+        y_pos_global = self.global_vars["y_position"]
+        y_pos_global.linkage = "common"
+        y_pos_global.global_constant = False
 
         # Verificación de tipo booleano
-        if isinstance(y, bool):
+        if isinstance(y_val, bool):
             print(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y}' de tipo '{type(y).__name__}'.")
+                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
             self.semantic_errors.append(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y}' de tipo '{type(y).__name__}'.")
+                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
             return None
 
-        self.y_position = y
+        # Crear constante LLVM para el nuevo valor
+        y_constant = ir.Constant(ir.IntType(32), int(y_val))
+
+        # Almacenar el nuevo valor
+        self.builder.store(y_constant, y_pos_global)
+
+        # Actualizar la variable de instancia
+        self.y_position = y_val
+
         result = f"Posicion actualizada a X: {self.x_position}, Y: {self.y_position}"
         print(result)
         return result
@@ -722,20 +880,63 @@ class ASTVisitor:
         return result
 
     def visit_downstatement(self, node):
+        # Obtener la variable global pen_down
+        pen_down_global = self.global_vars["pen_down"]
+        pen_down_global.linkage = "common"
+        pen_down_global.global_constant = False
+
+        # Crear constante LLVM para True (1)
+        true_constant = ir.Constant(ir.IntType(1), 1)
+
+        # Almacenar True en la variable global
+        self.builder.store(true_constant, pen_down_global)
+
+        # Actualizar la variable de instancia
         self.pen_down = True
         result = "Lapicero colocado en la superficie (Down)"
         print(result)
         return result
 
     def visit_upstatement(self, node):
+        # Obtener la variable global pen_down
+        pen_down_global = self.global_vars["pen_down"]
+        pen_down_global.linkage = "common"
+        pen_down_global.global_constant = False
+
+        # Crear constante LLVM para False (0)
+        false_constant = ir.Constant(ir.IntType(1), 0)
+
+        # Almacenar False en la variable global
+        self.builder.store(false_constant, pen_down_global)
+
+        # Actualizar la variable de instancia
         self.pen_down = False
         result = "Lapicero levantado de la superficie (Up)"
         print(result)
         return result
 
     def visit_beginningstatement(self, node):
+        # Obtener las variables globales
+        x_pos_global = self.global_vars["x_position"]
+        y_pos_global = self.global_vars["y_position"]
+
+        # Asegurar que las variables son modificables
+        x_pos_global.linkage = "common"
+        y_pos_global.linkage = "common"
+        x_pos_global.global_constant = False
+        y_pos_global.global_constant = False
+
+        # Crear constantes LLVM para la posición (1,1)
+        one = ir.Constant(ir.IntType(32), 1)
+
+        # Almacenar los nuevos valores (1,1) en las variables globales
+        self.builder.store(one, x_pos_global)
+        self.builder.store(one, y_pos_global)
+
+        # Actualizar las variables de instancia
         self.x_position = 1
         self.y_position = 1
+
         result = f"Lapicero colocado en la posicion inicial: X: {self.x_position}, Y: {self.y_position}"
         print(result)
         return result
@@ -774,6 +975,21 @@ class ASTVisitor:
 
         result = left == right
         print(result)
+
+        # Generar IR LLVM para la comparación
+        if isinstance(left, bool):  # Comparación entre booleanos
+            left_value = ir.Constant(ir.IntType(1), int(left))  # Convertir booleano a i1
+            right_value = ir.Constant(ir.IntType(1), int(right))  # Convertir booleano a i1
+            result = self.builder.icmp_unsigned("==", left_value, right_value)
+        elif isinstance(left, int):  # Comparación entre enteros
+            left_value = ir.Constant(ir.IntType(32), left)
+            right_value = ir.Constant(ir.IntType(32), right)
+            result = self.builder.icmp_signed("==", left_value, right_value)
+        else:
+            error_msg = f"Error Semántico: Operación '==' no soportada para el tipo {type(left).__name__}."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
         return result
 
     def visit_andstatement(self, node):
@@ -810,6 +1026,22 @@ class ASTVisitor:
 
         result = bool(left) and bool(right)
         print(result)
+        # Generar IR LLVM para la operación AND
+        if isinstance(left, bool) and isinstance(right, bool):  # Operación entre booleanos
+            left_value = ir.Constant(ir.IntType(1), int(left))  # Convertir a i1
+            right_value = ir.Constant(ir.IntType(1), int(right))  # Convertir a i1
+            llvm_result = self.builder.and_(left_value, right_value)
+        elif isinstance(left, int) and isinstance(right, int):  # Operación entre enteros
+            left_value = ir.Constant(ir.IntType(32), left)  # Convertir a i32
+            right_value = ir.Constant(ir.IntType(32), right)  # Convertir a i32
+            left_bool = self.builder.trunc(left_value, ir.IntType(1))  # Reducir a i1
+            right_bool = self.builder.trunc(right_value, ir.IntType(1))  # Reducir a i1
+            llvm_result = self.builder.and_(left_bool, right_bool)  # Operación AND en i1
+        else:
+            error_msg = f"Error Semántico: Operación 'AND' no soportada para los tipos {type(left).__name__} y {type(right).__name__}."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
         return result
 
     def visit_orstatement(self, node):
@@ -846,6 +1078,22 @@ class ASTVisitor:
 
         result = bool(left) or bool(right)
         print(result)
+        # Generar IR LLVM para la operación OR
+        if isinstance(left, bool) and isinstance(right, bool):  # Operación entre booleanos
+            left_value = ir.Constant(ir.IntType(1), int(left))  # Convertir a i1
+            right_value = ir.Constant(ir.IntType(1), int(right))  # Convertir a i1
+            llvm_result = self.builder.or_(left_value, right_value)
+        elif isinstance(left, int) and isinstance(right, int):  # Operación entre enteros
+            left_value = ir.Constant(ir.IntType(32), left)  # Convertir a i32
+            right_value = ir.Constant(ir.IntType(32), right)  # Convertir a i32
+            left_bool = self.builder.trunc(left_value, ir.IntType(1))  # Reducir a i1
+            right_bool = self.builder.trunc(right_value, ir.IntType(1))  # Reducir a i1
+            llvm_result = self.builder.or_(left_bool, right_bool)  # Operación OR en i1
+        else:
+            error_msg = f"Error Semántico: Operación 'OR' no soportada para los tipos {type(left).__name__} y {type(right).__name__}."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
         return result
 
     def visit_greaterstatement(self, node):

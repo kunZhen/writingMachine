@@ -1,11 +1,27 @@
 //WFWEFWE
 Proc Main()
 [
+Equal(True,false);
 Def(var,5);
+Def(var2,true);
 Put(var,6);
-Add(var,6);
+Add(var,var);
+Or (var2,false);
+Up;
+Down;
+Beginning;
 ];
 end;
+
+
+
+
+
+
+
+
+
+
 
 
 
