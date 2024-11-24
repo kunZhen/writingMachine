@@ -1459,12 +1459,11 @@ class ASTVisitor:
         return python_result
 
     def visit_forstatement(self, node):
-        # Obtener los valores de min_value y max_value
+        # Obtener valores de min_value y max_value
         min_value = self.visit(node.min_value)
         max_value = self.visit(node.max_value)
-        print(min_value)
 
-        # Verificar que min_value y max_value sean enteros
+        # Verificaciones iniciales
         if not isinstance(min_value, int):
             error_msg = f"Error Semántico: min_value debe ser un número entero. Se obtuvo '{min_value}' de tipo '{type(min_value).__name__}'."
             print(error_msg)
@@ -1477,48 +1476,59 @@ class ASTVisitor:
             self.semantic_errors.append(error_msg)
             return None
 
-        # Verificar si min_value es mayor o igual que max_value
         if min_value >= max_value:
-            raise ValueError("Max debe ser mayor que Min en el bucle FOR.")
+            error_msg = "Error Semántico: max_value debe ser mayor que min_value."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
 
-        # Reglas para el nombre de la variable de control
+        # Validar el nombre de la variable
         if not re.match(r'^[a-z][a-zA-Z0-9*@]{2,9}$', node.variable):
-            error_msg = (f"Error Semántico: El nombre de la variable de control '{node.variable}' no cumple "
-                         "con las reglas. Debe tener entre 3 y 10 caracteres, comenzar con "
-                         "una letra minúscula, y puede contener letras, números, '_' y '@'.")
+            error_msg = f"Error Semántico: El nombre de la variable '{node.variable}' no cumple con las reglas."
             print(error_msg)
             self.semantic_errors.append(error_msg)
             return None
 
-        # Verificar si la variable ya existe en el contexto actual o en global
-        if f"{node.variable}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
-                f"{node.variable}_Main" in self.variable_context.variables:
-            error_msg = f"La variable '{node.variable}' ya existe en el contexto actual o global."
-            print(error_msg)
-            self.semantic_errors.append(error_msg)
-            return None
+        # Crear la variable del bucle en el IR
+        loop_var = self.builder.alloca(ir.IntType(32), name=node.variable)
+        self.builder.store(ir.Constant(ir.IntType(32), min_value), loop_var)
 
-        # Inicializar la variable en el contexto
-        self.variable_context.set_variable(node.variable, min_value, "NUMBER")
+        # Crear bloques básicos para el bucle
+        loop_head = self.builder.append_basic_block(name="loop_head")
+        loop_body = self.builder.append_basic_block(name="loop_body")
+        loop_end = self.builder.append_basic_block(name="loop_end")
 
-        # Ejecutar el cuerpo del bucle
-        for i in range(min_value, max_value):
-            print(f"Iteracion FOR: {i}")
-            # Actualizar el valor de la variable para la iteracion actual
-            self.variable_context.set_variable(node.variable, i, "NUMBER")
+        # Saltar al encabezado del bucle
+        self.builder.branch(loop_head)
+        self.builder.position_at_end(loop_head)
 
-            # Visitar cada declaracion en el cuerpo del bucle
-            for statement in node.body:
-                self.visit(statement)
+        # Comparar si loop_var < max_value
+        current_value = self.builder.load(loop_var)
+        max_value_ir = ir.Constant(ir.IntType(32), max_value)
+        condition = self.builder.icmp_signed("<", current_value, max_value_ir)
+        self.builder.cbranch(condition, loop_body, loop_end)
 
-        # Eliminar la variable del contexto al finalizar el bucle
-        self.variable_context.remove_variable(node.variable)
+        # Generar cuerpo del bucle en LLVM
+        self.builder.position_at_end(loop_body)
+
+        # Visitar y generar las instrucciones para el cuerpo del bucle
+        for statement in node.body:
+            self.visit(statement)
+
+        # Incrementar la variable del bucle
+        incremented_value = self.builder.add(current_value, ir.Constant(ir.IntType(32), 1))
+        self.builder.store(incremented_value, loop_var)
+
+        # Saltar de nuevo al encabezado del bucle
+        self.builder.branch(loop_head)
+
+        # Finalizar el bucle
+        self.builder.position_at_end(loop_end)
 
     def visit_casestatement(self, node):
         print(f"Ejecutando Case para la variable: {node.variable}")
 
         # Verificación de contexto para la variable que se está evaluando
-
         referenced_var_name = node.variable
         referenced_full_name = (
             f"{referenced_var_name}_{self.variable_context.current_procedure}"
@@ -1527,32 +1537,107 @@ class ASTVisitor:
         )
 
         if referenced_full_name not in self.variable_context.variables:
-            print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-            self.semantic_errors.append(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
+            error_msg = f"Error Semantico: La variable '{referenced_var_name}' no está definida."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
             return None
 
-        # Obtener el valor de la variable
-        variable_value = self.variable_context.get_variable(node.variable)
+        # Obtener el valor y tipo de la variable
+        variable_value = self.variable_context.get_variable(referenced_full_name)
+        variable_type = self.variable_context.get_variable_type(referenced_full_name)
         print(f"Valor de la variable: {variable_value}")
 
-        # Evaluar cada cláusula When
+        # Obtener el alloca de la variable desde la tabla de símbolos
+        if referenced_var_name in self.symbol_table:
+            variable_ptr = self.symbol_table[referenced_var_name]
+        else:
+            error_msg = f"Error Semantico: No se encontró la variable '{referenced_var_name}' en la tabla de símbolos."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
+
+        # Cargar el valor de la variable en LLVM IR
+        variable_value_llvm = self.builder.load(variable_ptr, name=f"{referenced_var_name}_value")
+
+        # Convertir el valor a i32 si es necesario
+        if variable_type == "BOOLEAN":
+            # Extender el valor de i1 a i32
+            variable_value_llvm = self.builder.zext(variable_value_llvm, ir.IntType(32),
+                                                    name=f"{referenced_var_name}_i32")
+        elif variable_type == "NUMBER":
+            # Ya es de tipo i32
+            pass
+        else:
+            error_msg = f"Error Semántico: Tipo de dato no soportado para la variable '{node.variable}'."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
+
+        # Crear el bloque de salida del switch
+        end_switch_block = self.builder.append_basic_block(name="end_switch")
+
+        # Crear el switch instruction
+        switch_inst = self.builder.switch(variable_value_llvm, end_switch_block)
+
+        # Diccionario para almacenar los bloques de cada caso
+        case_blocks = {}
+
+        # Generar los bloques para cada cláusula When
         for when_clause in node.when_clauses:
             condition_value = self.visit(when_clause.condition)
             print(f"Evaluando condición: {condition_value}")
 
-            if condition_value == variable_value:
-                print("Condición cumplida, ejecutando cuerpo del When")
-                for statement in when_clause.body:
-                    self.visit(statement)
-                return
+            # Verificar el tipo de la condición
+            if isinstance(condition_value, bool):
+                condition_value = int(condition_value)
+            elif isinstance(condition_value, int):
+                pass
+            else:
+                error_msg = f"Error Semántico: Tipo de dato no soportado en la condición del Case: '{type(condition_value).__name__}'."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
+                return None
 
-        # Si ninguna condición se cumple y hay una cláusula Else, ejecutarla
+            # Crear un bloque para este caso
+            case_block = self.builder.append_basic_block(name=f"case_{condition_value}")
+            case_blocks[condition_value] = case_block
+
+            # Agregar el caso al switch
+            condition_llvm_value = ir.Constant(ir.IntType(32), condition_value)
+            switch_inst.add_case(condition_llvm_value, case_block)
+
+        # Si hay cláusula Else, crear su bloque
         if node.else_clause:
+            else_block = self.builder.append_basic_block(name="case_else")
+            switch_inst.default = else_block
+        else:
+            switch_inst.default = end_switch_block
+
+        # Generar código para cada caso
+        for when_clause in node.when_clauses:
+            condition_value = self.visit(when_clause.condition)
+            case_block = case_blocks[condition_value]
+            self.builder.position_at_end(case_block)
+
+            # Generar código para el cuerpo del When
+            for statement in when_clause.body:
+                self.visit(statement)
+
+            # Al final del caso, saltar al bloque de fin del switch
+            self.builder.branch(end_switch_block)
+
+        # Generar código para la cláusula Else si existe
+        if node.else_clause:
+            self.builder.position_at_end(else_block)
             print("Ninguna condición cumplida, ejecutando cláusula Else")
             for statement in node.else_clause:
                 self.visit(statement)
-        else:
-            print("Ninguna condición cumplida y no hay cláusula Else")
+            self.builder.branch(end_switch_block)
+
+        # Posicionar el builder en el bloque end_switch_block para continuar
+        self.builder.position_at_end(end_switch_block)
+
+        return None
 
     def visit_repeatstatement(self, node):
         iteration = 0
