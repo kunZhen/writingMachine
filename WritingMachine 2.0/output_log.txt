@@ -1,7 +1,7 @@
 Tokens encontrados:
 [('Proc', 'PROC', 2, 1), ('Main', 'ID', 2, 6), ('(', 'LPAREN', 2, 10), (')', 'RPAREN', 2, 11), ('[', 'LBRACKET', 3, 1), ('Def', 'DEF', 4, 1), ('(', 'LPAREN', 4, 4), ('var', 'ID', 4, 5), (',', 'COMMA', 4, 8), (5, 'NUMBER', 4, 9), (')', 'RPAREN', 4, 10), (';', 'SEMI', 4, 11), ('Put', 'PUT', 5, 1), ('(', 'LPAREN', 5, 4), ('var', 'ID', 5, 5), (',', 'COMMA', 5, 8), (6, 'NUMBER', 5, 9), (')', 'RPAREN', 5, 10), (';', 'SEMI', 5, 11), ('Add', 'ADD', 6, 1), ('(', 'LPAREN', 6, 4), ('var', 'ID', 6, 5), (',', 'COMMA', 6, 8), (6, 'NUMBER', 6, 9), (')', 'RPAREN', 6, 10), (';', 'SEMI', 6, 11), (']', 'RBRACKET', 7, 1), (';', 'SEMI', 7, 2), ('end', 'END', 8, 1), (';', 'SEMI', 8, 4)]
 
-AST: <ast_custom.program.Program object at 0x0000028789382C40>
+AST: <ast_custom.program.Program object at 0x0000016F35B0BC40>
 Registrando procedimiento: Main
 Procedimiento Main registrado con 0 parámetros: []
 Ejecutando el procedimiento 'Main'...
@@ -57,12 +57,14 @@ El IR es válido.
 target triple = "unknown-unknown-unknown"
 target datalayout = ""
 
+@"x_position" = common global i32 0
+@"y_position" = common global i32 0
+@"pen_down" = common global i1 0
 define void @"Main"()
 {
 entry:
   %"var" = alloca i32
   store i32 5, i32* %"var"
-  store i32 6, i32* %"var"
   store i32 12, i32* %"var"
   ret void
 }

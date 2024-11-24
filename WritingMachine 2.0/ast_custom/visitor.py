@@ -55,13 +55,25 @@ class ASTVisitor:
         self.symbol_table = {}
         self.variable_context = VariableContext()
         self.proc_var_tracker = ProcedureVariableTracker()
-        self.x_position = 0
-        self.y_position = 0
-        self.angle = 0
-        self.current_color = 1  # 1 para negro, 2 para rojo
-        self.pen_down = False
         self.semantic_errors = []
         self.ast = None
+
+        # Crear variables globales x_position, y_position y pen_down
+        self.global_vars = {
+            "x_position": ir.GlobalVariable(self.module, ir.IntType(32), name="x_position"),
+            "y_position": ir.GlobalVariable(self.module, ir.IntType(32), name="y_position"),
+            "pen_down": ir.GlobalVariable(self.module, ir.IntType(1), name="pen_down"),
+        }
+
+        # Inicializar variables globales con valores predeterminados
+        self.global_vars["x_position"].initializer = ir.Constant(ir.IntType(32), 0)
+        self.global_vars["y_position"].initializer = ir.Constant(ir.IntType(32), 0)
+        self.global_vars["pen_down"].initializer = ir.Constant(ir.IntType(1), 0)
+
+        # Especificar que las variables globales son modificables
+        for var in self.global_vars.values():
+            var.linkage = "common"
+            var.global_constant = False
 
     def visit(self, node):
         if node is None:
@@ -79,7 +91,6 @@ class ASTVisitor:
         raise NotImplementedError(f'No se ha implementado visit_{type(node).__name__.lower()}')
 
     def visit_program(self, node):
-        self.module = ir.Module(name="modulo_principal")
         # Guardar el AST completo en la primera visita
         if self.ast is None:
             self.ast = node
@@ -206,7 +217,7 @@ class ASTVisitor:
                 print(f"Error Semantico: No se puede asignar '{value}' de tipo '{new_type}' a "
                       f"la variable '{existing_var_name}' que es de tipo '{current_type}'.")
                 return None  # O lanza una excepción según tu diseño
-            self.builder.store(constant, alloca)
+
             # Si los tipos coinciden, actualiza la variable
             self.variable_context.set_variable(var_name, value, current_type)
             print(f"Actualizado {existing_var_name} = {value}")
