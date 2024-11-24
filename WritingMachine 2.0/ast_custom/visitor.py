@@ -108,8 +108,19 @@ class ASTVisitor:
     def visit_defstatement(self, node):
         var_name = node.var_name
         value = self.visit(node.value)  # Llama a visit para obtener el valor
-        # Crear espacio para la variable en la pila
-        alloca = self.builder.alloca(ir.IntType(32), name=var_name)
+        alloca = None  # Declaramos aquí para usarlo en cualquier caso
+
+        # Crear espacio para la variable en la pila según el tipo
+        if isinstance(value, bool):
+            alloca = self.builder.alloca(ir.IntType(1), name=var_name)  # Asignar 1 bit para booleanos
+        elif isinstance(value, (int, float)):
+            alloca = self.builder.alloca(ir.IntType(32), name=var_name)  # Asignar 32 bits para números
+        else:
+            error_msg = f"Error Semántico: Tipo de dato no reconocido para la variable '{var_name}'."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
+
         self.symbol_table[var_name] = alloca  # Guardar referencia en la tabla de símbolos
 
         # Reglas para el nombre de la variable
@@ -123,6 +134,8 @@ class ASTVisitor:
 
         # Determinar el tipo basado en el valor del nodo
         if isinstance(value, bool):
+            constant = ir.Constant(ir.IntType(1), int(value))  # Convertir True/False a 1/0
+            self.builder.store(constant, alloca)  # Almacenar el valor booleano
             var_type = "BOOLEAN"
         elif isinstance(value, (int, float)):
             constant = ir.Constant(ir.IntType(32), value)
@@ -133,7 +146,7 @@ class ASTVisitor:
         else:
             var_type = "UNKNOWN"
 
-            # Verificar si la variable ya existe en el contexto actual o en Main
+        # Verificar si la variable ya existe en el contexto actual o en Main
         if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
                 f"{var_name}_Main" in self.variable_context.variables:
 
@@ -171,14 +184,18 @@ class ASTVisitor:
             existing_var_name = f"{var_name}_{self.variable_context.current_procedure}" \
                 if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
                 else f"{var_name}_Main"
-
+            alloca = self.symbol_table[var_name]
             current_type = self.variable_context.get_variable_type(existing_var_name)
 
             # Determinar el tipo del nuevo valor
             if isinstance(value, bool):
                 new_type = "BOOLEAN"
+                constant = ir.Constant(ir.IntType(1), int(value))  # Convertir True/False a 1/0
+
             elif isinstance(value, int):
                 new_type = "NUMBER"
+                constant = ir.Constant(ir.IntType(32), value)
+
             elif isinstance(node.value, IdExpression):
                 new_type = "ID"
             else:
@@ -189,7 +206,7 @@ class ASTVisitor:
                 print(f"Error Semantico: No se puede asignar '{value}' de tipo '{new_type}' a "
                       f"la variable '{existing_var_name}' que es de tipo '{current_type}'.")
                 return None  # O lanza una excepción según tu diseño
-
+            self.builder.store(constant, alloca)
             # Si los tipos coinciden, actualiza la variable
             self.variable_context.set_variable(var_name, value, current_type)
             print(f"Actualizado {existing_var_name} = {value}")
@@ -200,79 +217,89 @@ class ASTVisitor:
                 f"Error Semantico: La variable '{var_name}' no esta definida.")
 
     def visit_addstatement(self, node):
+        var_name = node.var_name
+
         # Verificar si la variable está definida en el contexto actual o en Main
-        if f"{node.var_name}_{self.variable_context.current_procedure}" not in self.variable_context.variables and \
-                f"{node.var_name}_Main" not in self.variable_context.variables:
-            print(f"Error Semantico: '{node.var_name}' no es una variable valida.")
-            self.semantic_errors.append(f"Error Semantico: '{node.var_name}' no es una variable valida.")
+        if f"{var_name}_{self.variable_context.current_procedure}" not in self.variable_context.variables and \
+                f"{var_name}_Main" not in self.variable_context.variables:
+            error_msg = f"Error Semantico: '{var_name}' no es una variable valida."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
             return None
 
         # Obtener el nombre completo de la variable en el contexto actual o en Main
-        existing_var_name = f"{node.var_name}_{self.variable_context.current_procedure}" \
-            if f"{node.var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
-            else f"{node.var_name}_Main"
+        existing_var_name = f"{var_name}_{self.variable_context.current_procedure}" \
+            if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
+            else f"{var_name}_Main"
 
         current_value = self.variable_context.get_variable(existing_var_name)
         current_type = self.variable_context.get_variable_type(existing_var_name)
 
         # Comprobar si la variable es de tipo numerico
         if current_type != "NUMBER":
-            print(f"Error Semantico: No se puede incrementar '{node.var_name}' de tipo '{current_type}'.")
-            self.semantic_errors.append(
-                f"Error Semantico: No se puede incrementar '{node.var_name}' de tipo '{current_type}'.")
+            error_msg = f"Error Semantico: No se puede incrementar '{var_name}' de tipo '{current_type}'."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
             return None
+
+        # Obtener el alloca de la tabla de símbolos
+        alloca = self.symbol_table[var_name]
+
         # Si no hay un valor de incremento, incrementar por 1
         if node.increment_value is None:
+            increment_value = 1
             new_value = current_value + 1
         else:
-            # Verificar si la expresión es un ID (nombre de una variable) antes de evaluarla
+            # Verificar si la expresión es un ID (nombre de una variable)
             if isinstance(node.increment_value.value, IdExpression):
-                increment_var_name = node.increment_value.value.var_name  # Obtener el nombre del ID usando var_name
-                # Obtener el valor y tipo de la variable del contexto
+                increment_var_name = node.increment_value.value.var_name
+
                 if f"{increment_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
                         f"{increment_var_name}_Main" in self.variable_context.variables:
 
-                    # Obtener valor y tipo de la variable referenciada
                     referenced_var_name = f"{increment_var_name}_{self.variable_context.current_procedure}" \
                         if f"{increment_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
                         else f"{increment_var_name}_Main"
+
                     referenced_value = self.variable_context.get_variable(referenced_var_name)
                     referenced_type = self.variable_context.get_variable_type(referenced_var_name)
 
-                    # Verificar que el tipo de la variable referenciada sea NUMÉRICO
                     if referenced_type != "NUMBER":
-                        print(
-                            f"Error Semantico: El incremento debe ser un número, pero '{increment_var_name}' es de tipo '{referenced_type}'.")
-                        self.semantic_errors.append(
-                            f"Error Semantico: El incremento debe ser un número, pero '{increment_var_name}' es de tipo '{referenced_type}'.")
+                        error_msg = f"Error Semantico: El incremento debe ser un número, pero '{increment_var_name}' es de tipo '{referenced_type}'."
+                        print(error_msg)
+                        self.semantic_errors.append(error_msg)
                         return None
 
-                    # Asignar el valor referenciado como el incremento
-                    increment = referenced_value
+                    increment_value = referenced_value
+                    new_value = current_value + increment_value
                 else:
-                    print(f"Error Semantico: La variable '{increment_var_name}' no está definida.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: La variable '{increment_var_name}' no está definida.")
+                    error_msg = f"Error Semantico: La variable '{increment_var_name}' no está definida."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
                     return None
             else:
-                # Si no es un IdExpression, visitar la expresión para evaluarla
-                increment = self.visit(node.increment_value)
+                increment_value = self.visit(node.increment_value)
 
-                # Verificar que el incremento sea un número
-                if not isinstance(increment, (int, float)):
-                    print(
-                        f"Error Semantico: El incremento debe ser un número, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: El incremento debe ser un número, pero se obtuvo '{increment}' de tipo '{type(increment).__name__}'.")
+                if not isinstance(increment_value, (int, float)):
+                    error_msg = f"Error Semantico: El incremento debe ser un número, pero se obtuvo '{increment_value}' de tipo '{type(increment_value).__name__}'."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
                     return None
 
-            # Sumar el incremento
-            new_value = current_value + increment
+                new_value = current_value + increment_value
 
-        # Actualizar el valor de la variable
-        self.variable_context.set_variable(node.var_name, new_value, current_type)
+        # Crear la constante LLVM para el nuevo valor
+        constant = ir.Constant(ir.IntType(32), new_value)
+
+        # Almacenar el nuevo valor en la variable
+        self.builder.store(constant, alloca)
+
+        # Actualizar el valor en el contexto de variables
+        self.variable_context.set_variable(var_name, new_value, current_type)
         print(f"Actualizado {existing_var_name} = {new_value}")
 
+        return new_value
+    
     def visit_continueupstatement(self, node):
         move_units = node.move_units  # No evaluamos aún para verificar si es IdExpression
 

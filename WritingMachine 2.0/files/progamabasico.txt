@@ -1,8 +1,12 @@
 //WFWEFWE
 Proc Main()
 [
-Def(var,5)
-
+Def(var,5);
+Put(var,6);
+Add(var,6);
 ];
 end;
+
+
+
 
