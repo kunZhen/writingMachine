@@ -1,6 +1,7 @@
-from .node import Statement
+from .node import Statement, ASTNode
 
-class Expression(Statement):
+
+class Expression(ASTNode):
     def __init__(self, value):
         self.value = value  # Valor de la expresión
 

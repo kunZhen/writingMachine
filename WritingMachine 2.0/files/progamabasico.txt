@@ -5,16 +5,28 @@ Equal(True,false);
 Def(var,5);
 Def(var2,true);
 
-For var6(1 to 5) Loop
-[PoxY Add(var, var);
-ContinueRight 9;]
-End Loop;
+Def(bucle, 0);
 
-Def(bucle, 2);
-
-
+Repeat
+[ContinueLeft 90;
+ Add(bucle);]
+Until
+[bucle = 4/2];
 ];
 end;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

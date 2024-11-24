@@ -1,7 +1,7 @@
 Tokens encontrados:
-[('Proc', 'PROC', 2, 1), ('Main', 'ID', 2, 6), ('(', 'LPAREN', 2, 10), (')', 'RPAREN', 2, 11), ('[', 'LBRACKET', 3, 1), ('Equal', 'EQUAL', 4, 1), ('(', 'LPAREN', 4, 6), ('True', 'BOOLEAN', 4, 7), (',', 'COMMA', 4, 11), ('false', 'BOOLEAN', 4, 12), (')', 'RPAREN', 4, 17), (';', 'SEMI', 4, 18), ('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('var', 'ID', 5, 5), (',', 'COMMA', 5, 8), (5, 'NUMBER', 5, 9), (')', 'RPAREN', 5, 10), (';', 'SEMI', 5, 11), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('var2', 'ID', 6, 5), (',', 'COMMA', 6, 9), ('true', 'BOOLEAN', 6, 10), (')', 'RPAREN', 6, 14), (';', 'SEMI', 6, 15), ('For', 'FOR', 8, 1), ('var6', 'ID', 8, 5), ('(', 'LPAREN', 8, 9), (1, 'NUMBER', 8, 10), ('to', 'TO', 8, 12), (5, 'NUMBER', 8, 15), (')', 'RPAREN', 8, 16), ('Loop', 'LOOP', 8, 18), ('[', 'LBRACKET', 9, 1), ('PoxY', 'ID', 9, 2), ('Add', 'ADD', 9, 7), ('(', 'LPAREN', 9, 10), ('var', 'ID', 9, 11), (',', 'COMMA', 9, 14), ('var', 'ID', 9, 16), (')', 'RPAREN', 9, 19), (';', 'SEMI', 9, 20), ('ContinueRight', 'CONTINUERIGHT', 10, 1), (9, 'NUMBER', 10, 15), (';', 'SEMI', 10, 16), (']', 'RBRACKET', 10, 17), ('End', 'END', 11, 1), ('Loop', 'LOOP', 11, 5), (';', 'SEMI', 11, 9), ('Def', 'DEF', 13, 1), ('(', 'LPAREN', 13, 4), ('bucle', 'ID', 13, 5), (',', 'COMMA', 13, 10), (2, 'NUMBER', 13, 12), (')', 'RPAREN', 13, 13), (';', 'SEMI', 13, 14), (']', 'RBRACKET', 16, 1), (';', 'SEMI', 16, 2), ('end', 'END', 17, 1), (';', 'SEMI', 17, 4)]
+[('Proc', 'PROC', 2, 1), ('Main', 'ID', 2, 6), ('(', 'LPAREN', 2, 10), (')', 'RPAREN', 2, 11), ('[', 'LBRACKET', 3, 1), ('Equal', 'EQUAL', 4, 1), ('(', 'LPAREN', 4, 6), ('True', 'BOOLEAN', 4, 7), (',', 'COMMA', 4, 11), ('false', 'BOOLEAN', 4, 12), (')', 'RPAREN', 4, 17), (';', 'SEMI', 4, 18), ('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('var', 'ID', 5, 5), (',', 'COMMA', 5, 8), (5, 'NUMBER', 5, 9), (')', 'RPAREN', 5, 10), (';', 'SEMI', 5, 11), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('var2', 'ID', 6, 5), (',', 'COMMA', 6, 9), ('true', 'BOOLEAN', 6, 10), (')', 'RPAREN', 6, 14), (';', 'SEMI', 6, 15), ('Def', 'DEF', 8, 1), ('(', 'LPAREN', 8, 4), ('bucle', 'ID', 8, 5), (',', 'COMMA', 8, 10), (0, 'NUMBER', 8, 12), (')', 'RPAREN', 8, 13), (';', 'SEMI', 8, 14), ('Repeat', 'REPEAT', 10, 1), ('[', 'LBRACKET', 11, 1), ('ContinueLeft', 'CONTINUELEFT', 11, 2), (90, 'NUMBER', 11, 15), (';', 'SEMI', 11, 17), ('Add', 'ADD', 12, 2), ('(', 'LPAREN', 12, 5), ('bucle', 'ID', 12, 6), (')', 'RPAREN', 12, 11), (';', 'SEMI', 12, 12), (']', 'RBRACKET', 12, 13), ('Until', 'UNTIL', 13, 1), ('[', 'LBRACKET', 14, 1), ('bucle', 'ID', 14, 2), ('=', 'EQUALS', 14, 8), (4, 'NUMBER', 14, 10), ('/', 'DIV_OP', 14, 11), (2, 'NUMBER', 14, 12), (']', 'RBRACKET', 14, 13), (';', 'SEMI', 14, 14), (']', 'RBRACKET', 15, 1), (';', 'SEMI', 15, 2), ('end', 'END', 16, 1), (';', 'SEMI', 16, 4)]
 
-AST: <ast_custom.program.Program object at 0x000002443C85ED90>
+AST: <ast_custom.program.Program object at 0x000001FC1E26EEB0>
 Registrando procedimiento: Main
 Procedimiento Main registrado con 0 parámetros: []
 Ejecutando el procedimiento 'Main'...
@@ -11,9 +11,11 @@ Ejecutando cuerpo del procedimiento Main
 False
 Definido var = 5 (Tipo: NUMBER)
 Definido var2 = True (Tipo: BOOLEAN)
-Actualizado var_Main = 10
-Movido 9 unidades hacia la derecha. Nueva posicion en X: 9
-Definido bucle = 2 (Tipo: NUMBER)
+Definido bucle = 0 (Tipo: NUMBER)
+Tipo de node.condition: <class 'ast_custom.expression.Expression'>
+Movido 90 unidades hacia la izquierda. Nueva posicion en X: -90
+Actualizado bucle_Main = 1
+Repeat Until ejecutado correctamente con soporte para múltiples condiciones.
 Finalizada la ejecución del procedimiento Main
 
 
@@ -54,54 +56,56 @@ Program
           value:
           BooleanExpression
             value: True
-      Expression
-        value:
-        ForStatement
-          variable: var6
-          min_value:
-          NumberExpression
-            value: 1
-          max_value:
-          NumberExpression
-            value: 5
-          body: [
-          Program
-            statements: [
-            Expression
-              value:
-              IdExpression
-                var_name: PoxY
-            AddStatement
-              var_name: var
-              increment_value:
-              Expression
-                value:
-                IdExpression
-                  var_name: var
-            ContinueRightStatement
-              move_units:
-              Expression
-                value:
-                NumberExpression
-                  value: 9
-            ]
-          ]
       DefStatement
         var_name: bucle
         value:
         Expression
           value:
           NumberExpression
-            value: 2
+            value: 0
+      Expression
+        value:
+        RepeatStatement
+          body: [
+          Program
+            statements: [
+            ContinueLeftStatement
+              move_units:
+              Expression
+                value:
+                NumberExpression
+                  value: 90
+            AddStatement
+              var_name: bucle
+              increment_value: None
+            ]
+          ]
+          condition:
+          Expression
+            value:
+            BinaryOperation
+              left:
+              IdExpression
+                var_name: bucle
+              operator: =
+              right:
+              BinaryOperation
+                left:
+                NumberExpression
+                  value: 4
+                operator: /
+                right:
+                NumberExpression
+                  value: 2
       ]
     ]
   ]
 Symbol Table:
 Name       Type       Procedure       Value
 --------------------------------------------------
-var        NUMBER     Main            10
+var        NUMBER     Main            5
 var2       BOOLEAN    Main            True
-bucle      NUMBER     Main            2
+bucle      NUMBER     Main            1
 El IR es válido.
 ; ModuleID = "modulo_principal"
 target triple = "unknown-unknown-unknown"
@@ -118,24 +122,24 @@ entry:
   store i32 5, i32* %"var"
   %"var2" = alloca i1
   store i1 1, i1* %"var2"
-  %"var6" = alloca i32
-  store i32 1, i32* %"var6"
-  br label %"loop_head"
-loop_head:
-  %".7" = load i32, i32* %"var6"
-  %".8" = icmp slt i32 %".7", 5
-  br i1 %".8", label %"loop_body", label %"loop_end"
-loop_body:
-  store i32 10, i32* %"var"
-  %".11" = load i32, i32* @"x_position"
-  %".12" = add i32 %".11", 9
-  store i32 %".12", i32* @"x_position"
-  %".14" = add i32 %".7", 1
-  store i32 %".14", i32* %"var6"
-  br label %"loop_head"
-loop_end:
   %"bucle" = alloca i32
-  store i32 2, i32* %"bucle"
+  store i32 0, i32* %"bucle"
+  br label %"repeat_body"
+repeat_body:
+  %".7" = load i32, i32* @"x_position"
+  %".8" = sub i32 0, 90
+  %".9" = add i32 %".7", %".8"
+  store i32 %".9", i32* @"x_position"
+  %".11" = load i32, i32* %"bucle"
+  %".12" = add i32 %".11", 1
+  store i32 %".12", i32* %"bucle"
+  br label %"repeat_condition"
+repeat_condition:
+  %"bucle.1" = load i32, i32* %"bucle"
+  %".15" = sdiv i32 4, 2
+  %".16" = icmp eq i32 %"bucle.1", %".15"
+  br i1 %".16", label %"repeat_end", label %"repeat_body"
+repeat_end:
   ret void
 }
 

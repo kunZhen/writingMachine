@@ -1,5 +1,6 @@
 import random
 import re
+from ast_custom.expression import Expression
 from ast_custom.add_statement import AddStatement
 from ast_custom.and_statement import AndStatement
 from ast_custom.beginning_statement import BeginningStatement
@@ -248,7 +249,6 @@ class ASTVisitor:
             if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables \
             else f"{var_name}_Main"
 
-        current_value = self.variable_context.get_variable(existing_var_name)
         current_type = self.variable_context.get_variable_type(existing_var_name)
 
         # Comprobar si la variable es de tipo numerico
@@ -261,10 +261,14 @@ class ASTVisitor:
         # Obtener el alloca de la tabla de símbolos
         alloca = self.symbol_table[var_name]
 
+        # Cargar el valor actual desde memoria
+        current_value_llvm = self.builder.load(alloca)
+        current_value = self.variable_context.get_variable(existing_var_name)
+
         # Si no hay un valor de incremento, incrementar por 1
         if node.increment_value is None:
             increment_value = 1
-            new_value = current_value + 1
+            increment_value_llvm = ir.Constant(ir.IntType(32), 1)
         else:
             # Verificar si la expresión es un ID (nombre de una variable)
             if isinstance(node.increment_value.value, IdExpression):
@@ -287,7 +291,9 @@ class ASTVisitor:
                         return None
 
                     increment_value = referenced_value
-                    new_value = current_value + increment_value
+                    # Cargar el valor del incremento desde memoria
+                    increment_alloca = self.symbol_table[increment_var_name]
+                    increment_value_llvm = self.builder.load(increment_alloca)
                 else:
                     error_msg = f"Error Semantico: La variable '{increment_var_name}' no está definida."
                     print(error_msg)
@@ -302,15 +308,15 @@ class ASTVisitor:
                     self.semantic_errors.append(error_msg)
                     return None
 
-                new_value = current_value + increment_value
+                increment_value_llvm = ir.Constant(ir.IntType(32), increment_value)
 
-        # Crear la constante LLVM para el nuevo valor
-        constant = ir.Constant(ir.IntType(32), new_value)
-
+        # Realizar la suma en LLVM
+        new_value_llvm = self.builder.add(current_value_llvm, increment_value_llvm)
         # Almacenar el nuevo valor en la variable
-        self.builder.store(constant, alloca)
+        self.builder.store(new_value_llvm, alloca)
 
         # Actualizar el valor en el contexto de variables
+        new_value = current_value + increment_value
         self.variable_context.set_variable(var_name, new_value, current_type)
         print(f"Actualizado {existing_var_name} = {new_value}")
 
@@ -1640,48 +1646,140 @@ class ASTVisitor:
         return None
 
     def visit_repeatstatement(self, node):
-        iteration = 0
+        print(f"Tipo de node.condition: {type(node.condition)}")
+
+        # Crear bloques básicos para el bucle Repeat
+        repeat_body = self.builder.append_basic_block(name="repeat_body")
+        repeat_condition = self.builder.append_basic_block(name="repeat_condition")
+        repeat_end = self.builder.append_basic_block(name="repeat_end")
+
+        # Saltar al cuerpo del bucle
+        self.builder.branch(repeat_body)
+
+        # Bloque del cuerpo del bucle
+        self.builder.position_at_end(repeat_body)
+
+        # Ejecutar el cuerpo del bucle
+        for statement in node.body:
+            self.visit(statement)
+
+        # Al final del cuerpo, saltar al bloque de condición
+        self.builder.branch(repeat_condition)
+
+        # Bloque de condición
+        self.builder.position_at_end(repeat_condition)
+
+        # **Desempaquetar la condición hasta llegar al nodo de comparación**
+        condition_node = node.condition
         while True:
-            iteration += 1
-            print(f"Iteracion Repeat {iteration}")
+            if isinstance(condition_node, Expression):
+                condition_node = condition_node.value
+            elif isinstance(condition_node, ExpressionBracket):
+                if len(condition_node.expressions) == 1:
+                    condition_node = condition_node.expressions[0]
+                else:
+                    error_msg = "Error Semántico: La condición del Repeat Until debe ser una sola expresión."
+                    print(error_msg)
+                    self.semantic_errors.append(error_msg)
+                    return None
+            else:
+                break  # Salir del bucle si no es una expresión o bracket
 
-            # Ejecutar el cuerpo
-            for statement in node.body:
-                self.visit(statement)
+        # **Ahora, verificar si es una BinaryOperation**
+        if isinstance(condition_node, BinaryOperation):
+            left_value = self.evaluate_expression_node(condition_node.left)
+            right_value = self.evaluate_expression_node(condition_node.right)
+            operator = condition_node.operator
 
-            # Verificar la condición
-            condition_result = self.visit(node.condition)
+            # Generar la comparación LLVM según el operador
+            if operator == '>':
+                condition_value = self.builder.icmp_signed('>', left_value, right_value)
+            elif operator == '<':
+                condition_value = self.builder.icmp_signed('<', left_value, right_value)
+            elif operator == '>=':
+                condition_value = self.builder.icmp_signed('>=', left_value, right_value)
+            elif operator == '<=':
+                condition_value = self.builder.icmp_signed('<=', left_value, right_value)
+            elif operator == '=':
+                condition_value = self.builder.icmp_signed('==', left_value, right_value)
+            else:
+                error_msg = f"Error Semántico: Operador '{operator}' no soportado en la condición del Repeat Until."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
+                return None
+        else:
+            error_msg = f"Error Semántico: La condición del Repeat Until debe ser una operación binaria. Tipo encontrado: {type(condition_node).__name__}"
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
 
-            # Asegurarse de que tomamos solo el primer valor si es una lista
-            if isinstance(condition_result, list):
-                condition_result = condition_result[0]
+        # Generar el salto condicional
+        self.builder.cbranch(condition_value, repeat_end, repeat_body)
 
+        # Posicionar el builder en el bloque de fin del bucle
+        self.builder.position_at_end(repeat_end)
 
+        print("Repeat Until ejecutado correctamente con soporte para múltiples condiciones.")
 
-            # Verificación de contexto para la variable en la condición
-            if isinstance(node.condition, IdExpression):
-                referenced_var_name = node.condition.var_name
-                referenced_full_name = (
-                    f"{referenced_var_name}_{self.variable_context.current_procedure}"
-                    if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
-                    else f"{referenced_var_name}_Main"
-                )
+    def evaluate_expression_node(self, node):
+        if isinstance(node, NumberExpression):
+            return ir.Constant(ir.IntType(32), node.value)
+        elif isinstance(node, IdExpression):
+            var_name = node.var_name
+            if var_name in self.symbol_table:
+                var_ptr = self.symbol_table[var_name]
+            else:
+                error_msg = f"Error Semántico: La variable '{var_name}' no está definida."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
+                return None
+            return self.builder.load(var_ptr, name=var_name)
+        elif isinstance(node, BinaryOperation):
+            left_value = self.evaluate_expression_node(node.left)
+            right_value = self.evaluate_expression_node(node.right)
+            operator = node.operator
 
-                if referenced_full_name not in self.variable_context.variables:
-                    print(f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                    self.semantic_errors.append(
-                        f"Error Semantico: La variable '{referenced_var_name}' no está definida.")
-                    return None  # Detener la ejecución del método si la variable no está definida
+            if operator == '+':
+                return self.builder.add(left_value, right_value)
+            elif operator == '-':
+                return self.builder.sub(left_value, right_value)
+            elif operator == '*':
+                return self.builder.mul(left_value, right_value)
+            elif operator == '/':
+                return self.builder.sdiv(left_value, right_value)
+            else:
+                error_msg = f"Error Semántico: Operador '{operator}' no soportado en expresiones."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
+                return None
+        elif isinstance(node, Expression):
+            return self.evaluate_expression_node(node.value)
+        elif isinstance(node, ExpressionBracket):
+            if len(node.expressions) == 1:
+                return self.evaluate_expression_node(node.expressions[0])
+            else:
+                error_msg = "Error Semántico: Solo se soporta una expresión dentro de los corchetes."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
+                return None
+        else:
+            error_msg = f"Error Semántico: Tipo de nodo no soportado en expresiones: {type(node).__name__}."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
 
-            # Verificar si el resultado de la condición es None
-            if condition_result is None:
-                break  # Salir del bucle si el resultado de la condición es None
-
-            print(f"  Resultado de la condicion: {condition_result}")
-
-            if condition_result:
-                print("Saliendo del bucle Repeat")
-                break  # Salir del bucle si la condición es verdadera
+    def convert_to_llvm_value(self, value):
+        if isinstance(value, int):
+            return ir.Constant(ir.IntType(32), value)
+        elif isinstance(value, bool):
+            return ir.Constant(ir.IntType(1), int(value))
+        elif isinstance(value, ir.Value):
+            return value
+        else:
+            error_msg = f"Error Semántico: Tipo de dato no soportado en conversion: {type(value).__name__}"
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
 
     def visit_whilestatement(self, node):
         iteration = 0
