@@ -1,7 +1,7 @@
 Tokens encontrados:
 [('Proc', 'PROC', 3, 1), ('linea2', 'ID', 3, 6), ('(', 'LPAREN', 3, 12), (')', 'RPAREN', 3, 13), ('[', 'LBRACKET', 4, 1), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('varLocal2', 'ID', 6, 5), (',', 'COMMA', 6, 14), (3, 'NUMBER', 6, 16), (')', 'RPAREN', 6, 17), (';', 'SEMI', 6, 18), (']', 'RBRACKET', 8, 1), (';', 'SEMI', 8, 2), ('end', 'END', 9, 1), (';', 'SEMI', 9, 4), ('Proc', 'PROC', 11, 1), ('linea1', 'ID', 11, 6), ('(', 'LPAREN', 11, 12), ('aaa', 'ID', 11, 13), (')', 'RPAREN', 11, 16), ('[', 'LBRACKET', 12, 1), ('Def', 'DEF', 14, 1), ('(', 'LPAREN', 14, 4), ('varLocal1', 'ID', 14, 5), (',', 'COMMA', 14, 14), ('aaa', 'ID', 14, 16), (')', 'RPAREN', 14, 19), (';', 'SEMI', 14, 20), ('PosY', 'POSY', 15, 1), ('varLocal1', 'ID', 15, 6), (';', 'SEMI', 15, 15), ('For', 'FOR', 16, 1), ('var6', 'ID', 16, 5), ('(', 'LPAREN', 16, 9), (1, 'NUMBER', 16, 10), ('to', 'TO', 16, 12), (5, 'NUMBER', 16, 15), (')', 'RPAREN', 16, 16), ('Loop', 'LOOP', 16, 18), ('[', 'LBRACKET', 17, 1), ('PosY', 'POSY', 17, 2), ('Add', 'ADD', 17, 7), ('(', 'LPAREN', 17, 10), ('varLocal1', 'ID', 17, 11), (')', 'RPAREN', 17, 20), (';', 'SEMI', 17, 21), ('ContinueRight', 'CONTINUERIGHT', 18, 1), (9, 'NUMBER', 18, 15), (';', 'SEMI', 18, 16), (']', 'RBRACKET', 18, 17), ('End', 'END', 19, 1), ('Loop', 'LOOP', 19, 5), (';', 'SEMI', 19, 9), ('call', 'CALL', 20, 1), ('linea2', 'ID', 20, 6), ('(', 'LPAREN', 20, 12), (')', 'RPAREN', 20, 13), (';', 'SEMI', 20, 14), (']', 'RBRACKET', 21, 1), (';', 'SEMI', 21, 2), ('end', 'END', 22, 1), (';', 'SEMI', 22, 4), ('Proc', 'PROC', 25, 1), ('Main', 'ID', 25, 6), ('(', 'LPAREN', 25, 10), (')', 'RPAREN', 25, 11), ('[', 'LBRACKET', 26, 1), ('Equal', 'EQUAL', 27, 1), ('(', 'LPAREN', 27, 6), ('True', 'BOOLEAN', 27, 7), (',', 'COMMA', 27, 11), ('false', 'BOOLEAN', 27, 12), (')', 'RPAREN', 27, 17), (';', 'SEMI', 27, 18), ('Def', 'DEF', 28, 1), ('(', 'LPAREN', 28, 4), ('var', 'ID', 28, 5), (',', 'COMMA', 28, 8), (5, 'NUMBER', 28, 9), (')', 'RPAREN', 28, 10), (';', 'SEMI', 28, 11), ('Def', 'DEF', 29, 1), ('(', 'LPAREN', 29, 4), ('var2', 'ID', 29, 5), (',', 'COMMA', 29, 9), ('true', 'BOOLEAN', 29, 10), (')', 'RPAREN', 29, 14), (';', 'SEMI', 29, 15), ('Def', 'DEF', 31, 1), ('(', 'LPAREN', 31, 4), ('bucle', 'ID', 31, 5), (',', 'COMMA', 31, 10), (0, 'NUMBER', 31, 12), (')', 'RPAREN', 31, 13), (';', 'SEMI', 31, 14), ('While', 'WHILE', 33, 1), ('[', 'LBRACKET', 33, 7), ('var', 'ID', 33, 8), ('<', 'LT', 33, 12), (5, 'NUMBER', 33, 14), ('*', 'MULT_OP', 33, 15), (4, 'NUMBER', 33, 16), (']', 'RBRACKET', 33, 17), ('[', 'LBRACKET', 34, 1), ('ContinueRight', 'CONTINUERIGHT', 34, 2), (90, 'NUMBER', 34, 16), (';', 'SEMI', 34, 18), ('Add', 'ADD', 35, 2), ('(', 'LPAREN', 35, 6), ('var', 'ID', 35, 7), (')', 'RPAREN', 35, 10), (';', 'SEMI', 35, 11), (']', 'RBRACKET', 35, 12), ('Whend', 'WHEND', 36, 1), (';', 'SEMI', 36, 6), ('call', 'CALL', 37, 1), ('linea1', 'ID', 37, 6), ('(', 'LPAREN', 37, 12), ('var', 'ID', 37, 13), ('*', 'MULT_OP', 37, 16), (3, 'NUMBER', 37, 17), (')', 'RPAREN', 37, 18), (';', 'SEMI', 37, 19), (']', 'RBRACKET', 38, 1), (';', 'SEMI', 38, 2), ('end', 'END', 39, 1), (';', 'SEMI', 39, 4)]
 
-AST: <ast_custom.program.Program object at 0x00000261AAE65CD0>
+AST: <ast_custom.program.Program object at 0x00000153957D6D50>
 Registrando procedimiento: linea2
 Procedimiento linea2 registrado con 0 parámetros: []
 Registrando procedimiento: linea1
@@ -16,7 +16,7 @@ False
 Definido var = 5 (Tipo: NUMBER)
 Definido var2 = True (Tipo: BOOLEAN)
 Definido bucle = 0 (Tipo: NUMBER)
-Ejecutando While con condición: <ast_custom.expression.Expression object at 0x00000261AAE72A30>
+Ejecutando While con condición: <ast_custom.expression.Expression object at 0x00000153929DCF50>
 Movido 90 unidades hacia la derecha. Nueva posicion en X: 90
 Actualizado var_Main = 6
 While ejecutado correctamente.
@@ -342,4 +342,166 @@ loop_body:                                        ; preds = %loop_head
 loop_end:                                         ; preds = %loop_head
   ret void
 }
+
+El assembly es:
+Código ensamblador generado exitosamente:
+	.text
+	.file	"<string>"
+	.globl	linea2
+	.p2align	4, 0x90
+	.type	linea2,@function
+linea2:
+	.cfi_startproc
+	retq
+.Lfunc_end0:
+	.size	linea2, .Lfunc_end0-linea2
+	.cfi_endproc
+
+	.globl	linea1
+	.p2align	4, 0x90
+	.type	linea1,@function
+linea1:
+	.cfi_startproc
+	retq
+.Lfunc_end1:
+	.size	linea1, .Lfunc_end1-linea1
+	.cfi_endproc
+
+	.globl	Main
+	.p2align	4, 0x90
+	.type	Main,@function
+Main:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset %rbp, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register %rbp
+	subq	$16, %rsp
+	movl	$5, %eax
+	movabsq	$x_position, %rcx
+	.p2align	4, 0x90
+.LBB2_1:
+	movl	%eax, -4(%rbp)
+	cmpl	$19, %eax
+	jg	.LBB2_3
+	addl	$90, (%rcx)
+	movl	-4(%rbp), %eax
+	incl	%eax
+	jmp	.LBB2_1
+.LBB2_3:
+	movl	$16, %eax
+	movabsq	$__chkstk, %r11
+	callq	*%r11
+	subq	%rax, %rsp
+	movq	%rsp, %rax
+	movl	$18, (%rax)
+	movabsq	$y_position, %r8
+	movl	$18, (%r8)
+	movl	$1, %edx
+	cmpl	$4, %edx
+	jg	.LBB2_6
+	.p2align	4, 0x90
+.LBB2_5:
+	incl	(%rax)
+	movl	$19, (%r8)
+	addl	$9, (%rcx)
+	incl	%edx
+	cmpl	$4, %edx
+	jle	.LBB2_5
+.LBB2_6:
+	movq	%rbp, %rsp
+	popq	%rbp
+	retq
+.Lfunc_end2:
+	.size	Main, .Lfunc_end2-Main
+	.cfi_endproc
+
+	.type	x_position,@object
+	.comm	x_position,4,4
+	.type	y_position,@object
+	.comm	y_position,4,4
+	.type	pen_down,@object
+	.comm	pen_down,1,1
+	.section	".note.GNU-stack","",@progbits
+
+	.text
+	.file	"<string>"
+	.globl	linea2
+	.p2align	4, 0x90
+	.type	linea2,@function
+linea2:
+	.cfi_startproc
+	retq
+.Lfunc_end0:
+	.size	linea2, .Lfunc_end0-linea2
+	.cfi_endproc
+
+	.globl	linea1
+	.p2align	4, 0x90
+	.type	linea1,@function
+linea1:
+	.cfi_startproc
+	retq
+.Lfunc_end1:
+	.size	linea1, .Lfunc_end1-linea1
+	.cfi_endproc
+
+	.globl	Main
+	.p2align	4, 0x90
+	.type	Main,@function
+Main:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset %rbp, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register %rbp
+	subq	$16, %rsp
+	movl	$5, %eax
+	movabsq	$x_position, %rcx
+	.p2align	4, 0x90
+.LBB2_1:
+	movl	%eax, -4(%rbp)
+	cmpl	$19, %eax
+	jg	.LBB2_3
+	addl	$90, (%rcx)
+	movl	-4(%rbp), %eax
+	incl	%eax
+	jmp	.LBB2_1
+.LBB2_3:
+	movl	$16, %eax
+	movabsq	$__chkstk, %r11
+	callq	*%r11
+	subq	%rax, %rsp
+	movq	%rsp, %rax
+	movl	$18, (%rax)
+	movabsq	$y_position, %r8
+	movl	$18, (%r8)
+	movl	$1, %edx
+	cmpl	$4, %edx
+	jg	.LBB2_6
+	.p2align	4, 0x90
+.LBB2_5:
+	incl	(%rax)
+	movl	$19, (%r8)
+	addl	$9, (%rcx)
+	incl	%edx
+	cmpl	$4, %edx
+	jle	.LBB2_5
+.LBB2_6:
+	movq	%rbp, %rsp
+	popq	%rbp
+	retq
+.Lfunc_end2:
+	.size	Main, .Lfunc_end2-Main
+	.cfi_endproc
+
+	.type	x_position,@object
+	.comm	x_position,4,4
+	.type	y_position,@object
+	.comm	y_position,4,4
+	.type	pen_down,@object
+	.comm	pen_down,1,1
+	.section	".note.GNU-stack","",@progbits
 

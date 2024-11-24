@@ -2160,6 +2160,9 @@ class ASTVisitor:
             print("El IR es válido después de optimización.")
             print(self.optimized_ir)  # Imprime el IR optimizado
 
+            print("El assembly es:")
+            print(self.generate_assembly_code())
+
         except Exception as e:
             print(f"Error de validación: {e}")
 
@@ -2181,3 +2184,24 @@ class ASTVisitor:
         self.optimized_ir = str(llvm_mod)  # Conserva el IR optimizado como cadena
         print("Optimización completada. IR optimizado:")
         print(self.optimized_ir)
+
+    def generate_assembly_code(self):
+        try:
+            if not self.optimized_ir:
+                raise ValueError("El IR optimizado no está disponible. Ejecuta primero optimize_module().")
+
+            # Configurar el target
+            target = binding.Target.from_default_triple()
+            target_machine = target.create_target_machine()
+
+            # Crear el módulo a partir del IR optimizado
+            llvm_mod = binding.parse_assembly(self.optimized_ir)
+            llvm_mod.verify()
+
+            # Emitir el código ensamblador
+            assembly_code = target_machine.emit_assembly(llvm_mod)
+            print("Código ensamblador generado exitosamente:")
+            print(assembly_code)
+            return assembly_code
+        except Exception as e:
+            print(f"Error al generar el código ensamblador: {e}")
