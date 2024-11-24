@@ -7,13 +7,17 @@ Def(var2,true);
 
 Def(bucle, 0);
 
-Repeat
-[ContinueLeft 90;
- Add(bucle);]
-Until
-[bucle = 4/2];
+While [var < 5*4]
+[ContinueRight 90;
+ Add (var);]
+Whend;
+
 ];
 end;
+
+
+
+
 
 
 

@@ -318,7 +318,7 @@ def p_repeat_statement(p):
     p[0] = RepeatStatement(body=p[3], condition=p[7])
 # Regla para el control While
 def p_while_statement(p):
-    '''while_statement : WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND'''
+    '''while_statement : WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND'''
     p[0] = WhileStatement(condition=p[3], body=p[6])  # La condicion se toma de p[3] y el cuerpo de p[6]
 
 def p_procedure_statement(p):

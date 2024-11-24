@@ -84,7 +84,7 @@ Rule 74    when_clauses -> when_clause
 Rule 75    when_clauses -> when_clauses when_clause
 Rule 76    when_clause -> WHEN expression THEN LBRACKET program RBRACKET
 Rule 77    repeat_statement -> REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-Rule 78    while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+Rule 78    while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 Rule 79    procedure_statement -> PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
 Rule 80    call_statement -> CALL ID LPAREN parameter_list RPAREN
 Rule 81    parameter_list -> expression
@@ -174,10 +174,10 @@ pos_statement        : 17
 posx_statement       : 18
 posy_statement       : 19
 procedure_statement  : 6
-program              : 3 4 70 73 76 77 78 78 79 0
+program              : 3 4 70 73 76 77 78 79 0
 put_statement        : 9
 repeat_statement     : 26
-statement            : 1 2 3 4 35 36 38 39 40 41 42 43 44 45 45 46 47 48 52 52 53 53 54 54 55 55 56 56 57 57 58 59 59 60 60 61 61 66 67 71 77
+statement            : 1 2 3 4 35 36 38 39 40 41 42 43 44 45 45 46 47 48 52 52 53 53 54 54 55 55 56 56 57 57 58 59 59 60 60 61 61 66 67 71 77 78
 turnleft_statement   : 16
 turnright_statement  : 15
 up_statement         : 22
@@ -262,7 +262,7 @@ state 0
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -399,7 +399,7 @@ state 1
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -1683,7 +1683,7 @@ state 27
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -2085,7 +2085,7 @@ state 45
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -2219,7 +2219,7 @@ state 46
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -2353,7 +2353,7 @@ state 47
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -2487,7 +2487,7 @@ state 48
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -2621,7 +2621,7 @@ state 49
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -2755,7 +2755,7 @@ state 50
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -2896,7 +2896,7 @@ state 52
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -3030,7 +3030,7 @@ state 53
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -3164,7 +3164,7 @@ state 54
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -3393,7 +3393,7 @@ state 60
 
 state 61
 
-    (78) while_statement -> WHILE . LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> WHILE . LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     LBRACKET        shift and go to state 101
 
@@ -3852,7 +3852,7 @@ state 71
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -3987,7 +3987,7 @@ state 72
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     RPAREN          shift and go to state 111
     EQUAL           shift and go to state 26
@@ -4165,7 +4165,7 @@ state 74
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -4299,7 +4299,7 @@ state 75
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -4433,7 +4433,7 @@ state 76
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -4567,7 +4567,7 @@ state 77
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -4701,7 +4701,7 @@ state 78
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -4835,7 +4835,7 @@ state 79
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -4969,7 +4969,7 @@ state 80
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -5103,7 +5103,7 @@ state 81
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -5237,7 +5237,7 @@ state 82
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -5689,7 +5689,7 @@ state 94
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -5988,7 +5988,7 @@ state 100
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -6055,11 +6055,7 @@ state 100
 
 state 101
 
-    (78) while_statement -> WHILE LBRACKET . program RBRACKET LBRACKET program RBRACKET WHEND
-    (1) program -> . statement SEMI
-    (2) program -> . statement
-    (3) program -> . program statement SEMI
-    (4) program -> . program statement
+    (78) while_statement -> WHILE LBRACKET . statement RBRACKET LBRACKET program RBRACKET WHEND
     (5) statement -> . expression
     (6) statement -> . procedure_statement
     (7) statement -> . call_statement
@@ -6127,7 +6123,7 @@ state 101
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -6166,8 +6162,7 @@ state 101
     REPEAT          shift and go to state 60
     WHILE           shift and go to state 61
 
-    program                        shift and go to state 133
-    statement                      shift and go to state 2
+    statement                      shift and go to state 133
     expression                     shift and go to state 3
     procedure_statement            shift and go to state 4
     call_statement                 shift and go to state 5
@@ -7206,7 +7201,7 @@ state 132
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 157
     EQUAL           shift and go to state 26
@@ -7273,140 +7268,10 @@ state 132
 
 state 133
 
-    (78) while_statement -> WHILE LBRACKET program . RBRACKET LBRACKET program RBRACKET WHEND
-    (3) program -> program . statement SEMI
-    (4) program -> program . statement
-    (5) statement -> . expression
-    (6) statement -> . procedure_statement
-    (7) statement -> . call_statement
-    (8) statement -> . def_statement
-    (9) statement -> . put_statement
-    (10) statement -> . add_statement
-    (11) statement -> . continueup_statement
-    (12) statement -> . continuedown_statement
-    (13) statement -> . continueright_statement
-    (14) statement -> . continueleft_statement
-    (15) statement -> . turnright_statement
-    (16) statement -> . turnleft_statement
-    (17) statement -> . pos_statement
-    (18) statement -> . posx_statement
-    (19) statement -> . posy_statement
-    (20) statement -> . usecolor_statement
-    (21) statement -> . down_statement
-    (22) statement -> . up_statement
-    (23) statement -> . beginning_statement
-    (24) statement -> . for_statement
-    (25) statement -> . case_statement
-    (26) statement -> . repeat_statement
-    (27) statement -> . while_statement
-    (28) expression -> . expression PLUS expression
-    (29) expression -> . expression MINUS expression
-    (30) expression -> . expression MULT_OP expression
-    (31) expression -> . expression DIV_OP expression
-    (32) expression -> . expression LT expression
-    (33) expression -> . expression GT expression
-    (34) expression -> . expression EQUALS expression
-    (52) expression -> . EQUAL LPAREN statement COMMA statement RPAREN
-    (53) expression -> . AND LPAREN statement COMMA statement RPAREN
-    (54) expression -> . OR LPAREN statement COMMA statement RPAREN
-    (55) expression -> . GREATER LPAREN statement COMMA statement RPAREN
-    (56) expression -> . SMALLER LPAREN statement COMMA statement RPAREN
-    (57) expression -> . SUBSTR LPAREN statement COMMA statement RPAREN
-    (58) expression -> . RANDOM LPAREN statement RPAREN
-    (59) expression -> . MULT LPAREN statement COMMA statement RPAREN
-    (60) expression -> . DIV LPAREN statement COMMA statement RPAREN
-    (61) expression -> . SUM LPAREN statement COMMA statement RPAREN
-    (62) expression -> . LPAREN expression_list RPAREN
-    (65) expression -> . BOOLEAN
-    (68) expression -> . NUMBER
-    (69) expression -> . ID
-    (79) procedure_statement -> . PROC ID LPAREN parameter_list RPAREN LBRACKET program RBRACKET SEMI END
-    (80) call_statement -> . CALL ID LPAREN parameter_list RPAREN
-    (35) def_statement -> . DEF LPAREN ID COMMA statement RPAREN
-    (36) put_statement -> . PUT LPAREN ID COMMA statement RPAREN
-    (37) add_statement -> . ADD LPAREN ID RPAREN
-    (38) add_statement -> . ADD LPAREN ID COMMA statement RPAREN
-    (39) continueup_statement -> . CONTINUEUP statement
-    (40) continuedown_statement -> . CONTINUEDOWN statement
-    (41) continueright_statement -> . CONTINUERIGHT statement
-    (42) continueleft_statement -> . CONTINUELEFT statement
-    (43) turnright_statement -> . TURNRIGHT statement
-    (44) turnleft_statement -> . TURNLEFT statement
-    (45) pos_statement -> . POS LPAREN statement COMMA statement RPAREN
-    (46) posx_statement -> . POSX statement
-    (47) posy_statement -> . POSY statement
-    (48) usecolor_statement -> . USECOLOR statement
-    (49) down_statement -> . DOWN
-    (50) up_statement -> . UP
-    (51) beginning_statement -> . BEGINNING
-    (70) for_statement -> . FOR ID LPAREN expression TO expression RPAREN LOOP LBRACKET program RBRACKET END LOOP
-    (72) case_statement -> . CASE ID when_clauses END CASE
-    (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
-    (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> WHILE LBRACKET statement . RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 158
-    EQUAL           shift and go to state 26
-    AND             shift and go to state 28
-    OR              shift and go to state 29
-    GREATER         shift and go to state 30
-    SMALLER         shift and go to state 31
-    SUBSTR          shift and go to state 32
-    RANDOM          shift and go to state 33
-    MULT            shift and go to state 34
-    DIV             shift and go to state 35
-    SUM             shift and go to state 36
-    LPAREN          shift and go to state 27
-    BOOLEAN         shift and go to state 37
-    NUMBER          shift and go to state 38
-    ID              shift and go to state 39
-    PROC            shift and go to state 40
-    CALL            shift and go to state 41
-    DEF             shift and go to state 42
-    PUT             shift and go to state 43
-    ADD             shift and go to state 44
-    CONTINUEUP      shift and go to state 45
-    CONTINUEDOWN    shift and go to state 46
-    CONTINUERIGHT   shift and go to state 47
-    CONTINUELEFT    shift and go to state 48
-    TURNRIGHT       shift and go to state 49
-    TURNLEFT        shift and go to state 50
-    POS             shift and go to state 51
-    POSX            shift and go to state 52
-    POSY            shift and go to state 53
-    USECOLOR        shift and go to state 54
-    DOWN            shift and go to state 55
-    UP              shift and go to state 56
-    BEGINNING       shift and go to state 57
-    FOR             shift and go to state 58
-    CASE            shift and go to state 59
-    REPEAT          shift and go to state 60
-    WHILE           shift and go to state 61
 
-    statement                      shift and go to state 62
-    expression                     shift and go to state 3
-    procedure_statement            shift and go to state 4
-    call_statement                 shift and go to state 5
-    def_statement                  shift and go to state 6
-    put_statement                  shift and go to state 7
-    add_statement                  shift and go to state 8
-    continueup_statement           shift and go to state 9
-    continuedown_statement         shift and go to state 10
-    continueright_statement        shift and go to state 11
-    continueleft_statement         shift and go to state 12
-    turnright_statement            shift and go to state 13
-    turnleft_statement             shift and go to state 14
-    pos_statement                  shift and go to state 15
-    posx_statement                 shift and go to state 16
-    posy_statement                 shift and go to state 17
-    usecolor_statement             shift and go to state 18
-    down_statement                 shift and go to state 19
-    up_statement                   shift and go to state 20
-    beginning_statement            shift and go to state 21
-    for_statement                  shift and go to state 22
-    case_statement                 shift and go to state 23
-    repeat_statement               shift and go to state 24
-    while_statement                shift and go to state 25
 
 state 134
 
@@ -7478,7 +7343,7 @@ state 134
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -7612,7 +7477,7 @@ state 135
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -7746,7 +7611,7 @@ state 136
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -7880,7 +7745,7 @@ state 137
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -8014,7 +7879,7 @@ state 138
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -8148,7 +8013,7 @@ state 139
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -8338,7 +8203,7 @@ state 141
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -8472,7 +8337,7 @@ state 142
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -8606,7 +8471,7 @@ state 143
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -8780,7 +8645,7 @@ state 147
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -8914,7 +8779,7 @@ state 148
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -9095,7 +8960,7 @@ state 150
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -9229,7 +9094,7 @@ state 151
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -9367,7 +9232,7 @@ state 157
 
 state 158
 
-    (78) while_statement -> WHILE LBRACKET program RBRACKET . LBRACKET program RBRACKET WHEND
+    (78) while_statement -> WHILE LBRACKET statement RBRACKET . LBRACKET program RBRACKET WHEND
 
     LBRACKET        shift and go to state 180
 
@@ -9722,7 +9587,7 @@ state 177
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -9803,7 +9668,7 @@ state 179
 
 state 180
 
-    (78) while_statement -> WHILE LBRACKET program RBRACKET LBRACKET . program RBRACKET WHEND
+    (78) while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET . program RBRACKET WHEND
     (1) program -> . statement SEMI
     (2) program -> . statement
     (3) program -> . program statement SEMI
@@ -9875,7 +9740,7 @@ state 180
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -9914,8 +9779,8 @@ state 180
     REPEAT          shift and go to state 60
     WHILE           shift and go to state 61
 
-    program                        shift and go to state 200
     statement                      shift and go to state 2
+    program                        shift and go to state 200
     expression                     shift and go to state 3
     procedure_statement            shift and go to state 4
     call_statement                 shift and go to state 5
@@ -10518,7 +10383,7 @@ state 190
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -10886,7 +10751,7 @@ state 197
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 203
     EQUAL           shift and go to state 26
@@ -11025,7 +10890,7 @@ state 198
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -11160,7 +11025,7 @@ state 199
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -11226,7 +11091,7 @@ state 199
 
 state 200
 
-    (78) while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program . RBRACKET WHEND
+    (78) while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program . RBRACKET WHEND
     (3) program -> program . statement SEMI
     (4) program -> program . statement
     (5) statement -> . expression
@@ -11296,7 +11161,7 @@ state 200
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 206
     EQUAL           shift and go to state 26
@@ -11433,7 +11298,7 @@ state 201
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 207
     EQUAL           shift and go to state 26
@@ -11584,7 +11449,7 @@ state 204
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 210
     EQUAL           shift and go to state 26
@@ -11658,7 +11523,7 @@ state 205
 
 state 206
 
-    (78) while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET . WHEND
+    (78) while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET . WHEND
 
     WHEND           shift and go to state 212
 
@@ -11742,49 +11607,49 @@ state 211
 
 state 212
 
-    (78) while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .
+    (78) while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .
 
-    SEMI            reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    EQUAL           reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    AND             reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    OR              reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    GREATER         reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    SMALLER         reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    SUBSTR          reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    RANDOM          reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    MULT            reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    DIV             reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    SUM             reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    LPAREN          reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    BOOLEAN         reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    NUMBER          reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    ID              reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    PROC            reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    CALL            reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    DEF             reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    PUT             reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    ADD             reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    CONTINUEUP      reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    CONTINUEDOWN    reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    CONTINUERIGHT   reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    CONTINUELEFT    reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    TURNRIGHT       reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    TURNLEFT        reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    POS             reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    POSX            reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    POSY            reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    USECOLOR        reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    DOWN            reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    UP              reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    BEGINNING       reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    FOR             reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    CASE            reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    REPEAT          reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    WHILE           reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    $end            reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    RPAREN          reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    COMMA           reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
-    RBRACKET        reduce using rule 78 (while_statement -> WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND .)
+    SEMI            reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    EQUAL           reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    AND             reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    OR              reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    GREATER         reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    SMALLER         reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    SUBSTR          reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    RANDOM          reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    MULT            reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    DIV             reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    SUM             reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    LPAREN          reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    BOOLEAN         reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    NUMBER          reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    ID              reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    PROC            reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    CALL            reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    DEF             reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    PUT             reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    ADD             reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    CONTINUEUP      reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    CONTINUEDOWN    reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    CONTINUERIGHT   reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    CONTINUELEFT    reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    TURNRIGHT       reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    TURNLEFT        reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    POS             reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    POSX            reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    POSY            reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    USECOLOR        reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    DOWN            reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    UP              reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    BEGINNING       reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    FOR             reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    CASE            reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    REPEAT          reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    WHILE           reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    $end            reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    RPAREN          reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    COMMA           reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
+    RBRACKET        reduce using rule 78 (while_statement -> WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND .)
 
 
 state 213
@@ -11868,7 +11733,7 @@ state 214
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     EQUAL           shift and go to state 26
     AND             shift and go to state 28
@@ -12099,7 +11964,7 @@ state 217
     (72) case_statement -> . CASE ID when_clauses END CASE
     (73) case_statement -> . CASE ID when_clauses ELSE LBRACKET program RBRACKET END CASE
     (77) repeat_statement -> . REPEAT LBRACKET program RBRACKET UNTIL LBRACKET statement RBRACKET
-    (78) while_statement -> . WHILE LBRACKET program RBRACKET LBRACKET program RBRACKET WHEND
+    (78) while_statement -> . WHILE LBRACKET statement RBRACKET LBRACKET program RBRACKET WHEND
 
     RBRACKET        shift and go to state 218
     EQUAL           shift and go to state 26

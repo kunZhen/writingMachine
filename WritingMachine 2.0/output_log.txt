@@ -1,7 +1,7 @@
 Tokens encontrados:
-[('Proc', 'PROC', 2, 1), ('Main', 'ID', 2, 6), ('(', 'LPAREN', 2, 10), (')', 'RPAREN', 2, 11), ('[', 'LBRACKET', 3, 1), ('Equal', 'EQUAL', 4, 1), ('(', 'LPAREN', 4, 6), ('True', 'BOOLEAN', 4, 7), (',', 'COMMA', 4, 11), ('false', 'BOOLEAN', 4, 12), (')', 'RPAREN', 4, 17), (';', 'SEMI', 4, 18), ('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('var', 'ID', 5, 5), (',', 'COMMA', 5, 8), (5, 'NUMBER', 5, 9), (')', 'RPAREN', 5, 10), (';', 'SEMI', 5, 11), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('var2', 'ID', 6, 5), (',', 'COMMA', 6, 9), ('true', 'BOOLEAN', 6, 10), (')', 'RPAREN', 6, 14), (';', 'SEMI', 6, 15), ('Def', 'DEF', 8, 1), ('(', 'LPAREN', 8, 4), ('bucle', 'ID', 8, 5), (',', 'COMMA', 8, 10), (0, 'NUMBER', 8, 12), (')', 'RPAREN', 8, 13), (';', 'SEMI', 8, 14), ('Repeat', 'REPEAT', 10, 1), ('[', 'LBRACKET', 11, 1), ('ContinueLeft', 'CONTINUELEFT', 11, 2), (90, 'NUMBER', 11, 15), (';', 'SEMI', 11, 17), ('Add', 'ADD', 12, 2), ('(', 'LPAREN', 12, 5), ('bucle', 'ID', 12, 6), (')', 'RPAREN', 12, 11), (';', 'SEMI', 12, 12), (']', 'RBRACKET', 12, 13), ('Until', 'UNTIL', 13, 1), ('[', 'LBRACKET', 14, 1), ('bucle', 'ID', 14, 2), ('=', 'EQUALS', 14, 8), (4, 'NUMBER', 14, 10), ('/', 'DIV_OP', 14, 11), (2, 'NUMBER', 14, 12), (']', 'RBRACKET', 14, 13), (';', 'SEMI', 14, 14), (']', 'RBRACKET', 15, 1), (';', 'SEMI', 15, 2), ('end', 'END', 16, 1), (';', 'SEMI', 16, 4)]
+[('Proc', 'PROC', 2, 1), ('Main', 'ID', 2, 6), ('(', 'LPAREN', 2, 10), (')', 'RPAREN', 2, 11), ('[', 'LBRACKET', 3, 1), ('Equal', 'EQUAL', 4, 1), ('(', 'LPAREN', 4, 6), ('True', 'BOOLEAN', 4, 7), (',', 'COMMA', 4, 11), ('false', 'BOOLEAN', 4, 12), (')', 'RPAREN', 4, 17), (';', 'SEMI', 4, 18), ('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('var', 'ID', 5, 5), (',', 'COMMA', 5, 8), (5, 'NUMBER', 5, 9), (')', 'RPAREN', 5, 10), (';', 'SEMI', 5, 11), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 4), ('var2', 'ID', 6, 5), (',', 'COMMA', 6, 9), ('true', 'BOOLEAN', 6, 10), (')', 'RPAREN', 6, 14), (';', 'SEMI', 6, 15), ('Def', 'DEF', 8, 1), ('(', 'LPAREN', 8, 4), ('bucle', 'ID', 8, 5), (',', 'COMMA', 8, 10), (0, 'NUMBER', 8, 12), (')', 'RPAREN', 8, 13), (';', 'SEMI', 8, 14), ('While', 'WHILE', 10, 1), ('[', 'LBRACKET', 10, 7), ('var', 'ID', 10, 8), ('<', 'LT', 10, 12), (5, 'NUMBER', 10, 14), ('*', 'MULT_OP', 10, 15), (4, 'NUMBER', 10, 16), (']', 'RBRACKET', 10, 17), ('[', 'LBRACKET', 11, 1), ('ContinueRight', 'CONTINUERIGHT', 11, 2), (90, 'NUMBER', 11, 16), (';', 'SEMI', 11, 18), ('Add', 'ADD', 12, 2), ('(', 'LPAREN', 12, 6), ('var', 'ID', 12, 7), (')', 'RPAREN', 12, 10), (';', 'SEMI', 12, 11), (']', 'RBRACKET', 12, 12), ('Whend', 'WHEND', 13, 1), (';', 'SEMI', 13, 6), (']', 'RBRACKET', 15, 1), (';', 'SEMI', 15, 2), ('end', 'END', 16, 1), (';', 'SEMI', 16, 4)]
 
-AST: <ast_custom.program.Program object at 0x000001FC1E26EEB0>
+AST: <ast_custom.program.Program object at 0x00000178966BAB50>
 Registrando procedimiento: Main
 Procedimiento Main registrado con 0 parámetros: []
 Ejecutando el procedimiento 'Main'...
@@ -12,10 +12,10 @@ False
 Definido var = 5 (Tipo: NUMBER)
 Definido var2 = True (Tipo: BOOLEAN)
 Definido bucle = 0 (Tipo: NUMBER)
-Tipo de node.condition: <class 'ast_custom.expression.Expression'>
-Movido 90 unidades hacia la izquierda. Nueva posicion en X: -90
-Actualizado bucle_Main = 1
-Repeat Until ejecutado correctamente con soporte para múltiples condiciones.
+Ejecutando While con condición: <ast_custom.expression.Expression object at 0x00000178966BA8E0>
+Movido 90 unidades hacia la derecha. Nueva posicion en X: 90
+Actualizado var_Main = 6
+While ejecutado correctamente.
 Finalizada la ejecución del procedimiento Main
 
 
@@ -65,47 +65,47 @@ Program
             value: 0
       Expression
         value:
-        RepeatStatement
-          body: [
-          Program
-            statements: [
-            ContinueLeftStatement
-              move_units:
-              Expression
-                value:
-                NumberExpression
-                  value: 90
-            AddStatement
-              var_name: bucle
-              increment_value: None
-            ]
-          ]
+        WhileStatement
           condition:
           Expression
             value:
             BinaryOperation
               left:
               IdExpression
-                var_name: bucle
-              operator: =
+                var_name: var
+              operator: <
               right:
               BinaryOperation
                 left:
                 NumberExpression
-                  value: 4
-                operator: /
+                  value: 5
+                operator: *
                 right:
                 NumberExpression
-                  value: 2
+                  value: 4
+          body: [
+          Program
+            statements: [
+            ContinueRightStatement
+              move_units:
+              Expression
+                value:
+                NumberExpression
+                  value: 90
+            AddStatement
+              var_name: var
+              increment_value: None
+            ]
+          ]
       ]
     ]
   ]
 Symbol Table:
 Name       Type       Procedure       Value
 --------------------------------------------------
-var        NUMBER     Main            5
+var        NUMBER     Main            6
 var2       BOOLEAN    Main            True
-bucle      NUMBER     Main            1
+bucle      NUMBER     Main            0
 El IR es válido.
 ; ModuleID = "modulo_principal"
 target triple = "unknown-unknown-unknown"
@@ -118,28 +118,28 @@ define void @"Main"()
 {
 entry:
   %".2" = icmp eq i1 1, 0
+  %".3" = icmp eq i1 1, 0
   %"var" = alloca i32
   store i32 5, i32* %"var"
   %"var2" = alloca i1
   store i1 1, i1* %"var2"
   %"bucle" = alloca i32
   store i32 0, i32* %"bucle"
-  br label %"repeat_body"
-repeat_body:
-  %".7" = load i32, i32* @"x_position"
-  %".8" = sub i32 0, 90
-  %".9" = add i32 %".7", %".8"
-  store i32 %".9", i32* @"x_position"
-  %".11" = load i32, i32* %"bucle"
-  %".12" = add i32 %".11", 1
-  store i32 %".12", i32* %"bucle"
-  br label %"repeat_condition"
-repeat_condition:
-  %"bucle.1" = load i32, i32* %"bucle"
-  %".15" = sdiv i32 4, 2
-  %".16" = icmp eq i32 %"bucle.1", %".15"
-  br i1 %".16", label %"repeat_end", label %"repeat_body"
-repeat_end:
+  br label %"while_condition"
+while_condition:
+  %"var.1" = load i32, i32* %"var"
+  %".8" = mul i32 5, 4
+  %".9" = icmp slt i32 %"var.1", %".8"
+  br i1 %".9", label %"while_body", label %"while_end"
+while_body:
+  %".11" = load i32, i32* @"x_position"
+  %".12" = add i32 %".11", 90
+  store i32 %".12", i32* @"x_position"
+  %".14" = load i32, i32* %"var"
+  %".15" = add i32 %".14", 1
+  store i32 %".15", i32* %"var"
+  br label %"while_condition"
+while_end:
   ret void
 }
 

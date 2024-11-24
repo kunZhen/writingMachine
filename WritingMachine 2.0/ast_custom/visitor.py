@@ -996,6 +996,7 @@ class ASTVisitor:
             print(error_msg)
             self.semantic_errors.append(error_msg)
             return None
+        result = self.builder.icmp_signed('==', left_value, right_value)
         return result
 
     def visit_andstatement(self, node):
@@ -1048,6 +1049,7 @@ class ASTVisitor:
             print(error_msg)
             self.semantic_errors.append(error_msg)
             return None
+        result = self.builder.and_(left_value, right_value)
         return result
 
     def visit_orstatement(self, node):
@@ -1100,6 +1102,7 @@ class ASTVisitor:
             print(error_msg)
             self.semantic_errors.append(error_msg)
             return None
+        result = self.builder.or_(left_value, right_value)
         return result
 
     def visit_greaterstatement(self, node):
@@ -1161,6 +1164,8 @@ class ASTVisitor:
             print(error_msg)
             self.semantic_errors.append(error_msg)
             return None
+        result = self.builder.icmp_signed('>', left_value, right_value)
+
         return result
 
     def visit_smallerstatement(self, node):
@@ -1221,6 +1226,7 @@ class ASTVisitor:
             print(error_msg)
             self.semantic_errors.append(error_msg)
             return None
+        result = self.builder.icmp_signed('<', left_value, right_value)
         return result
 
     def visit_substrstatement(self, node):
@@ -1276,7 +1282,7 @@ class ASTVisitor:
         # Actualizar el resultado en Python
         python_result = left - right
         print(f"Sustraccion: {left} - {right} = {python_result}")
-        return python_result
+        return result
 
     def visit_randomstatement(self, node):
         # Obtener el valor de n
@@ -1358,7 +1364,7 @@ class ASTVisitor:
         # Actualizar el resultado en Python
         python_result = left * right
         print(f"Multiplicacion: {left} * {right} = {python_result}")
-        return python_result
+        return result
 
     def visit_divstatement(self, node):
         left = self.visit(node.left)
@@ -1413,6 +1419,8 @@ class ASTVisitor:
         # Actualizar el resultado en Python
         python_result = left // right
         print(f"Division: {left} // {right} = {python_result}")
+        python_result = self.builder.sdiv(left_value, right_value)
+
         return python_result
 
     def visit_sumstatement(self, node):
@@ -1462,6 +1470,7 @@ class ASTVisitor:
         # Actualizar el resultado en Python
         python_result = left + right
         print(f"Suma: {left} + {right} = {python_result}")
+        python_result = self.builder.add(left_value,right_value)
         return python_result
 
     def visit_forstatement(self, node):
@@ -1646,7 +1655,7 @@ class ASTVisitor:
         return None
 
     def visit_repeatstatement(self, node):
-        print(f"Tipo de node.condition: {type(node.condition)}")
+        print(f"Ejecutando Repeat Until con condición: {node.condition}")
 
         # Crear bloques básicos para el bucle Repeat
         repeat_body = self.builder.append_basic_block(name="repeat_body")
@@ -1669,49 +1678,19 @@ class ASTVisitor:
         # Bloque de condición
         self.builder.position_at_end(repeat_condition)
 
-        # **Desempaquetar la condición hasta llegar al nodo de comparación**
-        condition_node = node.condition
-        while True:
-            if isinstance(condition_node, Expression):
-                condition_node = condition_node.value
-            elif isinstance(condition_node, ExpressionBracket):
-                if len(condition_node.expressions) == 1:
-                    condition_node = condition_node.expressions[0]
-                else:
-                    error_msg = "Error Semántico: La condición del Repeat Until debe ser una sola expresión."
-                    print(error_msg)
-                    self.semantic_errors.append(error_msg)
-                    return None
-            else:
-                break  # Salir del bucle si no es una expresión o bracket
+        # Evaluar la condición usando evaluate_expression_node
+        condition_value = self.evaluate_expression_node(node.condition)
 
-        # **Ahora, verificar si es una BinaryOperation**
-        if isinstance(condition_node, BinaryOperation):
-            left_value = self.evaluate_expression_node(condition_node.left)
-            right_value = self.evaluate_expression_node(condition_node.right)
-            operator = condition_node.operator
-
-            # Generar la comparación LLVM según el operador
-            if operator == '>':
-                condition_value = self.builder.icmp_signed('>', left_value, right_value)
-            elif operator == '<':
-                condition_value = self.builder.icmp_signed('<', left_value, right_value)
-            elif operator == '>=':
-                condition_value = self.builder.icmp_signed('>=', left_value, right_value)
-            elif operator == '<=':
-                condition_value = self.builder.icmp_signed('<=', left_value, right_value)
-            elif operator == '=':
-                condition_value = self.builder.icmp_signed('==', left_value, right_value)
-            else:
-                error_msg = f"Error Semántico: Operador '{operator}' no soportado en la condición del Repeat Until."
-                print(error_msg)
-                self.semantic_errors.append(error_msg)
-                return None
-        else:
-            error_msg = f"Error Semántico: La condición del Repeat Until debe ser una operación binaria. Tipo encontrado: {type(condition_node).__name__}"
+        # Verificar si condition_value es válido
+        if condition_value is None:
+            error_msg = "Error Semántico: La condición del Repeat Until no es válida."
             print(error_msg)
             self.semantic_errors.append(error_msg)
             return None
+
+        # Asegurarse de que condition_value es de tipo i1 (booleano)
+        if isinstance(condition_value.type, ir.IntType) and condition_value.type.width != 1:
+            condition_value = self.builder.trunc(condition_value, ir.IntType(1), name="condition_value_trunc")
 
         # Generar el salto condicional
         self.builder.cbranch(condition_value, repeat_end, repeat_body)
@@ -1719,25 +1698,68 @@ class ASTVisitor:
         # Posicionar el builder en el bloque de fin del bucle
         self.builder.position_at_end(repeat_end)
 
-        print("Repeat Until ejecutado correctamente con soporte para múltiples condiciones.")
+        print("Repeat Until ejecutado correctamente.")
 
     def evaluate_expression_node(self, node):
         if isinstance(node, NumberExpression):
             return ir.Constant(ir.IntType(32), node.value)
+        elif isinstance(node, BooleanExpression):
+            return ir.Constant(ir.IntType(1), int(node.value))
         elif isinstance(node, IdExpression):
             var_name = node.var_name
-            if var_name in self.symbol_table:
-                var_ptr = self.symbol_table[var_name]
-            else:
+            referenced_full_name = (
+                f"{var_name}_{self.variable_context.current_procedure}"
+                if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables
+                else f"{var_name}_Main"
+            )
+
+            if referenced_full_name not in self.variable_context.variables:
                 error_msg = f"Error Semántico: La variable '{var_name}' no está definida."
                 print(error_msg)
                 self.semantic_errors.append(error_msg)
                 return None
+
+            var_ptr = self.symbol_table.get(var_name)
+            if var_ptr is None:
+                error_msg = f"Error Semántico: La variable '{var_name}' no tiene una referencia LLVM."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
+                return None
+
             return self.builder.load(var_ptr, name=var_name)
+        elif isinstance(node, SumStatement):
+            return self.visit_sumstatement(node)
+        elif isinstance(node, SubstrStatement):
+            return self.visit_substrstatement(node)
+        elif isinstance(node, MultStatement):
+            return self.visit_multstatement(node)
+        elif isinstance(node, DivStatement):
+            return self.visit_divstatement(node)
+        elif isinstance(node, EqualStatement):
+            return self.visit_equalstatement(node)
+        elif isinstance(node, GreaterStatement):
+            return self.visit_greaterstatement(node)
+        elif isinstance(node, SmallerStatement):
+            return self.visit_smallerstatement(node)
+        elif isinstance(node, AndStatement):
+            return self.visit_andstatement(node)
+        elif isinstance(node, OrStatement):
+            return self.visit_orstatement(node)
+        elif isinstance(node, RandomStatement):
+            return self.visit_randomstatement(node)
         elif isinstance(node, BinaryOperation):
             left_value = self.evaluate_expression_node(node.left)
             right_value = self.evaluate_expression_node(node.right)
             operator = node.operator
+
+            if left_value is None or right_value is None:
+                return None
+
+            if left_value.type != right_value.type:
+                error_msg = f"Error Semántico: Los operandos deben ser del mismo tipo."
+                print(error_msg)
+                self.semantic_errors.append(error_msg)
+                return None
 
             if operator == '+':
                 return self.builder.add(left_value, right_value)
@@ -1747,8 +1769,18 @@ class ASTVisitor:
                 return self.builder.mul(left_value, right_value)
             elif operator == '/':
                 return self.builder.sdiv(left_value, right_value)
+            elif operator == '<':
+                return self.builder.icmp_signed('<', left_value, right_value)
+            elif operator == '>':
+                return self.builder.icmp_signed('>', left_value, right_value)
+            elif operator == '=':
+                return self.builder.icmp_signed('==', left_value, right_value)
+            elif operator.lower() == 'and':
+                return self.builder.and_(left_value, right_value)
+            elif operator.lower() == 'or':
+                return self.builder.or_(left_value, right_value)
             else:
-                error_msg = f"Error Semántico: Operador '{operator}' no soportado en expresiones."
+                error_msg = f"Error Semántico: Operador '{operator}' no soportado."
                 print(error_msg)
                 self.semantic_errors.append(error_msg)
                 return None
@@ -1782,34 +1814,50 @@ class ASTVisitor:
             return None
 
     def visit_whilestatement(self, node):
-        iteration = 0
-        while True:
-            iteration += 1
-            print(f"Iteracion While {iteration}")
+        print(f"Ejecutando While con condición: {node.condition}")
 
-            # Evaluar la condicion
-            condition_result = self.visit(node.condition)
-            print(f"  Resultado de la condicion: {condition_result}")
+        # Crear bloques básicos para el bucle While
+        while_condition = self.builder.append_basic_block(name="while_condition")
+        while_body = self.builder.append_basic_block(name="while_body")
+        while_end = self.builder.append_basic_block(name="while_end")
 
-            # Asegurate de que tomas solo el primer valor si es una lista
-            if isinstance(condition_result, list):
-                if condition_result:  # Verificar si la lista no está vacía
-                    condition_result = condition_result[0]
-                else:
-                    print("La condición resultó en una lista vacía. Saliendo del bucle While.")
-                    break
+        # Saltar al bloque de condición inicialmente
+        self.builder.branch(while_condition)
 
-            if condition_result is None:
-                print("Saliendo del bucle While")
-                break  # Salir del bucle si el resultado de la condición es None
+        # Bloque de condición
+        self.builder.position_at_end(while_condition)
 
-            if not condition_result:
-                print("Saliendo del bucle While")
-                break
+        # Evaluar la condición usando evaluate_expression_node
+        condition_value = self.evaluate_expression_node(node.condition)
 
-            # Ejecutar el cuerpo
-            for statement in node.body:
-                self.visit(statement)
+        # Verificar si condition_value es válido
+        if condition_value is None:
+            error_msg = "Error Semántico: La condición del While no es válida."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
+            return None
+
+        # Asegurarse de que condition_value es de tipo i1 (booleano)
+        if isinstance(condition_value.type, ir.IntType) and condition_value.type.width != 1:
+            condition_value = self.builder.trunc(condition_value, ir.IntType(1), name="condition_value_trunc")
+
+        # Generar el salto condicional
+        self.builder.cbranch(condition_value, while_body, while_end)
+
+        # Bloque del cuerpo del bucle
+        self.builder.position_at_end(while_body)
+
+        # Ejecutar el cuerpo del bucle
+        for statement in node.body:
+            self.visit(statement)
+
+        # Al final del cuerpo, saltar de nuevo al bloque de condición
+        self.builder.branch(while_condition)
+
+        # Posicionar el builder en el bloque de fin del bucle
+        self.builder.position_at_end(while_end)
+
+        print("While ejecutado correctamente.")
 
     def visit_procedurestatement(self, node):
 
