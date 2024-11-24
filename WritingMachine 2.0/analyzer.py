@@ -3,7 +3,6 @@ from analizadorLexico import analysis, reset_lexer
 from analizadorSintactico import parse, reset_parser
 from ast_custom.visitor import ASTVisitor
 from llvmlite import ir, binding
-import codigo_intermedio
 
 
 class Analyzer:
@@ -65,6 +64,7 @@ class Analyzer:
             print("\nAST:")
             visitor.print_ast(ast_root)
             visitor.print_symbol_table()
+            visitor.validate_ir()
 
             if hasattr(visitor, 'semantic_errors') and visitor.semantic_errors:
                 print("\nErrores semanticos:")
@@ -72,34 +72,6 @@ class Analyzer:
                     print(error)
         except Exception as e:
             print(f"Error durante el análisis semántico: {str(e)}")
-
-        # Código intermedio y generación de código 
-        if not hasattr(visitor, 'semantic_errors') or not visitor.semantic_errors:
-            try:
-                print("\nGenerando código intermedio LLVM:")
-                generator = codigo_intermedio.LLVMCodeGenerator()
-                
-                # Generar código intermedio a partir del AST
-                generator.generate_from_ast(ast_root)
-                
-                # Optimizar
-                generator.optimize_module()
-                
-                # Imprimir el código LLVM IR para debugging
-                print("\nCódigo LLVM IR generado:")
-                print(str(generator.module))
-                
-                # Generar código de máquina
-                machine_code = generator.generate_machine_code()
-                
-                # Guardar el código objeto en un archivo
-                output_file = self.input_file.replace('.txt', '.o')
-                with open(output_file, 'wb') as f:
-                    f.write(machine_code)
-                print(f"\nCódigo objeto generado en: {output_file}")
-                
-            except Exception as e:
-                print(f"\nError durante la generación de código: {str(e)}")
 
     def generate_log(self, output_log="output_log.txt"):
         original_stdout = sys.stdout

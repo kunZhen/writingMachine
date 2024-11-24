@@ -1,0 +1,8 @@
+//WFWEFWE
+Proc Main()
+[
+Def(var,5)
+
+];
+end;
+

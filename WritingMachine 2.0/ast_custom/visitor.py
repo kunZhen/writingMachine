@@ -44,12 +44,15 @@ from ast_custom.usecolor_statement import UseColorStatement
 from ast_custom.variable_context import VariableContext
 from ast_custom.when_clause import WhenClause
 from ast_custom.while_statement import WhileStatement
-
+from llvmlite import ir, binding
 
 class ASTVisitor:
     """Clase base para visitar los nodos del AST."""
 
     def __init__(self):
+        self.module = ir.Module(name="modulo_principal")
+        self.builder = None
+        self.symbol_table = {}
         self.variable_context = VariableContext()
         self.proc_var_tracker = ProcedureVariableTracker()
         self.x_position = 0
@@ -76,6 +79,7 @@ class ASTVisitor:
         raise NotImplementedError(f'No se ha implementado visit_{type(node).__name__.lower()}')
 
     def visit_program(self, node):
+        self.module = ir.Module(name="modulo_principal")
         # Guardar el AST completo en la primera visita
         if self.ast is None:
             self.ast = node
@@ -104,6 +108,9 @@ class ASTVisitor:
     def visit_defstatement(self, node):
         var_name = node.var_name
         value = self.visit(node.value)  # Llama a visit para obtener el valor
+        # Crear espacio para la variable en la pila
+        alloca = self.builder.alloca(ir.IntType(32), name=var_name)
+        self.symbol_table[var_name] = alloca  # Guardar referencia en la tabla de símbolos
 
         # Reglas para el nombre de la variable
         if not re.match(r'^[a-z][a-zA-Z0-9*@]{2,9}$', var_name):
@@ -118,6 +125,8 @@ class ASTVisitor:
         if isinstance(value, bool):
             var_type = "BOOLEAN"
         elif isinstance(value, (int, float)):
+            constant = ir.Constant(ir.IntType(32), value)
+            self.builder.store(constant, alloca)
             var_type = "NUMBER"
         elif isinstance(node.value, IdExpression):
             var_type = "ID"
@@ -1323,6 +1332,15 @@ class ASTVisitor:
                 self.visit(statement)
 
     def visit_procedurestatement(self, node):
+
+        # Crear la función LLVM para este procedimiento
+        func_type = ir.FunctionType(ir.VoidType(), [])  # Sin parámetros y sin retorno
+        func = ir.Function(self.module, func_type, name=node.procedure_name)
+
+        # Crear un bloque de entrada para el procedimiento
+        block = func.append_basic_block(name="entry")
+        self.builder = ir.IRBuilder(block)
+
         print(f"Registrando procedimiento: {node.procedure_name}")
 
         # Extraer los nombres de los parámetros
@@ -1350,6 +1368,7 @@ class ASTVisitor:
         if node.procedure_name == "Main":
             print("Ejecutando el procedimiento 'Main'...")
             self.visit_callstatement(node)
+        self.builder.ret_void()
     def visit_callstatement(self, node):
         procedure_name = node.procedure_name
         param_count = len(node.arguments)
@@ -1590,10 +1609,19 @@ class ASTVisitor:
             else:
                 print(f"{indent}  {attr}: {value}")  # Si es un valor basico, lo imprime directamente
 
-
     def print_symbol_table(self):
         self.variable_context.print_symbol_table()
         self.check_main()
 
     def print_procedure_tracker(self):
         self.proc_var_tracker.print_summary()
+
+    def validate_ir(self):
+        try:
+            llvm_ir = str(self.module)
+            llvm_module = binding.parse_assembly(llvm_ir)
+            llvm_module.verify()
+            print("El IR es válido.")
+            print(self.module)
+        except Exception as e:
+            print(f"Error de validación: {e}")
