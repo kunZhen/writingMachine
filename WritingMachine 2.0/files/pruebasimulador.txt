@@ -37,8 +37,10 @@ While [var<7]
 ContinueRight 3;
 ContinueDown 1;]
 Whend;
+call linea1();
 ];
 end;
+
 
 
 

@@ -1,0 +1,17 @@
+//ayuda
+
+Proc Main()
+[
+Down;
+Def(varGlobal1,1);
+For var1(1 to 3) Loop
+ [
+Put(varGlobal1, var1);
+PosY varGlobal1;
+ ]
+End Loop;
+];
+end;
+
+
+

@@ -1,0 +1,15 @@
+//ayuda
+
+Proc Main()
+[
+Def(varGlobal1,1);
+Def (var1,4);
+Put(varGlobal1, var1);
+PosY varGlobal1;
+Down;
+];
+end;
+
+
+
+

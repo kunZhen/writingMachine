@@ -196,7 +196,6 @@ class ASTVisitor:
         var_name = node.var_name
         value = self.visit(node.value)
 
-
         # Verificar si la variable está definida en el contexto actual o en Main
         if f"{var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
                 f"{var_name}_Main" in self.variable_context.variables:
@@ -212,28 +211,46 @@ class ASTVisitor:
             if isinstance(value, bool):
                 new_type = "BOOLEAN"
                 constant = ir.Constant(ir.IntType(1), int(value))  # Convertir True/False a 1/0
-
-            elif isinstance(value, int):
+            elif isinstance(value, (int, float)):
                 new_type = "NUMBER"
+                constant = ir.Constant(ir.IntType(32), int(value))
             elif isinstance(node.value, IdExpression):
-                new_type = "ID"
+                # Si el valor es una variable, cargar su valor desde el IR
+                referenced_var_name = node.value.var_name
+                if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.symbol_table or \
+                        f"{referenced_var_name}_Main" in self.symbol_table:
+                    ref_full_name = f"{referenced_var_name}_{self.variable_context.current_procedure}" \
+                        if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.symbol_table \
+                        else f"{referenced_var_name}_Main"
+                    ref_ptr = self.symbol_table[ref_full_name]
+                    constant = self.builder.load(ref_ptr, name=f"loaded_{referenced_var_name}")
+                    new_type = current_type
+                else:
+                    print(f"Error Semántico: La variable '{referenced_var_name}' no está definida.")
+                    self.semantic_errors.append(
+                        f"Error Semántico: La variable '{referenced_var_name}' no está definida.")
+                    return None
             else:
-                new_type = "UNKNOWN"
+                print(f"Error Semántico: Tipo de dato no soportado para la asignación.")
+                self.semantic_errors.append(f"Error Semántico: Tipo de dato no soportado para la asignación.")
+                return None
 
             # Comprobar si los tipos coinciden
             if new_type != current_type:
-                print(f"Error Semantico: No se puede asignar '{value}' de tipo '{new_type}' a "
+                print(f"Error Semántico: No se puede asignar '{value}' de tipo '{new_type}' a "
                       f"la variable '{existing_var_name}' que es de tipo '{current_type}'.")
-                return None  # O lanza una excepción según tu diseño
+                return None
 
-            # Si los tipos coinciden, actualiza la variable
+            # Asignar el nuevo valor al espacio reservado
+            self.builder.store(constant, alloca)
+
+            # Actualizar el valor en el contexto de variables
             self.variable_context.set_variable(var_name, value, current_type)
             print(f"Actualizado {existing_var_name} = {value}")
-
         else:
-            print(f"Error Semantico: La variable '{var_name}' no esta definida.")
+            print(f"Error Semántico: La variable '{var_name}' no está definida.")
             self.semantic_errors.append(
-                f"Error Semantico: La variable '{var_name}' no esta definida.")
+                f"Error Semántico: La variable '{var_name}' no está definida.")
 
     def visit_addstatement(self, node):
         var_name = node.var_name
@@ -1525,6 +1542,11 @@ class ASTVisitor:
         loop_var = self.builder.alloca(ir.IntType(32), name=node.variable)
         self.builder.store(ir.Constant(ir.IntType(32), min_value), loop_var)
 
+        # Agregar la variable del bucle a variable_context y symbol_table
+        full_var_name = f"{node.variable}_{self.variable_context.current_procedure}"
+        self.variable_context.set_variable(node.variable, min_value, "NUMBER")
+        self.symbol_table[node.variable] = loop_var
+
         # Crear bloques básicos para el bucle
         loop_head = self.builder.append_basic_block(name="loop_head")
         loop_body = self.builder.append_basic_block(name="loop_body")
@@ -1543,13 +1565,17 @@ class ASTVisitor:
         # Generar cuerpo del bucle en LLVM
         self.builder.position_at_end(loop_body)
 
-        # Visitar y generar las instrucciones para el cuerpo del bucle
+        # Ejecutar y generar las instrucciones para el cuerpo del bucle
         for statement in node.body:
             self.visit(statement)
 
         # Incrementar la variable del bucle
         incremented_value = self.builder.add(current_value, ir.Constant(ir.IntType(32), 1))
         self.builder.store(incremented_value, loop_var)
+
+        # Actualizar el valor en variable_context
+        current_value_py = self.variable_context.get_variable(node.variable)
+        self.variable_context.set_variable(node.variable, current_value_py + 1, "NUMBER")
 
         # Saltar de nuevo al encabezado del bucle
         self.builder.branch(loop_head)

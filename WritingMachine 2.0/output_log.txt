@@ -1,24 +1,18 @@
 Tokens encontrados:
-[('Proc', 'PROC', 3, 1), ('linea2', 'ID', 3, 6), ('(', 'LPAREN', 3, 13), ('var1', 'ID', 3, 14), (')', 'RPAREN', 3, 18), ('[', 'LBRACKET', 4, 1), ('While', 'WHILE', 5, 1), ('[', 'LBRACKET', 5, 7), ('var1', 'ID', 5, 8), ('<', 'LT', 5, 12), (4, 'NUMBER', 5, 13), (']', 'RBRACKET', 5, 14), ('[', 'LBRACKET', 6, 1), ('Add', 'ADD', 6, 2), ('(', 'LPAREN', 6, 5), ('var1', 'ID', 6, 6), (')', 'RPAREN', 6, 10), (';', 'SEMI', 6, 11), ('ContinueRight', 'CONTINUERIGHT', 7, 1), (3, 'NUMBER', 7, 15), (';', 'SEMI', 7, 16), (']', 'RBRACKET', 7, 17), ('Whend', 'WHEND', 8, 1), (';', 'SEMI', 8, 6), (']', 'RBRACKET', 9, 1), (';', 'SEMI', 9, 2), ('end', 'END', 10, 1), (';', 'SEMI', 10, 4), ('Proc', 'PROC', 12, 1), ('linea1', 'ID', 12, 6), ('(', 'LPAREN', 12, 12), (')', 'RPAREN', 12, 13), ('[', 'LBRACKET', 13, 1), ('Pos', 'POS', 14, 1), ('(', 'LPAREN', 14, 5), (2, 'NUMBER', 14, 6), (',', 'COMMA', 14, 7), (2, 'NUMBER', 14, 8), (')', 'RPAREN', 14, 9), (';', 'SEMI', 14, 10), ('Def', 'DEF', 15, 1), ('(', 'LPAREN', 15, 4), ('var', 'ID', 15, 5), (',', 'COMMA', 15, 8), (2, 'NUMBER', 15, 10), (')', 'RPAREN', 15, 11), (';', 'SEMI', 15, 12), ('Down', 'DOWN', 16, 1), (';', 'SEMI', 16, 5), ('ContinueDown', 'CONTINUEDOWN', 17, 1), ('var', 'ID', 17, 14), ('*', 'MULT_OP', 17, 17), (2, 'NUMBER', 17, 18), (';', 'SEMI', 17, 19), ('PosX', 'POSX', 18, 1), (5, 'NUMBER', 18, 6), (';', 'SEMI', 18, 7), ('ContinueRight', 'CONTINUERIGHT', 19, 1), (10, 'NUMBER', 19, 15), (';', 'SEMI', 19, 17), ('ContinueUp', 'CONTINUEUP', 20, 1), (4, 'NUMBER', 20, 12), (';', 'SEMI', 20, 13), ('Up', 'UP', 21, 1), (';', 'SEMI', 21, 3), ('Def', 'DEF', 22, 1), ('(', 'LPAREN', 22, 4), ('var2', 'ID', 22, 5), (',', 'COMMA', 22, 9), (4, 'NUMBER', 22, 10), (')', 'RPAREN', 22, 11), (';', 'SEMI', 22, 12), ('Substr', 'SUBSTR', 23, 1), ('(', 'LPAREN', 23, 7), ('var2', 'ID', 23, 8), (',', 'COMMA', 23, 12), (1, 'NUMBER', 23, 13), ('*', 'MULT_OP', 23, 14), (1, 'NUMBER', 23, 15), ('/', 'DIV_OP', 23, 16), (1, 'NUMBER', 23, 17), (')', 'RPAREN', 23, 18), (';', 'SEMI', 23, 19), ('ContinueLeft', 'CONTINUELEFT', 24, 1), ('var2', 'ID', 24, 14), (';', 'SEMI', 24, 18), ('Down', 'DOWN', 25, 1), (';', 'SEMI', 25, 5), ('PosY', 'POSY', 26, 1), (5, 'NUMBER', 26, 6), (';', 'SEMI', 26, 7), ('ContinueDown', 'CONTINUEDOWN', 27, 1), (2, 'NUMBER', 27, 14), (';', 'SEMI', 27, 15), (']', 'RBRACKET', 28, 1), (';', 'SEMI', 28, 2), ('end', 'END', 29, 1), (';', 'SEMI', 29, 4), ('Proc', 'PROC', 31, 1), ('Main', 'ID', 31, 6), ('(', 'LPAREN', 31, 10), (')', 'RPAREN', 31, 11), ('[', 'LBRACKET', 32, 1), ('Down', 'DOWN', 33, 1), (';', 'SEMI', 33, 5), ('Def', 'DEF', 34, 1), ('(', 'LPAREN', 34, 4), ('var', 'ID', 34, 5), (',', 'COMMA', 34, 8), (1, 'NUMBER', 34, 9), (')', 'RPAREN', 34, 10), (';', 'SEMI', 34, 11), ('While', 'WHILE', 35, 1), ('[', 'LBRACKET', 35, 7), ('var', 'ID', 35, 8), ('<', 'LT', 35, 11), (7, 'NUMBER', 35, 12), (']', 'RBRACKET', 35, 13), ('[', 'LBRACKET', 36, 1), ('Add', 'ADD', 36, 2), ('(', 'LPAREN', 36, 5), ('var', 'ID', 36, 6), (')', 'RPAREN', 36, 9), (';', 'SEMI', 36, 10), ('ContinueRight', 'CONTINUERIGHT', 37, 1), (3, 'NUMBER', 37, 15), (';', 'SEMI', 37, 16), ('ContinueDown', 'CONTINUEDOWN', 38, 1), (1, 'NUMBER', 38, 14), (';', 'SEMI', 38, 15), (']', 'RBRACKET', 38, 16), ('Whend', 'WHEND', 39, 1), (';', 'SEMI', 39, 6), (']', 'RBRACKET', 40, 1), (';', 'SEMI', 40, 2), ('end', 'END', 41, 1), (';', 'SEMI', 41, 4)]
+[('Proc', 'PROC', 3, 1), ('Main', 'ID', 3, 6), ('(', 'LPAREN', 3, 10), (')', 'RPAREN', 3, 11), ('[', 'LBRACKET', 4, 1), ('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('varGlobal1', 'ID', 5, 5), (',', 'COMMA', 5, 15), (1, 'NUMBER', 5, 16), (')', 'RPAREN', 5, 17), (';', 'SEMI', 5, 18), ('Def', 'DEF', 6, 1), ('(', 'LPAREN', 6, 5), ('var1', 'ID', 6, 6), (',', 'COMMA', 6, 10), (4, 'NUMBER', 6, 11), (')', 'RPAREN', 6, 12), (';', 'SEMI', 6, 13), ('Put', 'PUT', 7, 1), ('(', 'LPAREN', 7, 4), ('varGlobal1', 'ID', 7, 5), (',', 'COMMA', 7, 15), ('var1', 'ID', 7, 17), (')', 'RPAREN', 7, 21), (';', 'SEMI', 7, 22), ('PosY', 'POSY', 8, 1), ('varGlobal1', 'ID', 8, 6), (';', 'SEMI', 8, 16), ('Down', 'DOWN', 9, 1), (';', 'SEMI', 9, 5), (']', 'RBRACKET', 10, 1), (';', 'SEMI', 10, 2), ('end', 'END', 11, 1), (';', 'SEMI', 11, 4)]
 
-AST: <ast_custom.program.Program object at 0x00000243BB02D430>
-Registrando procedimiento: linea2
-Procedimiento linea2 registrado con 1 parámetros: ['var1']
-Registrando procedimiento: linea1
-Procedimiento linea1 registrado con 0 parámetros: []
+AST: <ast_custom.program.Program object at 0x0000020C2893F100>
 Registrando procedimiento: Main
 Procedimiento Main registrado con 0 parámetros: []
 Ejecutando el procedimiento 'Main'...
 
 Ejecutando llamada al procedimiento: Main con 0 argumentos
 Ejecutando cuerpo del procedimiento Main
+Definido varGlobal1 = 1 (Tipo: NUMBER)
+Definido var1 = 4 (Tipo: NUMBER)
+Actualizado varGlobal1_Main = 4
+Posicion actualizada a X: 0, Y: 4
 Lapicero colocado en la superficie (Down)
-Definido var = 1 (Tipo: NUMBER)
-Ejecutando While con condición: <ast_custom.expression.Expression object at 0x00000243BB031E20>
-Actualizado var_Main = 2
-Movido 3 unidades hacia la derecha. Nueva posición en X: 3
-Movido 1 unidades hacia abajo. Nueva posicion en Y: 1
-While ejecutado correctamente.
 Finalizada la ejecución del procedimiento Main
 
 
@@ -26,210 +20,48 @@ AST:
 Program
   statements: [
   ProcedureStatement
-    procedure_name: linea2
-    arguments: [
-    IdExpression
-      var_name: var1
-    ]
-    body: [
-    Program
-      statements: [
-      Expression
-        value:
-        WhileStatement
-          condition:
-          Expression
-            value:
-            BinaryOperation
-              left:
-              IdExpression
-                var_name: var1
-              operator: <
-              right:
-              NumberExpression
-                value: 4
-          body: [
-          Program
-            statements: [
-            AddStatement
-              var_name: var1
-              increment_value: None
-            ContinueRightStatement
-              move_units:
-              Expression
-                value:
-                NumberExpression
-                  value: 3
-            ]
-          ]
-      ]
-    ]
-  ProcedureStatement
-    procedure_name: linea1
-    arguments: [
-    ]
-    body: [
-    Program
-      statements: [
-      PosStatement
-        x_val:
-        Expression
-          value:
-          NumberExpression
-            value: 2
-        y_val:
-        Expression
-          value:
-          NumberExpression
-            value: 2
-      DefStatement
-        var_name: var
-        value:
-        Expression
-          value:
-          NumberExpression
-            value: 2
-      DownStatement
-      ContinueDownStatement
-        move_units:
-        Expression
-          value:
-          BinaryOperation
-            left:
-            IdExpression
-              var_name: var
-            operator: *
-            right:
-            NumberExpression
-              value: 2
-      PosXStatement
-        x_val:
-        Expression
-          value:
-          NumberExpression
-            value: 5
-      ContinueRightStatement
-        move_units:
-        Expression
-          value:
-          NumberExpression
-            value: 10
-      ContinueUpStatement
-        move_units:
-        Expression
-          value:
-          NumberExpression
-            value: 4
-      UpStatement
-      DefStatement
-        var_name: var2
-        value:
-        Expression
-          value:
-          NumberExpression
-            value: 4
-      Expression
-        value:
-        SubstrStatement
-          left:
-          Expression
-            value:
-            IdExpression
-              var_name: var2
-          right:
-          Expression
-            value:
-            BinaryOperation
-              left:
-              BinaryOperation
-                left:
-                NumberExpression
-                  value: 1
-                operator: *
-                right:
-                NumberExpression
-                  value: 1
-              operator: /
-              right:
-              NumberExpression
-                value: 1
-      ContinueLeftStatement
-        move_units:
-        Expression
-          value:
-          IdExpression
-            var_name: var2
-      DownStatement
-      PosYStatement
-        y_val:
-        Expression
-          value:
-          NumberExpression
-            value: 5
-      ContinueDownStatement
-        move_units:
-        Expression
-          value:
-          NumberExpression
-            value: 2
-      ]
-    ]
-  ProcedureStatement
     procedure_name: Main
     arguments: [
     ]
     body: [
     Program
       statements: [
-      DownStatement
       DefStatement
-        var_name: var
+        var_name: varGlobal1
         value:
         Expression
           value:
           NumberExpression
             value: 1
-      Expression
+      DefStatement
+        var_name: var1
         value:
-        WhileStatement
-          condition:
-          Expression
-            value:
-            BinaryOperation
-              left:
-              IdExpression
-                var_name: var
-              operator: <
-              right:
-              NumberExpression
-                value: 7
-          body: [
-          Program
-            statements: [
-            AddStatement
-              var_name: var
-              increment_value: None
-            ContinueRightStatement
-              move_units:
-              Expression
-                value:
-                NumberExpression
-                  value: 3
-            ContinueDownStatement
-              move_units:
-              Expression
-                value:
-                NumberExpression
-                  value: 1
-            ]
-          ]
+        Expression
+          value:
+          NumberExpression
+            value: 4
+      PutStatement
+        var_name: varGlobal1
+        value:
+        Expression
+          value:
+          IdExpression
+            var_name: var1
+      PosYStatement
+        y_val:
+        Expression
+          value:
+          IdExpression
+            var_name: varGlobal1
+      DownStatement
       ]
     ]
   ]
 Symbol Table:
 Name       Type       Procedure       Value
 --------------------------------------------------
-var        NUMBER     Main            2
+varGlobal1 NUMBER     Main            4
+var1       NUMBER     Main            4
 El IR es válido antes de optimización.
 Optimización completada. IR optimizado:
 ; ModuleID = '<string>'
@@ -240,45 +72,12 @@ target triple = "unknown-unknown-unknown"
 @y_position = common global i32 0
 @pen_down = common global i1 false
 
-define void @linea2() {
-entry:
-  ret void
-}
-
-define void @linea1() {
-entry:
-  ret void
-}
-
 define void @Main() {
 entry:
+  store i32 4, i32* @y_position, align 4
   fence seq_cst
   store i1 true, i1* @pen_down, align 1
   fence seq_cst
-  %var = alloca i32, align 4
-  store i32 1, i32* %var, align 4
-  br label %while_condition
-
-while_condition:                                  ; preds = %while_body, %entry
-  %var.1 = load i32, i32* %var, align 4
-  %.7 = icmp slt i32 %var.1, 7
-  br i1 %.7, label %while_body, label %while_end
-
-while_body:                                       ; preds = %while_condition
-  %.9 = load i32, i32* %var, align 4
-  %.10 = add i32 %.9, 1
-  store i32 %.10, i32* %var, align 4
-  %current_x = load i32, i32* @x_position, align 4
-  %new_x = add i32 %current_x, 3
-  store i32 %new_x, i32* @x_position, align 4
-  fence seq_cst
-  %current_y = load i32, i32* @y_position, align 4
-  %new_y = add i32 %current_y, 1
-  store i32 %new_y, i32* @y_position, align 4
-  fence seq_cst
-  br label %while_condition
-
-while_end:                                        ; preds = %while_condition
   ret void
 }
 
@@ -291,45 +90,12 @@ target triple = "unknown-unknown-unknown"
 @y_position = common global i32 0
 @pen_down = common global i1 false
 
-define void @linea2() {
-entry:
-  ret void
-}
-
-define void @linea1() {
-entry:
-  ret void
-}
-
 define void @Main() {
 entry:
+  store i32 4, i32* @y_position, align 4
   fence seq_cst
   store i1 true, i1* @pen_down, align 1
   fence seq_cst
-  %var = alloca i32, align 4
-  store i32 1, i32* %var, align 4
-  br label %while_condition
-
-while_condition:                                  ; preds = %while_body, %entry
-  %var.1 = load i32, i32* %var, align 4
-  %.7 = icmp slt i32 %var.1, 7
-  br i1 %.7, label %while_body, label %while_end
-
-while_body:                                       ; preds = %while_condition
-  %.9 = load i32, i32* %var, align 4
-  %.10 = add i32 %.9, 1
-  store i32 %.10, i32* %var, align 4
-  %current_x = load i32, i32* @x_position, align 4
-  %new_x = add i32 %current_x, 3
-  store i32 %new_x, i32* @x_position, align 4
-  fence seq_cst
-  %current_y = load i32, i32* @y_position, align 4
-  %new_y = add i32 %current_y, 1
-  store i32 %new_y, i32* @y_position, align 4
-  fence seq_cst
-  br label %while_condition
-
-while_end:                                        ; preds = %while_condition
   ret void
 }
 

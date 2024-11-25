@@ -1,0 +1,88 @@
+//Programa Prueba
+
+//Imprime en código morse (…  .  …  .  …  . )
+Proc impresion() 
+[ 
+
+//Baja para imprimir
+Down;
+	For var1(1 to 3) Loop
+  	[
+	Put(varGlobal1, var1);
+   	PosY varGlobal1;
+  	]
+	End Loop;
+
+//Imprime T en código morse  …  (tres puntos)
+
+//Sube para NO imprimir
+Up;
+	// Se mueve dos puntos a la derecha sin imprimir
+   	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+
+//Baja para imprimir
+Down;
+
+
+// Imprime E en código morse  .  (un punto)
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+
+//Sube para NO imprimir
+Up;
+	// Se mueve dos puntos a la derecha sin imprimir
+   	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+
+//Baja para imprimir
+Down;
+
+
+// Imprime C en código morse  … . … . (raya punto raya punto)
+// Imprime  …  (tres puntos)
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+// Imprime .  (un punto)
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+// Imprime  …  (tres puntos)
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+// Imprime .  (un punto)
+	Put(varGlobal1, Sum(varGlobal1,1));
+	PosY varGlobal1;
+
+]; 
+end; 
+
+
+
+
+Proc Main() 
+[ 
+
+// Define variable global 
+
+Def(varGlobal1, 1); 
+
+//Llama al procedimiento letra1 
+call impresion(); 
+
+
+]; 
+end; 
+
+
