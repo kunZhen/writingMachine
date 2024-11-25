@@ -46,6 +46,8 @@ from ast_custom.variable_context import VariableContext
 from ast_custom.when_clause import WhenClause
 from ast_custom.while_statement import WhileStatement
 from llvmlite import ir, binding
+import subprocess
+import os
 
 class ASTVisitor:
     """Clase base para visitar los nodos del AST."""
@@ -2160,9 +2162,8 @@ class ASTVisitor:
             print("El IR es válido después de optimización.")
             print(self.optimized_ir)  # Imprime el IR optimizado
 
-            print("El assembly es:")
-            print(self.generate_assembly_code())
 
+            self.generate_assembly_code()
         except Exception as e:
             print(f"Error de validación: {e}")
 
@@ -2190,18 +2191,88 @@ class ASTVisitor:
             if not self.optimized_ir:
                 raise ValueError("El IR optimizado no está disponible. Ejecuta primero optimize_module().")
 
-            # Configurar el target
-            target = binding.Target.from_default_triple()
-            target_machine = target.create_target_machine()
+            # Inicializar todos los targets y ensambladores
+            binding.initialize_all_targets()
+            binding.initialize_all_asmprinters()
+
+            # Configurar el target triple para tu arquitectura actual
+            target_triple = "x86_64-pc-windows-msvc"  # Para sistemas Windows con MSVC
+            target = binding.Target.from_triple(target_triple)
+
+            # Crear el TargetMachine con optimización
+            target_machine = target.create_target_machine(opt=2)
 
             # Crear el módulo a partir del IR optimizado
             llvm_mod = binding.parse_assembly(self.optimized_ir)
+
+            # Configurar el triple del módulo
+            llvm_mod.triple = target_triple
+
+            # Verificar el módulo
             llvm_mod.verify()
 
             # Emitir el código ensamblador
             assembly_code = target_machine.emit_assembly(llvm_mod)
-            print("Código ensamblador generado exitosamente:")
-            print(assembly_code)
+            print("Código ensamblador generado exitosamente.")
+
+            # Guardar el ensamblador en un archivo .s
+            self.save_assembly_to_file(assembly_code, "output.s")
+
+            # Ensamblar el archivo .s a un archivo .o utilizando clang
+            self.clean_assembly_file("output.s")  # Limpia directivas innecesarias si es requerido
+            object_file = self.assemble_to_object_with_clang("output.s", "output.o")
+            if object_file:
+                print(f"Archivo objeto generado exitosamente: {object_file}")
+            else:
+                print("Hubo un error al generar el archivo objeto.")
             return assembly_code
         except Exception as e:
             print(f"Error al generar el código ensamblador: {e}")
+
+    def save_assembly_to_file(self, assembly_code, filename="output.s"):
+        with open(filename, "w") as f:
+            f.write(assembly_code)
+        print(f"Archivo ensamblador guardado como {filename}")
+
+    def assemble_to_object_with_clang(self, input_file="output.s", output_file="output.o", clang_path=None):
+        """
+        Ensambla un archivo .s o compila un archivo .ll a un archivo objeto .o utilizando Clang.
+        """
+        try:
+            if clang_path is None:
+                clang_path = r"C:\Program Files\LLVM\bin\clang.exe"  # Ruta a Clang
+
+            if not os.path.exists(clang_path):
+                raise FileNotFoundError(f"No se encontró Clang en: {clang_path}")
+
+            # Limpieza extendida del archivo ensamblador
+            self.clean_assembly_file(input_file)
+
+            # Ejecuta Clang con un triple ajustado
+            subprocess.run(
+                [clang_path, "-target", "x86_64-windows-msvc", "-c", input_file, "-o", output_file],
+                check=True
+            )
+            print(f"Archivo objeto generado como {output_file}")
+            return output_file
+        except subprocess.CalledProcessError as e:
+            print(f"Error al ensamblar con Clang: {e}")
+            return None
+        except FileNotFoundError as e:
+            print(f"Error: {e}")
+            return None
+
+    def clean_assembly_file(self, input_file="output.s"):
+        """
+        Limpia un archivo ensamblador eliminando directivas incompatibles.
+        """
+        cleaned_lines = []
+        with open(input_file, "r") as f:
+            for line in f:
+                if not line.strip().startswith((".size", ".section", ".type")):
+                    cleaned_lines.append(line)
+
+        with open(input_file, "w") as f:
+            f.writelines(cleaned_lines)
+
+        print(f"Archivo ensamblador limpio guardado como {input_file}")
