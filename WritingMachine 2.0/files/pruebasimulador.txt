@@ -1,18 +1,16 @@
 //hola
 Proc Main()
 [
-ContinueRight 3;
+ContinueRight 10;
 Down;
 ContinueRight 2;
 Up;
-ContinueRight 3;
+ContinueLeft 5;
 Down;
-Up;
-ContinueRight 5;
-Down;
-ContinueRight 2;
+ContinueLeft 4;
 ];
 end;
+
 
 
 

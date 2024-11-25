@@ -652,27 +652,29 @@ class ASTVisitor:
             move_units_value = self.visit(move_units)
 
             if isinstance(move_units_value, (int, float)):
-                # Cargar el valor actual de x_position
-                current_x = self.builder.load(x_pos_global)
+                # 1. Cargar el valor actual de x_position
+                current_x = self.builder.load(x_pos_global, name="current_x")
 
-                # Crear una constante negativa para el movimiento hacia la izquierda
+                # 2. Crear una constante negativa para el movimiento hacia la izquierda
                 neg_move = self.builder.sub(ir.Constant(ir.IntType(32), 0),
-                                            ir.Constant(ir.IntType(32), int(move_units_value)))
+                                            ir.Constant(ir.IntType(32), int(move_units_value)), name="neg_move")
 
-                # Realizar la suma con el valor negativo (equivalente a resta)
-                new_x = self.builder.add(current_x, neg_move)
+                # 3. Realizar la suma con el valor negativo (equivalente a resta)
+                new_x = self.builder.add(current_x, neg_move, name="new_x")
 
-                # Almacenar el resultado
+                # 4. Almacenar el nuevo valor en x_position
                 self.builder.store(new_x, x_pos_global)
 
-                # Actualizar la variable de instancia
-                self.x_position -= move_units_value
+                # 5. Volver a cargar el valor actualizado de x_position
+                updated_x = self.builder.load(x_pos_global, name="updated_x")
 
-                result = f"Movido {move_units_value} unidades hacia la izquierda. Nueva posicion en X: {self.x_position}"
-                print(result)
-                return result
+                # 6. Actualizar la posición de instancia
+                self.x_position = updated_x  # Actualizar con el valor correcto
+                print(f"Movido {move_units_value} unidades hacia la izquierda. Nueva posición en X: {self.x_position}")
+
+                return None
             else:
-                error_msg = f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero."
+                error_msg = f"Error Semántico: No se puede mover '{move_units_value}' unidades. Se esperaba un número."
                 print(error_msg)
                 self.semantic_errors.append(error_msg)
                 return None
