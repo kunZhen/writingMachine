@@ -327,9 +327,9 @@ class ASTVisitor:
     def visit_continueupstatement(self, node):
         move_units = node.move_units
 
-        # Obtener la variable global y_position y asegurarse de que esté correctamente declarada
+        # Obtener la variable global y_position
         y_pos_global = self.global_vars["y_position"]
-        y_pos_global.linkage = "common"  # Asegurar que es visible externamente
+        y_pos_global.linkage = "common"
         y_pos_global.global_constant = False
 
         if not hasattr(y_pos_global, 'initializer') or y_pos_global.initializer is None:
@@ -394,25 +394,28 @@ class ASTVisitor:
 
             if isinstance(move_units_value, (int, float)):
                 # Cargar el valor actual de y_position
-                current_y = self.builder.load(y_pos_global)
+                current_y = self.builder.load(y_pos_global, name="current_y")
 
                 # Crear una constante LLVM con el valor de movimiento
-                move_amount = ir.Constant(ir.IntType(32), int(move_units_value))
+                neg_move = ir.Constant(ir.IntType(32), -int(move_units_value))
 
                 # Realizar la suma
-                new_y = self.builder.add(current_y, move_amount)
+                new_y = self.builder.add(current_y, neg_move, name="new_y")
 
                 # Almacenar el resultado en la variable global
                 self.builder.store(new_y, y_pos_global)
 
+                # Barrera de memoria para evitar reordenamientos
+                self.builder.fence(ordering="seq_cst")
+
                 # Actualizar la variable de instancia
-                self.y_position += move_units_value
+                self.y_position -= move_units_value
 
                 result = f"Movido {move_units_value} unidades hacia arriba. Nueva posicion en Y: {self.y_position}"
                 print(result)
                 return result
             else:
-                error_msg = f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero."
+                error_msg = f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un número."
                 print(error_msg)
                 self.semantic_errors.append(error_msg)
                 return None
@@ -482,26 +485,28 @@ class ASTVisitor:
 
             if isinstance(move_units_value, (int, float)):
                 # Cargar el valor actual de y_position
-                current_y = self.builder.load(y_pos_global)
+                current_y = self.builder.load(y_pos_global, name="current_y")
 
                 # Crear una constante negativa para el movimiento hacia abajo
-                neg_move = self.builder.sub(ir.Constant(ir.IntType(32), 0),
-                                            ir.Constant(ir.IntType(32), int(move_units_value)))
+                move_amount = ir.Constant(ir.IntType(32), int(move_units_value))
 
                 # Realizar la suma con el valor negativo (equivalente a resta)
-                new_y = self.builder.add(current_y, neg_move)
+                new_y = self.builder.add(current_y, move_amount, name="new_y")
 
-                # Almacenar el resultado
+                # Almacenar el resultado en la variable global
                 self.builder.store(new_y, y_pos_global)
 
+                # Barrera de memoria para evitar reordenamientos
+                self.builder.fence(ordering="seq_cst")
+
                 # Actualizar la variable de instancia
-                self.y_position -= move_units_value
+                self.y_position += move_units_value
 
                 result = f"Movido {move_units_value} unidades hacia abajo. Nueva posicion en Y: {self.y_position}"
                 print(result)
                 return result
             else:
-                error_msg = f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero."
+                error_msg = f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un número."
                 print(error_msg)
                 self.semantic_errors.append(error_msg)
                 return None

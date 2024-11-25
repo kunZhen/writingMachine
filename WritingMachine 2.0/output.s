@@ -4,21 +4,26 @@
 	.p2align	4, 0x90
 Main:
 	.cfi_startproc
-	movabsq	$x_position, %rax
-	addl	$10, (%rax)
 	mfence
-	movabsq	$pen_down, %rcx
-	movb	$1, (%rcx)
+	movabsq	$pen_down, %rax
+	movb	$1, (%rax)
 	mfence
-	addl	$2, (%rax)
+	movabsq	$y_position, %rcx
+	addl	$5, (%rcx)
 	mfence
-	movb	$0, (%rcx)
+	movabsq	$x_position, %rdx
+	addl	$10, (%rdx)
 	mfence
-	addl	$-5, (%rax)
+	addl	$-4, (%rcx)
 	mfence
-	movb	$1, (%rcx)
+	movb	$0, (%rax)
 	mfence
-	addl	$-4, (%rax)
+	addl	$-3, (%rdx)
+	mfence
+	movb	$1, (%rax)
+	mfence
+	addl	$2, (%rcx)
+	mfence
 	retq
 .Lfunc_end0:
 	.cfi_endproc
