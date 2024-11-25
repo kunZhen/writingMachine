@@ -1,21 +1,27 @@
 Tokens encontrados:
-[('Proc', 'PROC', 2, 1), ('Main', 'ID', 2, 6), ('(', 'LPAREN', 2, 10), (')', 'RPAREN', 2, 11), ('[', 'LBRACKET', 3, 1), ('Down', 'DOWN', 4, 1), (';', 'SEMI', 4, 5), ('ContinueDown', 'CONTINUEDOWN', 5, 1), (5, 'NUMBER', 5, 14), (';', 'SEMI', 5, 15), ('ContinueRight', 'CONTINUERIGHT', 6, 1), (10, 'NUMBER', 6, 15), (';', 'SEMI', 6, 17), ('ContinueUp', 'CONTINUEUP', 7, 1), (4, 'NUMBER', 7, 12), (';', 'SEMI', 7, 13), ('Up', 'UP', 8, 1), (';', 'SEMI', 8, 3), ('ContinueLeft', 'CONTINUELEFT', 9, 1), (3, 'NUMBER', 9, 14), (';', 'SEMI', 9, 15), ('Down', 'DOWN', 10, 1), (';', 'SEMI', 10, 5), ('ContinueDown', 'CONTINUEDOWN', 11, 1), (2, 'NUMBER', 11, 14), (';', 'SEMI', 11, 15), (']', 'RBRACKET', 12, 1), (';', 'SEMI', 12, 2), ('end', 'END', 13, 1), (';', 'SEMI', 13, 4)]
+[('Proc', 'PROC', 2, 1), ('Main', 'ID', 2, 6), ('(', 'LPAREN', 2, 10), (')', 'RPAREN', 2, 11), ('[', 'LBRACKET', 3, 1), ('Pos', 'POS', 4, 1), ('(', 'LPAREN', 4, 5), (2, 'NUMBER', 4, 6), (',', 'COMMA', 4, 7), (2, 'NUMBER', 4, 8), (')', 'RPAREN', 4, 9), (';', 'SEMI', 4, 10), ('Def', 'DEF', 5, 1), ('(', 'LPAREN', 5, 4), ('var', 'ID', 5, 5), (',', 'COMMA', 5, 8), (2, 'NUMBER', 5, 10), (')', 'RPAREN', 5, 11), (';', 'SEMI', 5, 12), ('Down', 'DOWN', 6, 1), (';', 'SEMI', 6, 5), ('ContinueDown', 'CONTINUEDOWN', 7, 1), ('var', 'ID', 7, 14), ('*', 'MULT_OP', 7, 17), (2, 'NUMBER', 7, 18), (';', 'SEMI', 7, 19), ('PosX', 'POSX', 8, 1), (5, 'NUMBER', 8, 6), (';', 'SEMI', 8, 7), ('ContinueRight', 'CONTINUERIGHT', 9, 1), (10, 'NUMBER', 9, 15), (';', 'SEMI', 9, 17), ('ContinueUp', 'CONTINUEUP', 10, 1), (4, 'NUMBER', 10, 12), (';', 'SEMI', 10, 13), ('Up', 'UP', 11, 1), (';', 'SEMI', 11, 3), ('ContinueLeft', 'CONTINUELEFT', 12, 1), (3, 'NUMBER', 12, 14), (';', 'SEMI', 12, 15), ('Down', 'DOWN', 13, 1), (';', 'SEMI', 13, 5), ('PosY', 'POSY', 14, 1), (5, 'NUMBER', 14, 6), (';', 'SEMI', 14, 7), ('ContinueDown', 'CONTINUEDOWN', 15, 1), (2, 'NUMBER', 15, 14), (';', 'SEMI', 15, 15), (']', 'RBRACKET', 16, 1), (';', 'SEMI', 16, 2), ('end', 'END', 17, 1), (';', 'SEMI', 17, 4)]
 
-AST: <ast_custom.program.Program object at 0x00000201AA9C6A90>
+AST: <ast_custom.program.Program object at 0x0000021333FEC9D0>
 Registrando procedimiento: Main
 Procedimiento Main registrado con 0 parámetros: []
 Ejecutando el procedimiento 'Main'...
 
 Ejecutando llamada al procedimiento: Main con 0 argumentos
 Ejecutando cuerpo del procedimiento Main
+Posicion actualizada a X: 2, Y: 2
+Definido var = 2 (Tipo: NUMBER)
 Lapicero colocado en la superficie (Down)
-Movido 5 unidades hacia abajo. Nueva posicion en Y: 5
-Movido 10 unidades hacia la derecha. Nueva posición en X: 10
-Movido 4 unidades hacia arriba. Nueva posicion en Y: 1
+Operando izquierdo: 2, Operando derecho: 2, Operador: *
+4
+Movido 4 unidades hacia abajo. Nueva posicion en Y: 6
+Posicion actualizada a X: 5, Y: 6
+Movido 10 unidades hacia la derecha. Nueva posición en X: 15
+Movido 4 unidades hacia arriba. Nueva posicion en Y: 2
 Lapicero levantado de la superficie (Up)
 Movido 3 unidades hacia la izquierda. Nueva posición en X: %"updated_x" = load i32, i32* @"x_position"
 Lapicero colocado en la superficie (Down)
-Movido 2 unidades hacia abajo. Nueva posicion en Y: 3
+Posicion actualizada a X: %"updated_x" = load i32, i32* @"x_position", Y: 5
+Movido 2 unidades hacia abajo. Nueva posicion en Y: 7
 Finalizada la ejecución del procedimiento Main
 
 
@@ -29,9 +35,39 @@ Program
     body: [
     Program
       statements: [
+      PosStatement
+        x_val:
+        Expression
+          value:
+          NumberExpression
+            value: 2
+        y_val:
+        Expression
+          value:
+          NumberExpression
+            value: 2
+      DefStatement
+        var_name: var
+        value:
+        Expression
+          value:
+          NumberExpression
+            value: 2
       DownStatement
       ContinueDownStatement
         move_units:
+        Expression
+          value:
+          BinaryOperation
+            left:
+            IdExpression
+              var_name: var
+            operator: *
+            right:
+            NumberExpression
+              value: 2
+      PosXStatement
+        x_val:
         Expression
           value:
           NumberExpression
@@ -56,6 +92,12 @@ Program
           NumberExpression
             value: 3
       DownStatement
+      PosYStatement
+        y_val:
+        Expression
+          value:
+          NumberExpression
+            value: 5
       ContinueDownStatement
         move_units:
         Expression
@@ -68,6 +110,7 @@ Program
 Symbol Table:
 Name       Type       Procedure       Value
 --------------------------------------------------
+var        NUMBER     Main            2
 El IR es válido antes de optimización.
 Optimización completada. IR optimizado:
 ; ModuleID = '<string>'
@@ -80,12 +123,17 @@ target triple = "unknown-unknown-unknown"
 
 define void @Main() {
 entry:
+  store i32 2, i32* @x_position, align 4
+  fence seq_cst
+  store i32 2, i32* @y_position, align 4
   fence seq_cst
   store i1 true, i1* @pen_down, align 1
   fence seq_cst
   %current_y = load i32, i32* @y_position, align 4
-  %new_y = add i32 %current_y, 5
+  %new_y = add i32 %current_y, 4
   store i32 %new_y, i32* @y_position, align 4
+  fence seq_cst
+  store i32 5, i32* @x_position, align 4
   fence seq_cst
   %current_x = load i32, i32* @x_position, align 4
   %new_x = add i32 %current_x, 10
@@ -102,6 +150,8 @@ entry:
   store i32 %new_x.1, i32* @x_position, align 4
   fence seq_cst
   store i1 true, i1* @pen_down, align 1
+  fence seq_cst
+  store i32 5, i32* @y_position, align 4
   fence seq_cst
   %current_y.2 = load i32, i32* @y_position, align 4
   %new_y.2 = add i32 %current_y.2, 2
@@ -121,12 +171,17 @@ target triple = "unknown-unknown-unknown"
 
 define void @Main() {
 entry:
+  store i32 2, i32* @x_position, align 4
+  fence seq_cst
+  store i32 2, i32* @y_position, align 4
   fence seq_cst
   store i1 true, i1* @pen_down, align 1
   fence seq_cst
   %current_y = load i32, i32* @y_position, align 4
-  %new_y = add i32 %current_y, 5
+  %new_y = add i32 %current_y, 4
   store i32 %new_y, i32* @y_position, align 4
+  fence seq_cst
+  store i32 5, i32* @x_position, align 4
   fence seq_cst
   %current_x = load i32, i32* @x_position, align 4
   %new_x = add i32 %current_x, 10
@@ -143,6 +198,8 @@ entry:
   store i32 %new_x.1, i32* @x_position, align 4
   fence seq_cst
   store i1 true, i1* @pen_down, align 1
+  fence seq_cst
+  store i32 5, i32* @y_position, align 4
   fence seq_cst
   %current_y.2 = load i32, i32* @y_position, align 4
   %new_y.2 = add i32 %current_y.2, 2

@@ -87,6 +87,24 @@ class PencilSimulator:
                 if var_type:
                     print(f"[DEBUG] Usando registro {register} para {var_type}")
 
+            elif "movl" in line:
+                # Extraer el valor y el registro
+                value = int(line.split('$')[1].split(',')[0].strip(), 16)
+                register = line.split(',')[1].strip().strip('()')
+                var_type = self.get_current_register_type(register, i)
+
+                if var_type == "x_position":
+                    old_x = self.x_position
+                    self.x_position = value
+                    print(f"[DEBUG] Inicializando x de {old_x} a {self.x_position}")
+
+                elif var_type == "y_position":
+                    old_y = self.y_position
+                    self.y_position = value
+                    print(f"[DEBUG] Inicializando y de {old_y} a {self.y_position}")
+
+                self.render_canvas()
+
             elif "movb" in line:
                 value = line.split('$')[1].split(',')[0].strip()
                 register = line.split(',')[1].strip().strip('()')
@@ -97,7 +115,8 @@ class PencilSimulator:
                     self.pen_down = value == "0x1"
                     state_change = "activando" if self.pen_down else "desactivando"
                     print(
-                        f"[DEBUG] {state_change} pen_down={self.pen_down} en posición x={self.x_position}, y={self.y_position}")
+                        f"[DEBUG] {state_change} pen_down={self.pen_down} en posición x={self.x_position}, y={self.y_position}"
+                    )
 
                     if self.pen_down and not old_pen_state:
                         self.handle_pen_down()

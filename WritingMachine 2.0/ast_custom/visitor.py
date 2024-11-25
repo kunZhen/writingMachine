@@ -787,19 +787,17 @@ class ASTVisitor:
         x_pos_global.global_constant = False
         y_pos_global.global_constant = False
 
-        # Validar contexto y tipos
+        # Validar tipos
         if isinstance(x_val, bool):
-            print(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
-            self.semantic_errors.append(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
+            error_msg = f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}'."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
             return None
 
         if isinstance(y_val, bool):
-            print(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
-            self.semantic_errors.append(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
+            error_msg = f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}'."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
             return None
 
         # Crear constantes LLVM para los nuevos valores
@@ -808,7 +806,9 @@ class ASTVisitor:
 
         # Almacenar los nuevos valores
         self.builder.store(x_constant, x_pos_global)
+        self.builder.fence(ordering="seq_cst")  # Barrera de memoria para X
         self.builder.store(y_constant, y_pos_global)
+        self.builder.fence(ordering="seq_cst")  # Barrera de memoria para Y
 
         # Actualizar las variables de instancia
         self.x_position = x_val
@@ -827,12 +827,11 @@ class ASTVisitor:
         x_pos_global.linkage = "common"
         x_pos_global.global_constant = False
 
-        # Verificación de tipo booleano
+        # Verificación de tipo
         if isinstance(x_val, bool):
-            print(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
-            self.semantic_errors.append(
-                f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}' de tipo '{type(x_val).__name__}'.")
+            error_msg = f"Error Semantico: La posicion X no puede ser un booleano. Se obtuvo '{x_val}'."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
             return None
 
         # Crear constante LLVM para el nuevo valor
@@ -840,6 +839,7 @@ class ASTVisitor:
 
         # Almacenar el nuevo valor
         self.builder.store(x_constant, x_pos_global)
+        self.builder.fence(ordering="seq_cst")  # Barrera de memoria para evitar reordenamientos
 
         # Actualizar la variable de instancia
         self.x_position = x_val
@@ -857,12 +857,11 @@ class ASTVisitor:
         y_pos_global.linkage = "common"
         y_pos_global.global_constant = False
 
-        # Verificación de tipo booleano
+        # Verificación de tipo
         if isinstance(y_val, bool):
-            print(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
-            self.semantic_errors.append(
-                f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}' de tipo '{type(y_val).__name__}'.")
+            error_msg = f"Error Semantico: La posicion Y no puede ser un booleano. Se obtuvo '{y_val}'."
+            print(error_msg)
+            self.semantic_errors.append(error_msg)
             return None
 
         # Crear constante LLVM para el nuevo valor
@@ -870,6 +869,7 @@ class ASTVisitor:
 
         # Almacenar el nuevo valor
         self.builder.store(y_constant, y_pos_global)
+        self.builder.fence(ordering="seq_cst")  # Barrera de memoria para evitar reordenamientos
 
         # Actualizar la variable de instancia
         self.y_position = y_val

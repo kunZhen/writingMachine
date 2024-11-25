@@ -1,16 +1,22 @@
 //hola
 Proc Main()
 [
+Pos (2,2);
+Def(var, 2);
 Down;
-ContinueDown 5;
+ContinueDown var*2;
+PosX 5;
 ContinueRight 10;
 ContinueUp 4;
 Up;
 ContinueLeft 3;
 Down;
+PosY 5;
 ContinueDown 2;
 ];
 end;
+
+
 
 
 
