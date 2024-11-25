@@ -1,5 +1,13 @@
 	.text
 	.file	"<string>"
+	.globl	linea1
+	.p2align	4, 0x90
+linea1:
+	.cfi_startproc
+	retq
+.Lfunc_end0:
+	.cfi_endproc
+
 	.globl	Main
 	.p2align	4, 0x90
 Main:
@@ -32,7 +40,7 @@ Main:
 	addl	$2, (%rcx)
 	mfence
 	retq
-.Lfunc_end0:
+.Lfunc_end1:
 	.cfi_endproc
 
 	.comm	x_position,4,4
