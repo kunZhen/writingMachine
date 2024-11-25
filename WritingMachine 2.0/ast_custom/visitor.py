@@ -1915,6 +1915,7 @@ class ASTVisitor:
             print("Ejecutando el procedimiento 'Main'...")
             self.visit_callstatement(node)
         self.builder.ret_void()
+
     def visit_callstatement(self, node):
         procedure_name = node.procedure_name
         param_count = len(node.arguments)
@@ -1964,12 +1965,22 @@ class ASTVisitor:
             # Determinar el tipo del valor
             if isinstance(value, bool):
                 var_type = "BOOLEAN"
+                alloca = self.builder.alloca(ir.IntType(1), name=param_name)
+                constant = ir.Constant(ir.IntType(1), int(value))
             elif isinstance(value, (int, float)):
                 var_type = "NUMBER"
+                alloca = self.builder.alloca(ir.IntType(32), name=param_name)
+                constant = ir.Constant(ir.IntType(32), int(value))
             else:
                 var_type = "UNKNOWN"
+                # Manejar otros tipos si es necesario
 
-            # Asignar el valor al parámetro en el contexto con su tipo
+            # Almacenar el valor en el espacio reservado
+            self.builder.store(constant, alloca)
+            # Agregar a la tabla de símbolos
+            self.symbol_table[param_name] = alloca
+
+            # Asignar la variable en el contexto
             self.variable_context.set_variable(param_name, value, var_type)
 
         # Buscar y ejecutar el cuerpo del procedimiento
