@@ -518,6 +518,7 @@ class ASTVisitor:
             x_pos_global.initializer = ir.Constant(ir.IntType(32), 0)
 
         if isinstance(move_units.value, IdExpression):
+            # Manejo de variables como argumento (mantener código existente)
             referenced_var_name = move_units.value.var_name
             if f"{referenced_var_name}_{self.variable_context.current_procedure}" in self.variable_context.variables or \
                     f"{referenced_var_name}_Main" in self.variable_context.variables:
@@ -534,23 +535,17 @@ class ASTVisitor:
                     return None
 
                 if isinstance(referenced_value, (int, float)):
-                    # Si la variable referenciada está en la tabla de símbolos
                     if referenced_var_name in self.symbol_table:
                         move_value_ptr = self.symbol_table[referenced_var_name]
                         move_amount = self.builder.load(move_value_ptr)
                     else:
                         move_amount = ir.Constant(ir.IntType(32), int(referenced_value))
 
-                    # Cargar el valor actual de x_position
+                    # Cargar el valor actual de x_position justo antes de usarlo
                     current_x = self.builder.load(x_pos_global)
-
-                    # Realizar la suma
                     new_x = self.builder.add(current_x, move_amount)
-
-                    # Almacenar el resultado
                     self.builder.store(new_x, x_pos_global)
 
-                    # Actualizar la variable de instancia
                     self.x_position += referenced_value
                     result = f"Movido {referenced_value} unidades hacia la derecha. Nueva posicion en X: {self.x_position}"
                     print(result)
@@ -569,26 +564,26 @@ class ASTVisitor:
             move_units_value = self.visit(move_units)
 
             if isinstance(move_units_value, (int, float)):
-                # Cargar el valor actual de x_position
-                current_x = self.builder.load(x_pos_global)
+                # 1. Cargar el valor actual
+                current_x = self.builder.load(x_pos_global, name="current_x")
 
-                # Crear constante para el movimiento
-                move_amount = ir.Constant(ir.IntType(32), int(move_units_value))
+                # 2. Realizar la suma
+                new_x = self.builder.add(current_x, ir.Constant(ir.IntType(32), move_units_value), name="new_x")
 
-                # Realizar la suma
-                new_x = self.builder.add(current_x, move_amount)
+                # 3. Almacenar el resultado
+                store_inst = self.builder.store(new_x, x_pos_global)
 
-                # Almacenar el resultado
-                self.builder.store(new_x, x_pos_global)
+                # 4. Insertar una barrera de memoria para prevenir optimizaciones
+                self.builder.fence(ordering="seq_cst")
 
-                # Actualizar la variable de instancia
+                # 5. Actualizar la posición de instancia
                 self.x_position += move_units_value
 
-                result = f"Movido {move_units_value} unidades hacia la derecha. Nueva posicion en X: {self.x_position}"
-                print(result)
-                return result
+                print(
+                    f"Movido {move_units_value} unidades hacia la derecha. Nueva posición en X: {self.x_position}")
+                return None
             else:
-                error_msg = f"Error Semantico: No se puede mover '{move_units_value}' unidades. Se esperaba un numero."
+                error_msg = f"Error Semántico: No se puede mover '{move_units_value}' unidades. Se esperaba un número."
                 print(error_msg)
                 self.semantic_errors.append(error_msg)
                 return None
@@ -893,14 +888,21 @@ class ASTVisitor:
         pen_down_global.linkage = "common"
         pen_down_global.global_constant = False
 
+        # Insertar una barrera de memoria antes
+        self.builder.fence(ordering="seq_cst")
+
         # Crear constante LLVM para True (1)
         true_constant = ir.Constant(ir.IntType(1), 1)
 
         # Almacenar True en la variable global
         self.builder.store(true_constant, pen_down_global)
 
+        # Insertar una barrera de memoria después
+        self.builder.fence(ordering="seq_cst")
+
         # Actualizar la variable de instancia
         self.pen_down = True
+
         result = "Lapicero colocado en la superficie (Down)"
         print(result)
         return result
@@ -911,18 +913,24 @@ class ASTVisitor:
         pen_down_global.linkage = "common"
         pen_down_global.global_constant = False
 
+        # Insertar una barrera de memoria antes
+        self.builder.fence(ordering="seq_cst")
+
         # Crear constante LLVM para False (0)
         false_constant = ir.Constant(ir.IntType(1), 0)
 
         # Almacenar False en la variable global
         self.builder.store(false_constant, pen_down_global)
 
+        # Insertar una barrera de memoria después
+        self.builder.fence(ordering="seq_cst")
+
         # Actualizar la variable de instancia
         self.pen_down = False
+
         result = "Lapicero levantado de la superficie (Up)"
         print(result)
         return result
-
     def visit_beginningstatement(self, node):
         # Obtener las variables globales
         x_pos_global = self.global_vars["x_position"]

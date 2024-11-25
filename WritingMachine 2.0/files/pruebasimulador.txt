@@ -1,0 +1,19 @@
+//hola
+Proc Main()
+[
+ContinueRight 3;
+Down;
+ContinueRight 2;
+Up;
+ContinueRight 3;
+Down;
+Up;
+ContinueRight 5;
+Down;
+ContinueRight 2;
+];
+end;
+
+
+
+
