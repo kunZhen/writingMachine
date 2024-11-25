@@ -1,4 +1,7 @@
 //si
+
+Proc Main()
+[
 Def(var,true);
 Def(var,3);
 Def(var2,3);
@@ -6,5 +9,5 @@ Sum(true,var2);
 Put(var1,var2);
 Pos(var,3);
 Div(true, false);
-
-
+];
+end;

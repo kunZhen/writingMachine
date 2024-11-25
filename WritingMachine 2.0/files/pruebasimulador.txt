@@ -9,7 +9,9 @@ PosX 5;
 ContinueRight 10;
 ContinueUp 4;
 Up;
-ContinueLeft 3;
+Def(var2,4);
+Substr(var2,1*1/1);
+ContinueLeft var2;
 Down;
 PosY 5;
 ContinueDown 2;
@@ -21,6 +23,7 @@ Proc Main()
 call linea1();
 ];
 end;
+
 
 
 

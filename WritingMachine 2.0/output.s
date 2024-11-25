@@ -31,7 +31,7 @@ Main:
 	mfence
 	movb	$0, (%rdx)
 	mfence
-	addl	$-3, (%rax)
+	addl	$-4, (%rax)
 	mfence
 	movb	$1, (%rdx)
 	mfence
