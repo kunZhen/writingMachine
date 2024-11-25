@@ -1,4 +1,15 @@
 //hola
+
+Proc linea2 (var1)
+[
+Def(var1,1);
+While [var1<4]
+[Add(var1);
+ContinueRight 3;]
+Whend;
+];
+end;
+
 Proc linea1()
 [
 Pos (2,2);
@@ -20,9 +31,24 @@ end;
 
 Proc Main()
 [
-call linea1();
+Down;
+Def(var,1);
+While [var<7]
+[Add(var);
+ContinueRight 3;
+ContinueDown 1;]
+Whend;
 ];
 end;
+
+
+
+
+
+
+
+
+
 
 
 

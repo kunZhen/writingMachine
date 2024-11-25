@@ -13,6 +13,9 @@ class PencilSimulator:
         self.current_register_map = {}
         self.last_movabs_line = None
         self.last_movabs_register = None
+        self.stack = []
+        self.current_line = 0
+        self.stack_vars = {}  # Para mantener las variables del stack
 
     def load_object(self, objdump_path=None):
         if objdump_path is None:
@@ -59,56 +62,190 @@ class PencilSimulator:
         if register not in self.current_register_map:
             return None
 
-        # Encontrar el mapeo más reciente antes de la línea actual
         mappings = self.current_register_map[register]
         current_mapping = None
         min_distance = float('inf')
 
+        # Buscamos el mapeo más cercano pero anterior a la línea actual
         for mapping in mappings:
             distance = line_num - mapping['position']
             if 0 <= distance < min_distance:
                 min_distance = distance
                 current_mapping = mapping
 
+        # Si estamos procesando una instrucción addl o incl con %rax,
+        # siempre asumimos que es x_position
+        if current_mapping and register == '%rax' and \
+                ('addl' in self.instructions[line_num] or 'incl' in self.instructions[line_num]):
+            return 'x_position'
+
         return current_mapping['symbol'] if current_mapping else None
+    def get_line_address(self, line):
+        # Extrae la dirección de una línea de instrucción
+        if ':' in line:
+            addr_str = line.split(':')[0].strip()
+            try:
+                return int(addr_str, 16)
+            except ValueError:
+                return None
+        return None
+
+    def find_line_by_address(self, target_addr):
+        # Encuentra el índice de la línea que corresponde a una dirección
+        for i, line in enumerate(self.instructions):
+            addr = self.get_line_address(line)
+            if addr == target_addr:
+                return i
+        return None
+
+    def get_jump_target_address(self, jump_target):
+        """Convierte una referencia de salto en una dirección hexadecimal."""
+        # Si el salto es una dirección directa (0xb2)
+        if jump_target.startswith('0x'):
+            return int(jump_target, 16)
+
+        # Si el salto es relativo a una función (<Main+0x92>)
+        if '+0x' in jump_target:
+            offset = int(jump_target.split('+0x')[1].rstrip('>'), 16)
+            # Encontrar la dirección base de Main
+            for line in self.instructions:
+                if '<Main>:' in line:
+                    base_addr = int(line.split('<')[0].strip(), 16)
+                    return base_addr + offset
+        return None
 
     def execute(self):
         print("\nIniciando simulación del lápiz...\n")
+        self.stack = []
+        self.current_line = 0
+        self.stack_vars = {}  # Para mantener las variables del stack
 
-        for i, line in enumerate(self.instructions):
+        while self.current_line < len(self.instructions):
+            line = self.instructions[self.current_line]
             if not line.strip() or "file format" in line or "Disassembly" in line:
+                self.current_line += 1
                 continue
 
-            print(f"[DEBUG] Procesando línea {i}: {line}")
+            print(f"[DEBUG] Procesando línea {self.current_line}: {line}")
 
-            if "movabsq" in line:
+            # Push y Pop para el manejo de la pila
+            if "pushq" in line:
+                register = line.split()[-1].strip()
+                self.stack.append(register)
+                self.current_line += 1
+                continue
+
+            if "popq" in line:
+                if self.stack:
+                    self.stack.pop()
+                self.current_line += 1
+                continue
+
+            # Instrucciones de control de flujo
+            if "cmpl" in line:
+                parts = line.split(',')
+                compare_value = int(parts[0].split('$')[1].strip(), 16)
+                offset = parts[1].strip().split('(')[0].strip()
+                stack_value = self.stack_vars.get(offset, 0)
+                self.compare_result = compare_value
+                self.last_compare = stack_value  # Guardar el valor para comparaciones
+                print(f"[DEBUG] Comparando {compare_value} con variable en stack ({stack_value})")
+                self.current_line += 1
+                continue
+
+            if "jg" in line:
+                target = line.split()[-1].strip()
+                target_addr = self.get_jump_target_address(target)
+                if target_addr is not None:
+                    if self.compare_result < self.last_compare:
+                        new_line = self.find_line_by_address(target_addr)
+                        if new_line is not None:
+                            print(f"[DEBUG] Salto a línea {new_line} (dirección {hex(target_addr)})")
+                            self.current_line = new_line
+                            continue
+                self.current_line += 1
+                continue
+
+            if "jle" in line:
+                target = line.split()[-1].strip()
+                target_addr = self.get_jump_target_address(target)
+                if target_addr is not None:
+                    if self.last_compare <= self.compare_result:
+                        new_line = self.find_line_by_address(target_addr)
+                        if new_line is not None:
+                            print(f"[DEBUG] Salto a línea {new_line} (dirección {hex(target_addr)})")
+                            self.current_line = new_line
+                            continue
+                self.current_line += 1
+                continue
+
+            if "jmp" in line:
+                target = line.split()[-1].strip()
+                target_addr = self.get_jump_target_address(target)
+                if target_addr is not None:
+                    new_line = self.find_line_by_address(target_addr)
+                    if new_line is not None:
+                        print(f"[DEBUG] Salto incondicional a línea {new_line} (dirección {hex(target_addr)})")
+                        self.current_line = new_line
+                        continue
+                self.current_line += 1
+                continue
+
+            if "incl" in line:
+                if "(%rax)" in line:
+                    self.x_position += 1
+                    if self.pen_down:
+                        self.handle_pen_down()
+                    print(f"[DEBUG] Incrementando x a {self.x_position}")
+                elif "(%rcx)" in line:
+                    self.y_position += 1
+                    if self.pen_down:
+                        self.handle_pen_down()
+                    print(f"[DEBUG] Incrementando y a {self.y_position}")
+                elif "(%rsp)" in line:
+                    offset = line.split('(')[0].strip().split()[-1]
+                    if offset in self.stack_vars:
+                        self.stack_vars[offset] += 1
+                        print(f"[DEBUG] Incrementando variable en stack offset {offset} a {self.stack_vars[offset]}")
+                self.current_line += 1
+                self.render_canvas()
+                continue
+
+            # Procesamiento de movl para variables del stack
+            if "movl" in line:
+                if "rsp" in line or "esp" in line:
+                    parts = line.split(',')
+                    value = int(parts[0].split('$')[1].strip(), 16)
+                    offset = parts[1].strip().split('(')[0].strip()
+                    self.stack_vars[offset] = value
+                    print(f"[DEBUG] Inicializando variable en stack offset {offset} = {value}")
+                elif "esp" not in line:
+                    value = int(line.split('$')[1].split(',')[0].strip(), 16)
+                    register = line.split(',')[1].strip().strip('()')
+                    var_type = self.get_current_register_type(register, self.current_line)
+
+                    if var_type == "x_position":
+                        old_x = self.x_position
+                        self.x_position = value
+                        print(f"[DEBUG] Inicializando x de {old_x} a {self.x_position}")
+
+                    elif var_type == "y_position":
+                        old_y = self.y_position
+                        self.y_position = value
+                        print(f"[DEBUG] Inicializando y de {old_y} a {self.y_position}")
+
+                    self.render_canvas()
+
+            elif "movabsq" in line:
                 register = line.split(',')[-1].strip()
-                var_type = self.get_current_register_type(register, i)
+                var_type = self.get_current_register_type(register, self.current_line)
                 if var_type:
                     print(f"[DEBUG] Usando registro {register} para {var_type}")
-
-            elif "movl" in line:
-                # Extraer el valor y el registro
-                value = int(line.split('$')[1].split(',')[0].strip(), 16)
-                register = line.split(',')[1].strip().strip('()')
-                var_type = self.get_current_register_type(register, i)
-
-                if var_type == "x_position":
-                    old_x = self.x_position
-                    self.x_position = value
-                    print(f"[DEBUG] Inicializando x de {old_x} a {self.x_position}")
-
-                elif var_type == "y_position":
-                    old_y = self.y_position
-                    self.y_position = value
-                    print(f"[DEBUG] Inicializando y de {old_y} a {self.y_position}")
-
-                self.render_canvas()
 
             elif "movb" in line:
                 value = line.split('$')[1].split(',')[0].strip()
                 register = line.split(',')[1].strip().strip('()')
-                var_type = self.get_current_register_type(register, i)
+                var_type = self.get_current_register_type(register, self.current_line)
 
                 if var_type == "pen_down":
                     old_pen_state = self.pen_down
@@ -127,7 +264,7 @@ class PencilSimulator:
                 try:
                     value = int(line.split("$")[1].split(",")[0].strip(), 16)
                     register = line.split(',')[1].strip().strip('()')
-                    var_type = self.get_current_register_type(register, i)
+                    var_type = self.get_current_register_type(register, self.current_line)
 
                     if var_type == "x_position":
                         old_x = self.x_position
@@ -158,6 +295,13 @@ class PencilSimulator:
             elif "mfence" in line:
                 print("[DEBUG] Barrera de memoria - asegurando orden de operaciones")
 
+            self.current_line += 1
+    def get_stack_var(self):
+        """Obtiene el valor actual de la variable en el stack que se está comparando"""
+        # Buscar la variable más reciente en el stack
+        if '0x4' in self.stack_vars:  # Esta es la variable que se usa en el while
+            return self.stack_vars['0x4']
+        return 0  #
     def handle_pen_down(self):
         """Maneja el evento de bajar el lápiz, dibujando en la posición actual"""
         if 0 <= self.x_position < len(self.canvas[0]) and 0 <= self.y_position < len(self.canvas):

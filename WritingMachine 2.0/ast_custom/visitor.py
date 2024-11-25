@@ -1878,6 +1878,7 @@ class ASTVisitor:
 
     def visit_procedurestatement(self, node):
 
+
         # Crear la función LLVM para este procedimiento
         func_type = ir.FunctionType(ir.VoidType(), [])  # Sin parámetros y sin retorno
         func = ir.Function(self.module, func_type, name=node.procedure_name)
