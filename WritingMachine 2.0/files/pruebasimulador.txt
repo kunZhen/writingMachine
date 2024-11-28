@@ -1,0 +1,65 @@
+//hola
+
+Proc linea2 (var1)
+[
+While [var1<4]
+[Add(var1);
+ContinueRight 3;]
+Whend;
+];
+end;
+
+Proc linea1()
+[
+Pos (2,2);
+Def(var, 2);
+Down;
+ContinueDown var*2;
+PosX 5;
+ContinueRight 10;
+ContinueUp 4;
+Up;
+Def(var2,4);
+Substr(var2,1*1/1);
+ContinueLeft var2;
+Down;
+PosY 5;
+ContinueDown 2;
+];
+end;
+
+Proc Main()
+[
+Down;
+Def(var,1);
+While [var<7]
+[Add(var);
+ContinueRight 3;
+ContinueDown 1;]
+Whend;
+call linea1();
+];
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

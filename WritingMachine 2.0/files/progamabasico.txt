@@ -1,0 +1,103 @@
+//WFWEFWE
+
+Proc linea2()
+[ 
+//Define variable local 
+Def(varLocal2, 3); 
+
+]; 
+end;
+
+Proc linea1(aaa)
+[ 
+//Define variable local 
+Def(varLocal1, aaa); 
+PosY varLocal1; 
+For var6(1 to 5) Loop
+[PosY Add(varLocal1);
+ContinueRight 9;]
+End Loop;
+call linea2();
+]; 
+end;
+
+
+Proc Main()
+[
+Equal(True,false);
+Def(var,5);
+Def(var2,true);
+
+Def(bucle, 0);
+
+While [var < 5*4]
+[ContinueRight 90;
+ Add (var);]
+Whend;
+call linea1(var*3);
+];
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
